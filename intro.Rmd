@@ -81,6 +81,7 @@ output:
     + Porque en internet podrás encontrar solución a (casi) todos los problemas que tengas.
     + Porque podrás personalizar/modificar cada instrucción con las opciones que desees.
     + Porque es gratuito, como la versión de código abierto de RStudio, y los puedes instalar donde desees.
+    + Porque si hay varias respuestas a una misma pregunta, lo que al principio puede hacerte dudar sobre cuál escoger, probablemente hay una que te funcionará y te irá mejor que las otras.
 
 # Nociones elementales y funciones básicas
 
