@@ -90,27 +90,85 @@ output:
     + Desde el R-script en RStudio se ejecutan con `Control+Enter`
 
 * Se pueden escribir comentarios (secciones de código que el programa no ejecuta), situando antes un símbolo `#`
-* Simplificando, tenemos objetos (numéricos, enteros, caracteres, listas, data frames) y funciones que se pueden guardar en variables por medio de la asignación, que consiste en el símbolo `<-`
+* Simplificando, tenemos objetos de distintas clases:
+    + 5 tipos de datos básicos: lógicos, enteros, numéricos, complejos, caracteres. Se pueden transformar en este orden por coerción
+    + otras estructuras de datos: vectores, factores, matrices, listas, data frames, tablas, etc.
+    + funciones
+    + para saber más, [Understanding basic data types in R](https://www.diegobarneche.com/2014-12-11-ufsc/lessons/01-intro_r/data-structures.html)
+* Estos se pueden guardar en variables por medio de la asignación, que consiste en el símbolo `<-`
 
 ```{r, echo=TRUE}
+
 # código de R que no hace nada
+
 x <- 4 # aisgnamos a la variable x el número 4
+class(x)
+is.character(4)
+as.character(4) # un objeto numérico se puede coercionar a un carácter
+as.numeric("a") # al revés, no
+as.numeric(FALSE) # un objeto lógico se puede coercionar a uno numérico
+as.numeric(TRUE)
+
+y <- c(2:4)
+y
+class(y)
+length(y)
+
 ```
+
+Otras funciones prácticas para interactuar con el ordenador
+
+```{r, echo=TRUE}
+
+getwd()
+# setwd("C:/...")
+list.files()
+
+```
+
+
+
 
 
 ## R como calculadora
 
 ```{r, echo=TRUE}
+
 2+3
 x+5
 y <- x-3*7 + 24 # los espacios aquí no afectan
 y
+
 ```
 
 ## Operadores aritméticos y lógicos
 ## Vectores y data frames 
 
 # Funciones y librerías para interaccionar con otros softwares estadísticos como SPSS o STATA
+
+#### ¿Se puede abrir un fichero en dta (stata) en R y cambiar su versión, por ejemplo de la 15 a la 13?
+
+* La librería [haven](https://haven.tidyverse.org/) nos lo permite (entre las versiones 8 y 15).
+* Otras librerías que pueden ayudar son: `foreign` y `readstata13`
+* Para saber más, [Datasets basics](https://people.umass.edu/biep640w/pdf/R%20handout%202018%20Dataset%20Basics.pdf)
+
+```{r, echo=TRUE}
+
+library(haven)
+dta_data <- read_dta("carsdata.dta") # con un archivo de stata 10 (haven::read_dta )
+dta_data
+str(dta_data)
+
+# file from https://digitalcommons.usu.edu/all_datasets/27/
+foreign::read.dta("Jakus_NCDA.dta") # archivo de stata 15
+dta_data2 <- read_dta("Jakus_NCDA.dta")
+str(dta_data2)
+write_dta(dta_data2, "Jakus_NCDA2.dta", version = 13)
+
+```
+
+
+
 # Manejo de datos con las librerías dplyr & tidyr 
 
 ## Selección y filtro de variables 
