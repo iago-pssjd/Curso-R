@@ -1,65 +1,123 @@
 ---
-title: "IntruducciÛn a R"
-author: "Laia Egea e Iago GinÈ"
+title: "Intruducci√≥n a R"
+author: "Laia Egea e Iago Gin√©"
 date: "10-12/12/2019"
-abstract: "El objetivo de este curso es introducir el software R a todas las personas que trabajen con datos y darles las herramientas para el manejo y visualizaciÛn de datos, asÌ como para algunos an·lisis estadÌsticos b·sicos."
+abstract: "El objetivo de este curso es introducir el software R a todas las personas que trabajen con datos y darles las herramientas para el manejo y visualizaci√≥n de datos, as√≠ como para algunos an√°lisis estad√≠sticos b√°sicos."
 output: 
   html_notebook:
     toc: yes
 
 ---
 
-# PresentaciÛn del entorno R y Rstudio
+# Presentaci√≥n del entorno R y Rstudio
 
-* R y RStudio son dos programas diferentes. 
-    + R es el programa que calcula. Es software libre y gratuito, inicialmente enfocado a la computaciÛn estadÌstica.
-    + R tambiÈn es el lenguaje en el que escribimos los comandos, pues es tambiÈn el lenguaje de programaciÛn.
-    + Hoy en dÌa est· ampliamente extendido y entre los lenguajes de programaciÛn m·s utilizados. Como consecuencia:
+* [R](https://www.r-project.org/) y [RStudio](https://rstudio.com/) son dos programas diferentes. 
+    + R es el programa que calcula. Es software libre y gratuito, inicialmente enfocado a la computaci√≥n estad√≠stica.
+    + R tambi√©n es el lenguaje en el que escribimos los comandos, pues es tambi√©n el lenguaje de programaci√≥n.
+    + Hoy en d√≠a est√° ampliamente extendido y entre los lenguajes de programaci√≥n m√°s utilizados. Como consecuencia:
         * existen muchos foros en internet donde los usuarios plantean/resuelven sus dudas y/o propuestas.
-        * hay muchas librerÌas para R en continuo desarrollo y que permiten usarlo de una manera mucho m·s r·pida y eficiente.
+        * hay muchas librer√≠as para R en continuo desarrollo y que permiten usarlo de una manera mucho m√°s r√°pida y eficiente.
     + RStudio es la interfaz donde estaremos trabajando, pues nos ofrece algunas comodidades.
-        * Nos permite crear scripts de una manera m·s ·gil y en un entorno mucho m·s agradable que usando R.
-        * TambiÈn hace m·s sencillo instalar y desinstalar librerÌas, cargar y visualizar bases de datos, etc.
-        * Ofrece otras posibilidades m·s all· de R como crear p·ginas web, pdf's o archivos word con R integrado, que va m·s all· de este curso.
+        * Nos permite crear scripts de una manera m√°s √°gil y en un entorno mucho m√°s agradable que usando R.
+        * Tambi√©n hace m√°s sencillo instalar y desinstalar librer√≠as, cargar y visualizar bases de datos, etc.
+        * Ofrece otras posibilidades m√°s all√° de R como crear p√°ginas web, pdf's o archivos word con R integrado, que va m√°s all√° de este curso.
 
-* Entre las consecuencias de lo ampliamente usado de R est· que podemos encontrar en internet muchos tutoriales introductorios en cualquier idioma:
+* Entre las consecuencias de lo ampliamente usado de R est√° que podemos encontrar en internet muchos tutoriales introductorios en cualquier idioma:
     * [http://rosuda.org/mitarbeiter/pilhoefer/rkurs2.pdf](http://rosuda.org/mitarbeiter/pilhoefer/rkurs2.pdf)
     * [http://b2slab.upc.edu/software-and-tutorials/r-nutshell/](http://b2slab.upc.edu/software-and-tutorials/r-nutshell/)
     * [https://www.cyclismo.org/tutorial/R/index.html](https://www.cyclismo.org/tutorial/R/index.html)
     * [https://www.uv.es/vcoll/preliminares.html](https://www.uv.es/vcoll/preliminares.html)
     * [http://people.math.aau.dk/~sorenh/misc/rdocs/Rintro-notes.pdf](http://people.math.aau.dk/~sorenh/misc/rdocs/Rintro-notes.pdf)
+    * en la pesta√±a Resources de la web de [RStudio](https://rstudio.com/)
+    * [otros](https://github.com/iago-pssjd/Curso-R/archive/v1.0.zip)
 
 * ... y foros:
     + principalmente [https://stackoverflow.com/questions/tagged/r](https://stackoverflow.com/questions/tagged/r)
-    + para cuestiones relacionadas con RStudio, pero tambiÈn con las librerÌas de la familia tidyverse y otros: [https://community.rstudio.com/](https://community.rstudio.com/)
+    + para cuestiones relacionadas con RStudio, pero tambi√©n con las librer√≠as de la familia tidyverse y otros: [https://community.rstudio.com/](https://community.rstudio.com/)
 
 * ... y blogs:
     + principalmente: [https://www.r-bloggers.com/](https://www.r-bloggers.com/)
-    + enfocado a la estadÌstica: [http://www.sthda.com/english/](http://www.sthda.com/english/)
+    + [https://statisticsglobe.com/r-programming-language/](https://statisticsglobe.com/r-programming-language/)
+    + enfocados a la estad√≠stica, pero no s√≥lo (de hecho, dir√≠a que los siguientes son los mejores): 
+        * [http://www.sthda.com/english/](http://www.sthda.com/english/)
+        * [http://www.flutterbys.com.au/stats/course.html](http://www.flutterbys.com.au/stats/course.html)
+        * [http://www.r-tutor.com/](http://www.r-tutor.com/sitemap)
+    + enfocado a la investigaci√≥n en psicolog√≠a:
+        * [http://personality-project.org/r/](http://personality-project.org/r/)
+    + centrado en RStudio: [https://support.rstudio.com/hc/en-us](https://support.rstudio.com/hc/en-us)
+    + [https://www.statmethods.net/index.html](https://www.statmethods.net/index.html)
+    + [https://www.datacamp.com/community/tags/r-programming](https://www.datacamp.com/community/tags/r-programming)
     
-* ... y sobre librerÌas especÌficas:
-    + ggplot
-        * [http://www.flutterbys.com.au/stats/tut/tut5.2.html](http://www.flutterbys.com.au/stats/tut/tut5.2.html)
+* ... y sobre librer√≠as o materias espec√≠ficas:
+    + sobre librer√≠as en general:
+        * [https://rdrr.io/](https://rdrr.io/)
+        * [https://www.maths.lancs.ac.uk/~rowlings/R/TaskViews/](https://www.maths.lancs.ac.uk/~rowlings/R/TaskViews/)
+    + gr√°ficas en general:
+        * [https://www.r-graph-gallery.com/](https://www.r-graph-gallery.com/)
+    + formas de mostrar descriptivos:
+        * [https://dabblingwithdata.wordpress.com/2018/01/02/my-favourite-r-package-for-summarising-data/](https://dabblingwithdata.wordpress.com/2018/01/02/my-favourite-r-package-for-summarising-data/)
+    + neuroimagen con R:
+        * [https://johnmuschelli.com/](https://johnmuschelli.com/)
+    + sistemas de informaci√≥n geogr√°fica (SIG)
+        * ...
 
-Entonces, este curso, para quÈ?
 
+* ... e incluso multitud de libros que pod√©is encontrar en [https://bookdown.org/](https://bookdown.org/)
 
+* ... adem√°s de diversos cursos online (MOOC's) en plataformas como Coursera, edX, etc.
 
-# Nociones elementales y funciones b·sicas
+* En los enlaces citados se encuentran recursos para utilizar las diferentes librer√≠as, y tambi√©n para usar R enfocado a las m√°s diversas tareas, desde los c√°lculos estad√≠sticos m√°s habituales, pero, por ejemplo, tambi√©n para hacer [meta-an√°lisis](https://bookdown.org/MathiasHarrer/Doing_Meta_Analysis_in_R/), [an√°lisis factorial](https://www.statmethods.net/advstats/factor.html), [estad√≠stica bayesiana o machine learning](http://www.r-tutor.com/), etc.
+
+* Tambi√©n tenemos las p√°ginas webs principales en torno a R, que tambi√©n contienen informaci√≥n √∫til, pero son m√°s t√©cnicas:
+    + [R](https://www.r-project.org/), [CRAN](https://cran.r-project.org/)
+    + las publicaciones del projecto: [R News](https://www.r-project.org/doc/Rnews/index.html) (2001 - 2008) y [R Journal](https://journal.r-project.org/archive/) (2009 - presente)
+    + [R Forge](https://r-forge.r-project.org/)
+    + [https://stat.ethz.ch/R-manual/](https://stat.ethz.ch/R-manual/)
+
+* Entonces, este curso, para qu√©?
+
+* Y por qu√© R?
+    + Porque puedes guardar las instrucciones que ejecutas en R scripts, y ejecutarlas todas de una vez, sin tener que memorizar y repetir cada uno de los pasos.
+    + Porque en internet podr√°s encontrar soluci√≥n a (casi) todos los problemas que tengas.
+    + Porque podr√°s personalizar/modificar cada instrucci√≥n con las opciones que desees.
+    + Porque es gratuito, como la versi√≥n de c√≥digo abierto de RStudio, y los puedes instalar donde desees.
+
+# Nociones elementales y funciones b√°sicas
+
+* R es esencialmente una consola en la que el cursos se sit√∫a tras el s√≠mbolo `>`. Ah√≠ se escriben las instrucciones. Se ejecutan con `Enter`.
+* Los resultados suelen aparecer debajo. En el caso de gr√°ficas, depende del entorno en que se trabaje (R, RStudio, R Commander, etc.)
+* Las instrucciones se pueden escribir todas en un fichero de texto con la extensi√≥n `.r` (el R-script), el cual puede ser cargado y ejecutado desde R. En RStudio, lo podemos ver y ejecutar al mismo tiempo en un panel situado junto al panel de la consola.
+    + Desde el R-script en RStudio se ejecutan con `Control+Enter`
+
+* Se pueden escribir comentarios (secciones de c√≥digo que el programa no ejecuta), situando antes un s√≠mbolo `#`
+* Simplificando, tenemos objetos (num√©ricos, enteros, caracteres, listas, data frames) y funciones que se pueden guardar en variables por medio de la asignaci√≥n, que consiste en el s√≠mbolo `<-`
+
+```{r, echo=TRUE}
+# c√≥digo de R que no hace nada
+x <- 4 # aisgnamos a la variable x el n√∫mero 4
+```
+
 
 ## R como calculadora
 
-## Operadores aritmÈticos y lÛgicos
+```{r, echo=TRUE}
+2+3
+x+5
+y <- x-3*7 + 24 # los espacios aqu√≠ no afectan
+y
+```
+
+## Operadores aritm√©ticos y l√≥gicos
 ## Vectores y data frames 
 
-# Funciones y librerÌas para interaccionar con otros softwares estadÌsticos como SPSS o STATA
-# Manejo de datos con las librerÌas dplyr & tidyr 
+# Funciones y librer√≠as para interaccionar con otros softwares estad√≠sticos como SPSS o STATA
+# Manejo de datos con las librer√≠as dplyr & tidyr 
 
-## SelecciÛn y filtro de variables 
-## TransformaciÛn de variables 
-## EstadÌsticos descriptivos 
+## Selecci√≥n y filtro de variables 
+## Transformaci√≥n de variables 
+## Estad√≠sticos descriptivos 
 
-# Gr·ficos con la librerÌa ggplot2
-# Tests estadÌsticos y modelos de regresiÛn habituales para el an·lisis estadÌstico
+# Gr√°ficos con la librer√≠a ggplot2
+# Tests estad√≠sticos y modelos de regresi√≥n habituales para el an√°lisis estad√≠stico
 ## T-test, anova... 
-## RegresiÛn lineal, logÌstica, multinomial... 
+## Regresi√≥n lineal, log√≠stica, multinomial... 
