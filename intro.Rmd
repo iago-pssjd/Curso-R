@@ -155,7 +155,7 @@ y
 ```{r, echo=TRUE}
 
 library(haven)
-dta_data <- read_dta("carsdata.dta") # con un archivo de stata 10 (haven::read_dta )
+dta_data <- read_dta("carsdata.dta") # con un archivo de stata 10
 dta_data
 str(dta_data)
 
