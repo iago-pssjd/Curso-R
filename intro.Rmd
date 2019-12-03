@@ -20,7 +20,7 @@ output:
     + RStudio es la interfaz donde estaremos trabajando, pues nos ofrece algunas comodidades.
         * Nos permite crear scripts de una manera más ágil y en un entorno mucho más agradable que usando R.
         * También hace más sencillo instalar y desinstalar librerías, cargar y visualizar bases de datos, etc.
-        * Ofrece otras posibilidades más allí de R como crear páginas web, pdf's o archivos word con R integrado, que va más allá de este curso.
+        * Ofrece otras posibilidades más allá de R como crear páginas web, pdf's o archivos word con R integrado, que va más allá de este curso.
 
 * Entre las consecuencias de lo ampliamente usado de R está que podemos encontrar en internet muchos tutoriales introductorios en cualquier idioma:
     * [http://rosuda.org/mitarbeiter/pilhoefer/rkurs2.pdf](http://rosuda.org/mitarbeiter/pilhoefer/rkurs2.pdf)
@@ -68,7 +68,7 @@ output:
 
 * En los enlaces citados se encuentran recursos para utilizar las diferentes librerías, y también para usar R enfocado a las más diversas tareas, desde los cálculos estadísticos más habituales, pero, por ejemplo, también para hacer [meta-análisis](https://bookdown.org/MathiasHarrer/Doing_Meta_Analysis_in_R/), [análisis factorial](https://www.statmethods.net/advstats/factor.html), [estadística bayesiana o machine learning](http://www.r-tutor.com/), etc.
 
-* también tenemos las páginas webs principales en torno a R, que también contienen información útil, pero son más técnicas:
+* También tenemos las páginas webs principales en torno a R, que también contienen información útil, pero son más técnicas:
     + [R](https://www.r-project.org/), [CRAN](https://cran.r-project.org/)
     + las publicaciones del projecto: [R News](https://www.r-project.org/doc/Rnews/index.html) (2001 - 2008) y [R Journal](https://journal.r-project.org/archive/) (2009 - presente)
     + [R Forge](https://r-forge.r-project.org/)
@@ -97,10 +97,9 @@ output:
     + Numéricos
     + Caracteres
 
-<!-- + 5 tipos de datos básicos: lógicos, enteros, numéricos, complejos, caracteres. Se pueden transformar en este orden por coerción -->
 
 ```{r, echo=TRUE}
-nombre<-"Luis"
+nombre <- "Luis"
 varon <- TRUE
 edad <- 23
 estatura <- 1.77
@@ -111,7 +110,7 @@ estatura <- 1.77
     + Factores
     + Matrices
     + Data frames: `data.frame(...)`
-    + Listas: `lsit(...)` 
+    + Listas: `list(...)` 
     + Funciones: `function(...){...}`
     + para saber más, [Understanding basic data types in R](https://www.diegobarneche.com/2014-12-11-ufsc/lessons/01-intro_r/data-structures.html)
 
@@ -135,7 +134,7 @@ estatura[2]
 * Los factores pueden ser de dos tipos al igual que las variables categóricas: 
     + Nominales: No ordenados 
     + Ordinales: Ordenados
-* Se crean a partir de un vector numéricos con las funciones: 
+* Se crean a partir de un vector numérico con las funciones: 
     + Nominales: `as.factor()`
     + Ordinales: `as.ordered` 
 * Se crean a partir de un vector de caracteres utilizando `factor()`
@@ -152,8 +151,8 @@ ford <- as.ordered(f) #Factor Ordinal
 * Las matrices son una ampliación de los vectores con dos dimensiones: filas y columnas
 * Todos los elementos deben ser del mismo tipo
 * Se crean con la función `matrix()`
-* Para seleccionar a un elemento de un matriz: Matriz[X,Y]
-* Para saber las dimensión: `dim()`
+* Para seleccionar un elemento de un matriz: Matriz[X,Y]
+* Para saber las dimensiones: `dim()`
 
 
 ```{r, echo=TRUE}
