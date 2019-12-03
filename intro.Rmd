@@ -20,7 +20,7 @@ output:
     + RStudio es la interfaz donde estaremos trabajando, pues nos ofrece algunas comodidades.
         * Nos permite crear scripts de una manera más ágil y en un entorno mucho más agradable que usando R.
         * También hace más sencillo instalar y desinstalar librerías, cargar y visualizar bases de datos, etc.
-        * Ofrece otras posibilidades más allá de R como crear páginas web, pdf's o archivos word con R integrado, que va más allá de este curso.
+        * Ofrece otras posibilidades más allí de R como crear páginas web, pdf's o archivos word con R integrado, que va más allá de este curso.
 
 * Entre las consecuencias de lo ampliamente usado de R está que podemos encontrar en internet muchos tutoriales introductorios en cualquier idioma:
     * [http://rosuda.org/mitarbeiter/pilhoefer/rkurs2.pdf](http://rosuda.org/mitarbeiter/pilhoefer/rkurs2.pdf)
@@ -68,7 +68,7 @@ output:
 
 * En los enlaces citados se encuentran recursos para utilizar las diferentes librerías, y también para usar R enfocado a las más diversas tareas, desde los cálculos estadísticos más habituales, pero, por ejemplo, también para hacer [meta-análisis](https://bookdown.org/MathiasHarrer/Doing_Meta_Analysis_in_R/), [análisis factorial](https://www.statmethods.net/advstats/factor.html), [estadística bayesiana o machine learning](http://www.r-tutor.com/), etc.
 
-* También tenemos las páginas webs principales en torno a R, que también contienen información útil, pero son más técnicas:
+* también tenemos las páginas webs principales en torno a R, que también contienen información útil, pero son más técnicas:
     + [R](https://www.r-project.org/), [CRAN](https://cran.r-project.org/)
     + las publicaciones del projecto: [R News](https://www.r-project.org/doc/Rnews/index.html) (2001 - 2008) y [R Journal](https://journal.r-project.org/archive/) (2009 - presente)
     + [R Forge](https://r-forge.r-project.org/)
@@ -85,20 +85,130 @@ output:
 
 # Nociones elementales y funciones básicas
 
-* R es esencialmente una consola en la que el cursos se sitúa tras el símbolo `>`. Ahí se escriben las instrucciones. Se ejecutan con `Enter`.
+* R es esencialmente una consola en la que el cursor se sitúa tras el símbolo `>`. Ahí se escriben las instrucciones. Se ejecutan con `Enter`.
 * Los resultados suelen aparecer debajo. En el caso de gráficas, depende del entorno en que se trabaje (R, RStudio, R Commander, etc.)
 * Las instrucciones se pueden escribir todas en un fichero de texto con la extensión `.r` (el R-script), el cual puede ser cargado y ejecutado desde R. En RStudio, lo podemos ver y ejecutar al mismo tiempo en un panel situado junto al panel de la consola.
     + Desde el R-script en RStudio se ejecutan con `Control+Enter`
 
 * Se pueden escribir comentarios (secciones de código que el programa no ejecuta), situando antes un símbolo `#`
-* Simplificando, tenemos objetos de distintas clases:
-    + 5 tipos de datos básicos: lógicos, enteros, numéricos, complejos, caracteres. Se pueden transformar en este orden por coerción
-    + otras estructuras de datos: vectores, factores, matrices, listas, data frames, tablas, etc.
-    + funciones
-    + para saber más, [Understanding basic data types in R](https://www.diegobarneche.com/2014-12-11-ufsc/lessons/01-intro_r/data-structures.html)
-* Estos se pueden guardar en variables por medio de la asignación, que consiste en el símbolo `<-`
+* R es un lenguaje orientado a objetos. Para asignar nombre a los objetos usamos el símbolo `<-`
+* Los objetos están compuestos de elementos y los más simples pueden ser de los siquientes tipos:
+    + Lógicos
+    + Numéricos
+    + Caracteres
+
+<!-- + 5 tipos de datos básicos: lógicos, enteros, numéricos, complejos, caracteres. Se pueden transformar en este orden por coerción -->
 
 ```{r, echo=TRUE}
+nombre<-"Luis"
+varon <- TRUE
+edad <- 23
+estatura <- 1.77
+```
+  
+* Los objetos pueden ser de la siguientes clases: 
+    + Vectores
+    + Factores
+    + Matrices
+    + Data frames: `data.frame(...)`
+    + Listas: `lsit(...)` 
+    + Funciones: `function(...){...}`
+    + para saber más, [Understanding basic data types in R](https://www.diegobarneche.com/2014-12-11-ufsc/lessons/01-intro_r/data-structures.html)
+
+### Vectores
+
+* Todos los elementos del vector han de ser del mismo tipo:
+* Se crean con la función `c(...)`
+* vector[X] para acceder al X-ésimo elemento del vector
+
+```{r, echo=TRUE}
+nombre <- c("Luis","Maria")
+edad <- c(23,24)
+varon <- c(TRUE,FALSE)
+estatura <- c(1.77,1.64)
+
+estatura[2]
+```
+
+### Factores
+
+* Los factores pueden ser de dos tipos al igual que las variables categóricas: 
+    + Nominales: No ordenados 
+    + Ordinales: Ordenados
+* Se crean a partir de un vector numéricos con las funciones: 
+    + Nominales: `as.factor()`
+    + Ordinales: `as.ordered` 
+* Se crean a partir de un vector de caracteres utilizando `factor()`
+* Las etiquetas se asignan con `levels()`
+
+```{r, echo=TRUE}
+f <- as.factor(c(1,2,3,1,2,1,1,3,2)) #Factor Nominal
+levels(f) <- c("Bajo","Medio","Alto")
+ford <- as.ordered(f) #Factor Ordinal
+```
+
+### Matrices
+
+* Las matrices son una ampliación de los vectores con dos dimensiones: filas y columnas
+* Todos los elementos deben ser del mismo tipo
+* Se crean con la función `matrix()`
+* Para seleccionar a un elemento de un matriz: Matriz[X,Y]
+* Para saber las dimensión: `dim()`
+
+
+```{r, echo=TRUE}
+ejema <- matrix(c(1,2,3,4,5,6,7,8,9,10,11,12), ncol=3, byrow=TRUE)
+ejema
+
+dim(ejema)
+
+ejema[1,1]
+```
+
+### Data.frames
+
+* Es el objeto asignado para Bases de Datos. Las filas son individuos y las columnas variables. 
+* Se crean con la función `data.frame()`
+* Cada columna tiene que tener los elementos del mismo tipo.
+* Para seleccionar una variable: `NombreDataFrame$NombreVariable`
+* Para saber la dimensión: `dim()`
+
+```{r, echo=TRUE}
+BD <- data.frame(nombre = c("Luis","Maria"), edad = c(23,24), varon = c(TRUE,FALSE), estatura = c(1.77,1.64))
+BD
+
+dim(BD)
+
+BD$nombre
+
+BD[1,2]
+BD[1,]
+BD[,2]
+```
+
+
+
+### Listas
+
+* Una lista es un objeto consistente en una colección ordenada de objetos que se suelen llamar componentes
+* No es necesario que los componentes sean del mismo tipo, ni de la misma longitud: una lista puede estar compuesta de, por ejemplo, un vector numérico de tamaño 2, un valor lógico, un vector de tamaño 3, una matriz y una función.
+* Se construyen con la función `list()`
+* La selección de elementos se hace con doble corchete.
+* El corchete simple se utiliza para seleccionar dentro de una componente de la lista (una sublista).
+
+
+```{r, echo=TRUE}
+ejemplolista <- list(nombre="Pedro", casado=T,esposa="Maria", no.hijos=3, edad.hijos=c(4,7,9))
+ejemplolista
+
+ejemplolista[[5]]
+
+ejemplolista[[5]][2]
+```
+
+
+```{r, echo=TRUE}
+
 
 # código de R que no hace nada
 
@@ -114,6 +224,9 @@ y <- c(2:4)
 y
 class(y)
 length(y)
+
+
+floor()
 
 ```
 
@@ -139,6 +252,14 @@ list.files()
 x+5
 y <- x-3*7 + 24 # los espacios aquí no afectan
 y
+
+# log()
+# ln()
+# exp()
+# log10()
+# sqrt()
+# factorial()
+
 
 ```
 
@@ -175,8 +296,21 @@ write_dta(dta_data2, "Jakus_NCDA2.dta", version = 13)
 ## Selección y filtro de variables 
 ## Transformación de variables 
 ## Estadísticos descriptivos 
+```{r, echo=TRUE}
+head(iris)
+
+mean(iris$Sepal.Length)
+sd(iris$Sepal.Length)
+var(iris$Sepal.Length)
+median(iris$Sepal.Length)
+min(iris$Sepal.Length)
+max(iris$Sepal.Length)
+```
 
 # Gráficos con la librería ggplot2
+
 # Tests estadísticos y modelos de regresión habituales para el análisis estadístico
+
 ## T-test, anova... 
+
 ## Regresión lineal, logística, multinomial... 
