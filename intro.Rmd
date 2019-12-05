@@ -668,7 +668,7 @@ range(iris$Sepal.Length) # Rango
 quantile(iris$Sepal.Length, probs = c(0.025, 0.975)) # Cuantiles
 ```
 
-* La función `summary()` obtenemos un resumen descriptivo de una variable o bien de todas las variables de un data.frame:
+* Con la función `summary()` obtenemos un resumen descriptivo de una variable o bien de todas las variables de un data.frame:
 
 ```{r, echo=TRUE}
 summary(iris$Sepal.Length) 
@@ -692,7 +692,7 @@ table(starwars$gender)
 ```
 
 
-* Para arreglarlo hay que añadir `na.rm = TRUE` per funcions d'estadística descriptiva o useNA = 'always' o 'ifany'. 
+* Para arreglarlo hay que añadir `na.rm = TRUE` para funciones de estadística descriptiva o useNA = 'always' o 'ifany'. 
 
 ```{r}
 mean(starwars$heigth, na.rm = TRUE) 
@@ -713,12 +713,12 @@ table(starwars$hair_color, starwars$eye_color)
 **¿Cómo hacer gráficos (los habituales)? y, ¿cómo guardarlos?**
 
 
-* `ggplot2` es una libreria que permite hacer gran variedad de gràficos "bonitos" de manera sencilla. 
-* Todos los gràficos de `ggplot2` se podrían hacer también con R básico pero es más complejo. Por otro lado, ggplot2 es un poco más robusto que R básico, es decir, no te permite modificar tantas cosas dado que ya viene predeterminado.
+* `ggplot2` es una librería que permite hacer gran variedad de gráficos "bonitos" de manera sencilla. 
+* Todos los gráficos de `ggplot2` se podrían hacer también con R base pero es más complejo. Por otro lado, ggplot2 es un poco más robusto que R base, es decir, no te permite modificar tantas cosas dado que ya viene predeterminado.
 * Las funciones que se utilizan: 
-    + `ggplot()`: Crea un gràfico nuevo
-    + `aes()`: Para especificar como y que variables intervendrán en todo el gràfico
-    + `+`: Para añadir capas
+    + `ggplot()`: Crea un gráfico nuevo
+    + `aes()`: Especifica cómo y qué variables intervendrán en todo el gráfico
+    + `+`: Añade capas
 
 ### Gráfico de puntos
 
@@ -780,7 +780,7 @@ shapiro.test(starwars$height)
 
 #### Prueba chi-cuadrado de Pearson 
 
-* Prueba no paramétrica que se utiliza para probar la independencia de dos variables entre sí, mediante la presentación de los datos en tablas de contingencia.
+* Prueba no paramétrica que se utiliza para probar la independencia de dos variables entre sí mediante la presentación de los datos en tablas de contingencia.
 * Hipótesis nula = independencia vs Hipotesis alternativa = dependencia
 
 ```{r}
