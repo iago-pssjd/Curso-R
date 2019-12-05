@@ -293,23 +293,259 @@ write_dta(dta_data2, "Jakus_NCDA2.dta", version = 13)
 # Manejo de datos con las librerías dplyr & tidyr 
 
 ## Selección y filtro de variables 
+
 ## Transformación de variables 
-## Estadísticos descriptivos 
+
+
+# Estadísticos descriptivos 
+
+Datos que usaremos: 
+
 ```{r, echo=TRUE}
 head(iris)
+?iris
 
-mean(iris$Sepal.Length)
-sd(iris$Sepal.Length)
-var(iris$Sepal.Length)
-median(iris$Sepal.Length)
-min(iris$Sepal.Length)
-max(iris$Sepal.Length)
+library(dplyr)
+data("starwars")
+?starwars
+head(starwars)
+View(starwars)
 ```
+
+
+* Listado de estadísticos descriptivos más habituales:
+
+```{r, echo=TRUE}
+mean(iris$Sepal.Length) # Media
+sd(iris$Sepal.Length) # Desviación típica
+var(iris$Sepal.Length) # Varianza
+median(iris$Sepal.Length) # Mediana
+min(iris$Sepal.Length) # Mínimo
+max(iris$Sepal.Length) # Máximo
+range(iris$Sepal.Length) # Rango
+quantile(iris$Sepal.Length, probs = c(0.025, 0.975)) # Cuantiles
+```
+
+* La función `summary()` obtenemos un resumen descriptivo de una variable o bien de todas las variables de un data.frame:
+
+```{r, echo=TRUE}
+summary(iris$Sepal.Length) 
+summary(iris)
+```
+
+* Para variables categóricas:
+
+```{r, echo=TRUE}
+table(iris$Species)
+```
+
+* Cuando la base de datos tiene missings: 
+
+```{r}
+mean(starwars$heigth) 
+sd(starwars$heigth)
+
+dim(starwars)
+table(starwars$gender)
+```
+
+
+* Para arreglarlo hay que añadir `na.rm = TRUE` per funcions d'estadística descriptiva o useNA = 'always' o 'ifany'. 
+
+```{r}
+mean(starwars$heigth, na.rm = TRUE) 
+sd(starwars$heigth, na.rm = TRUE) 
+
+table(starwars$gender, useNA = 'always')
+table(starwars$genders, useNA = 'ifany')
+```
+
+```{r}
+table(starwars$hair_color, starwars$eye_color)
+```
+
+
 
 # Gráficos con la librería ggplot2
 
+* `ggplot2` es una libreria que permite hacer gran variedad de gràficos "bonitos" de manera sencilla. 
+* Todos los gràficos de `ggplot2` se podrían hacer también con R básico pero es más complejo. Por otro lado, ggplot2 es un poco más robusto que R básico, es decir, no te permite modificar tantas cosas dado que ya viene predeterminado.
+* Las funciones que se utilizan: 
+    + `ggplot()`: Crea un gràfico nuevo
+    + `aes()`: Para especificar como y que variables intervendrán en todo el gràfico
+    + `+`: Para añadir capas
+
+### Gráfico de puntos
+
+```{r}
+library(ggplot2)
+
+ggplot(SW, aes(x = mass, y = height)) + 
+  geom_point()
+
+ggplot(SW, aes(x = mass, y = height, colour = "red")) + 
+  geom_point()
+
+ggplot(SW, aes(x = mass, y = height, colour = gender)) + 
+  geom_point()
+
+ggplot(SW, aes(x = mass, y = height, colour = gender, size=birth_year, alpha = 0.5)) + 
+  geom_point(shape=23)
+
+ggplot(SW, aes(x = mass, y = height, colour = gender, fill = gender, size=birth_year, alpha = 0.5)) + 
+  geom_point(shape=23)
+```
+
+
 # Tests estadísticos y modelos de regresión habituales para el análisis estadístico
 
-## T-test, anova... 
+## Tests de hipótesis
 
-## Regresión lineal, logística, multinomial... 
+#### Prueba t de Student
+
+* Prueba paramétrica que compara medias de dos variables (supone que son normales). 
+
+```{r}
+summary(iris)
+
+?t.test
+t.test(iris$Sepal.Length, iris$Sepal.Width, alternative = "two.sided")
+t.test(iris$Sepal.Length, iris$Sepal.Width, alternative = "less")
+t.test(iris$Sepal.Length, iris$Sepal.Width, alternative = "greater")
+
+t.test(iris$Sepal.Length, iris$Sepal.Width, alternative = "two.sided", mu = 2.8)
+```
+
+#### Prueba Wilcoxon-Mann-Whitney
+
+* Prueba no paramétrica que compara medias de dos variables
+
+```{r}
+wilcox.test(x = iris$Sepal.Length, y = iris$Sepal.Width, alternative = "two.sided", mu = 0,
+            paired = FALSE, conf.int = 0.95)
+```
+
+#### Prueba de Shapiro-Wilk
+
+* Comprueba la normalidad de una variable
+
+```{r}
+shapiro.test(starwars$height)
+```
+
+#### Prueba chi-cuadrado de Pearson 
+
+* Prueba no paramétrica que se utiliza para probar la independencia de dos variables entre sí, mediante la presentación de los datos en tablas de contingencia.
+* Hipótesis nula = independencia vs Hipotesis alternativa = dependencia
+
+```{r}
+tt <- table(starwars$gender, starwars$hair_color)
+chisq.test(tt)
+```
+
+#### ANOVA
+
+* Constituye la herramienta básica para el estudio del efecto de uno o más factores (cada uno con dos o más niveles) sobre la media de una variable continua.
+
+```{r}
+library(ggplot2)
+ggplot(data = starwars, aes(x = gender, y = height, color= gender)) +
+  geom_boxplot()
+
+anova <- aov(iris$Petal.Length ~ iris$Species)
+summary(anova)
+```
+
+
+## Regresiónes
+
+#### Regresión Lineal simple
+
+* $y = a+bX$
+
+```{r}
+SW <- starwars %>% 
+  select(height:species) %>% 
+  mutate(hair_color = as.factor(hair_color), 
+         skin_color = as.factor(skin_color), 
+         eye_color = as.factor(eye_color), 
+         gender = as.factor(gender), 
+         homeworld = as.factor(homeworld), 
+         species = as.factor(species))
+
+pairs(SW)
+
+plot(SW$height ~ SW$mass)
+
+mod0 <- lm(SW$height ~ SW$mass, data = iris)
+summary(mod0)
+
+mode(mod0)
+mod0$coefficients
+
+confint(object = mod0, level = 0.95 ) #Intervalo de confianza de los coeficientes de la regressión 
+
+plot(mod0) # Diagnóstico del modelo:
+```
+
+```{r}
+starwars$name[starwars$mass == 1358]
+
+SW <- SW[-which(starwars$mass == 1358),]
+plot(SW$height ~ SW$mass)
+
+mod0_1 <- lm(SW$height ~ SW$mass, data = iris)
+summary(mod0_1)
+
+mod0_1$coefficients
+
+confint(object = mod0_1, level = 0.95 ) #Intervalo de confianza de los coeficientes de la regressión 
+
+plot(mod0_1) # Diagnóstico del modelo:
+```
+
+
+* $\text{height} = 103.5133 + 0.9327 \cdot \text{mass} $
+* Podemos graficarlo:
+
+```{r}
+plot(SW$height ~ SW$mass)
+abline(mod0_1)
+```
+
+* Calcular predicciones: 
+
+```{r}
+# Creamos un data.frame con los valores de la variable independiente de los que queremos hacer la predicción:
+nuevas <- data.frame(mass = c(80, 60, 20))
+
+# Calculamos las predicciones:
+predict(mod0_1, nuevas)
+```
+
+#### Regresión Lineal múltiple
+
+
+```{r}
+mod1 <- lm(height ~ mass + gender, data = SW)
+summary(mod1)
+confint(object = mod1, level = 0.95 )
+plot(mod1)
+
+# Predicciones:
+nuevas <- data.frame(mass = c(80, 60, 20), gender = c('male', 'female', 'female'))
+predict(mod1, nuevas)
+```
+
+#### Regresión Logística
+```{r}
+SW$gender <- car::recode(SW$gender, "'none' = NA")
+SW$gender <- factor(SW$gender)
+
+mod2 <- glm(gender ~ height + mass + hair_color + eye_color + birth_year, data = SW, family="binomial")
+summary(mod2)
+plot(mod2)
+
+exp(mod2$coefficients)
+```
+
