@@ -23,46 +23,42 @@ output:
         * Ofrece otras posibilidades más allá de R como crear páginas web, pdf's o archivos word con R integrado, que va más allá de este curso.
 
 * Entre las consecuencias de lo ampliamente usado de R está que podemos encontrar en internet muchos tutoriales introductorios en cualquier idioma:
-    * [http://rosuda.org/mitarbeiter/pilhoefer/rkurs2.pdf](http://rosuda.org/mitarbeiter/pilhoefer/rkurs2.pdf)
-    * [http://b2slab.upc.edu/software-and-tutorials/r-nutshell/](http://b2slab.upc.edu/software-and-tutorials/r-nutshell/)
-    * [https://www.cyclismo.org/tutorial/R/index.html](https://www.cyclismo.org/tutorial/R/index.html)
-    * [https://www.uv.es/vcoll/preliminares.html](https://www.uv.es/vcoll/preliminares.html)
-    * [http://people.math.aau.dk/~sorenh/misc/rdocs/Rintro-notes.pdf](http://people.math.aau.dk/~sorenh/misc/rdocs/Rintro-notes.pdf)
+    * [http://rosuda.org/mitarbeiter/pilhoefer/rkurs2.pdf]
+    * [http://b2slab.upc.edu/software-and-tutorials/r-nutshell/]
+    * [https://www.cyclismo.org/tutorial/R/index.html]
+    * [https://www.uv.es/vcoll/preliminares.html]
+    * [http://people.math.aau.dk/~sorenh/misc/rdocs/Rintro-notes.pdf]
     * en la pestaña Resources de la web de [RStudio](https://rstudio.com/)
     * [otros](https://github.com/iago-pssjd/Curso-R/archive/v1.0.zip)
 
 * ... y foros:
-    + principalmente [https://stackoverflow.com/questions/tagged/r](https://stackoverflow.com/questions/tagged/r)
-    + para cuestiones relacionadas con RStudio, pero también con las librerías de la familia tidyverse y otros: [https://community.rstudio.com/](https://community.rstudio.com/)
+    + principalmente [https://stackoverflow.com/questions/tagged/r]
+    + para cuestiones relacionadas con RStudio, pero también con las librerías de la familia tidyverse y otros: [https://community.rstudio.com/]
 
 * ... y blogs:
-    + principalmente: [https://www.r-bloggers.com/](https://www.r-bloggers.com/)
-    + [https://statisticsglobe.com/r-programming-language/](https://statisticsglobe.com/r-programming-language/)
+    + principalmente: [https://www.r-bloggers.com/]
+    + [https://statisticsglobe.com/r-programming-language/]
     + enfocados a la estadística, pero no sólo (de hecho, diría que los siguientes son los mejores): 
-        * [http://www.sthda.com/english/](http://www.sthda.com/english/)
-        * [http://www.flutterbys.com.au/stats/course.html](http://www.flutterbys.com.au/stats/course.html)
+        * [http://www.sthda.com/english/]
+        * [http://www.flutterbys.com.au/stats/course.html]
         * [http://www.r-tutor.com/](http://www.r-tutor.com/sitemap)
     + enfocado a la investigación en psicología:
         * [http://personality-project.org/r/](http://personality-project.org/r/)
-    + centrado en RStudio: [https://support.rstudio.com/hc/en-us](https://support.rstudio.com/hc/en-us)
-    + [https://www.statmethods.net/index.html](https://www.statmethods.net/index.html)
-    + [https://www.datacamp.com/community/tags/r-programming](https://www.datacamp.com/community/tags/r-programming)
+    + centrado en RStudio: [https://support.rstudio.com/hc/en-us]
+    + [https://www.statmethods.net/index.html]
+    + [https://www.datacamp.com/community/tags/r-programming]
     
 * ... y sobre librerías o materias específicas:
     + sobre librerías en general:
-        * [https://rdrr.io/](https://rdrr.io/)
-        * [https://www.maths.lancs.ac.uk/~rowlings/R/TaskViews/](https://www.maths.lancs.ac.uk/~rowlings/R/TaskViews/)
+        * [https://rdrr.io/]
+        * [https://www.maths.lancs.ac.uk/~rowlings/R/TaskViews/]
     + gráficas en general:
-        * [https://www.r-graph-gallery.com/](https://www.r-graph-gallery.com/)
+        * [https://www.r-graph-gallery.com/]
     + formas de mostrar descriptivos:
-        * [https://dabblingwithdata.wordpress.com/2018/01/02/my-favourite-r-package-for-summarising-data/](https://dabblingwithdata.wordpress.com/2018/01/02/my-favourite-r-package-for-summarising-data/)
-    + neuroimagen con R:
-        * [https://johnmuschelli.com/](https://johnmuschelli.com/)
-    + sistemas de información geográfica (SIG)
-        * ...
+        * [https://dabblingwithdata.wordpress.com/2018/01/02/my-favourite-r-package-for-summarising-data/]
 
 
-* ... e incluso multitud de libros que podéis encontrar en [https://bookdown.org/](https://bookdown.org/)
+* ... e incluso multitud de libros que podéis encontrar en [https://bookdown.org/]
 
 * ... además de diversos cursos online (MOOC's) en plataformas como Coursera, edX, etc.
 
@@ -72,7 +68,7 @@ output:
     + [R](https://www.r-project.org/), [CRAN](https://cran.r-project.org/)
     + las publicaciones del projecto: [R News](https://www.r-project.org/doc/Rnews/index.html) (2001 - 2008) y [R Journal](https://journal.r-project.org/archive/) (2009 - presente)
     + [R Forge](https://r-forge.r-project.org/)
-    + [https://stat.ethz.ch/R-manual/](https://stat.ethz.ch/R-manual/)
+    + [https://stat.ethz.ch/R-manual/]
 
 * Entonces, este curso, para qué?
 
@@ -87,44 +83,57 @@ output:
 
 * R es esencialmente una consola en la que el cursor se sitúa tras el símbolo `>`. Ahí se escriben las instrucciones. Se ejecutan con `Enter`.
 * Los resultados suelen aparecer debajo. En el caso de gráficas, depende del entorno en que se trabaje (R, RStudio, R Commander, etc.)
+
+**Cómo guardar bien la sintaxis**
+
 * Las instrucciones se pueden escribir todas en un fichero de texto con la extensión `.r` (el R-script), el cual puede ser cargado y ejecutado desde R. En RStudio, lo podemos ver y ejecutar al mismo tiempo en un panel situado junto al panel de la consola.
     + Desde el R-script en RStudio se ejecutan con `Control+Enter`
+    + Sin embargo, RStudio no es imprescindible: para abrir, editar y guardar un R-script, una aplicación básica como el `Bloc de notas` de Windows es suficiente.
 
 * Se pueden escribir comentarios (secciones de código que el programa no ejecuta), situando antes un símbolo `#`
 * R es un lenguaje orientado a objetos. Para asignar nombre a los objetos usamos el símbolo `<-`
-* Los objetos están compuestos de elementos y los más simples pueden ser de los siquientes tipos:
-    + Lógicos
+* Los objetos elementales básicos pueden ser de las siquientes clases:
+    + Lógicos (`TRUE` y `FALSE`)
     + Numéricos
     + Caracteres
 
 
 ```{r, echo=TRUE}
+
+# línea de código de R que no hace nada
+
 nombre <- "Luis"
+nombre # para ver el contenido de un objeto, basta escribir su nombre
 varon <- TRUE
-edad <- 23
+edad <- 23; edad # se pueden introducir diferentes instrucciones en una misma línea separadas por ; (indiferentemente de los espacios en blanco en medio)
 estatura <- 1.77
+
 ```
   
-* Los objetos pueden ser de la siguientes clases: 
+* A partir de los anteriores se pueden crear objetos compuestos con diferentes estructuras, como pueden ser: 
     + Vectores
     + Factores
     + Matrices
     + Data frames: `data.frame(...)`
     + Listas: `list(...)` 
     + Funciones: `function(...){...}`
-    + para saber más, [Understanding basic data types in R](https://www.diegobarneche.com/2014-12-11-ufsc/lessons/01-intro_r/data-structures.html)
+
+* Para saber más, [Understanding basic data types in R](https://www.diegobarneche.com/2014-12-11-ufsc/lessons/01-intro_r/data-structures.html)
+
+## Objetos
 
 ### Vectores
 
 * Todos los elementos del vector han de ser del mismo tipo:
-* Se crean con la función `c(...)`
-* vector[X] para acceder al X-ésimo elemento del vector
+* Se crean y se unen con la función `c(...)`
+* vector[i] para acceder al i-ésimo elemento del vector
 
 ```{r, echo=TRUE}
+
 nombre <- c("Luis","Maria")
 edad <- c(23,24)
 varon <- c(TRUE,FALSE)
-estatura <- c(1.77,1.64)
+estatura <- c(1.77, 1.64) # entre los objetos y las comas puede haber espacios
 
 estatura[2]
 ```
@@ -141,9 +150,13 @@ estatura[2]
 * Las etiquetas se asignan con `levels()`
 
 ```{r, echo=TRUE}
+
 f <- as.factor(c(1,2,3,1,2,1,1,3,2)) #Factor Nominal
+f
 levels(f) <- c("Bajo","Medio","Alto")
 ford <- as.ordered(f) #Factor Ordinal
+ford
+
 ```
 
 ### Matrices
@@ -151,49 +164,58 @@ ford <- as.ordered(f) #Factor Ordinal
 * Las matrices son una ampliación de los vectores con dos dimensiones: filas y columnas
 * Todos los elementos deben ser del mismo tipo
 * Se crean con la función `matrix()`
-* Para seleccionar un elemento de un matriz: Matriz[X,Y]
+* Para seleccionar un elemento de un matriz: Matriz[i,j]
 * Para saber las dimensiones: `dim()`
 
 
 ```{r, echo=TRUE}
+
 ejema <- matrix(c(1,2,3,4,5,6,7,8,9,10,11,12), ncol=3, byrow=TRUE)
 ejema
 
 dim(ejema)
 
 ejema[1,1]
+
 ```
 
-### Data.frames
+### Data frames
 
-* Es el objeto asignado para Bases de Datos. Las filas son individuos y las columnas variables. 
+**¿Cómo deben estar organizadas las filas/columnas en bases de datos longitudinales para leerlas con R?**
+
+* Es la clase de objeto que R asigna a bases de datos. Las filas son individuos o casos y las columnas variables.
 * Se crean con la función `data.frame()`
 * Cada columna tiene que tener los elementos del mismo tipo.
-* Para seleccionar una variable: `NombreDataFrame$NombreVariable`
+* Para seleccionar una variable: `NombreDataFrame$NombreVariable`, o lo que es lo mismo `NombreDataFrame[["NombreVariable"]]`
 * Para saber la dimensión: `dim()`
+* La clase propiamente dicha de un data frame en R es `data.frame`(el resultado de aplicar la función `class`). Sin embargo, la mayoría de librerías que veremos después trabajan con un data frame expandido llamado `tibble` (en este caso el resultado de la función `class` es un vector de 3 componentes, `tbl_df`, `tbl` y `data.frame`).
+    + Un `data.frame` podrá ser transformado en `tibble` por medio de la función `as_tibble`, y recíprocamente tenemos la función `as.data.frame`.
 
 ```{r, echo=TRUE}
-BD <- data.frame(nombre = c("Luis","Maria"), edad = c(23,24), varon = c(TRUE,FALSE), estatura = c(1.77,1.64))
+
+BD <- data.frame(nombre = c("Luis","Maria","Juan"), edad = c(23,24,25), varon = c(TRUE,FALSE, TRUE), estatura = c(1.77,1.64,1.70))
 BD
 
 dim(BD)
+class(BD)
 
 BD$nombre
 
 BD[1,2]
 BD[1,]
 BD[,2]
+
 ```
 
 
 
 ### Listas
 
-* Una lista es un objeto consistente en una colección ordenada de objetos que se suelen llamar componentes
+* Una lista es un objeto consistente en una colección ordenada de objetos que se suelen llamar componentes.
 * No es necesario que los componentes sean del mismo tipo, ni de la misma longitud: una lista puede estar compuesta de, por ejemplo, un vector numérico de tamaño 2, un valor lógico, un vector de tamaño 3, una matriz y una función.
 * Se construyen con la función `list()`
 * La selección de elementos se hace con doble corchete.
-* El corchete simple se utiliza para seleccionar dentro de una componente de la lista (una sublista).
+* El corchete simple se utiliza para seleccionar una sublista.
 
 
 ```{r, echo=TRUE}
@@ -205,69 +227,195 @@ ejemplolista[[5]]
 ejemplolista[[5]][2]
 ```
 
+## Funciones
 
 ```{r, echo=TRUE}
 
-
-# código de R que no hace nada
-
-x <- 4 # aisgnamos a la variable x el número 4
-class(x)
-is.character(4)
+x <- 4
+class(x) # clase de un objeto
+attributes(x) # sus atributos; en este caso no tiene
+str(x) # estructura de un objeto; sus características y sus datos
+is.character(4) # podemos comprobar si un objeto es de una determinada clase
 as.character(4) # un objeto numérico se puede coercionar a un carácter
 as.numeric("a") # al revés, no
 as.numeric(FALSE) # un objeto lógico se puede coercionar a uno numérico
 as.numeric(TRUE)
 
+# las cadenas de caracteres se pueden pegar
+paste("a", x) # con un espacio por defecto que se puede cambiar con la opción sep
+paste("a", x, sep = ";")
+paste0("a", x, "b", 3) # sin separación por defecto
+
+
+# todo lo anterior es igual para un vector
 y <- c(2:4)
 y
 class(y)
-length(y)
+length(x); length(y) # las longitudes
+paste0(y,y+3)
 
-
-floor()
-
-```
-
-Otras funciones prácticas para interactuar con el ordenador
-
-```{r, echo=TRUE}
-
-getwd()
-# setwd("C:/...")
-list.files()
+table(BD$edad,BD$varon)
 
 ```
 
 
 
 
-
-## R como calculadora
+* Otras funciones prácticas:
 
 ```{r, echo=TRUE}
 
+getwd() # el directorio donde R está trabajando
+# setwd("C:/...") # para cambiarlo
+
+list.files() # archivos en el directorio donde R está trabajando
+
+ls() # objetos cargados en el entorno de R (los objetos de R con los que podemos trabajar en este momento)
+rm(x, ejemplolista) # para eliminar objetos del entorno
+ls()
+
+
+
+install.packages("magrittr") # para instalar librerías (en este caso, la librería magrittr)
+library(magrittr) # para cargar librerías
+(.packages()) # para ver qué librerías tenemos cargadas en este momento
+
+# para buscar ayuda sobre una función
+help(print) # o bien
+?cat
+
+
+
+xlist <- list(a = 1:10, logic = c(TRUE,FALSE,FALSE,TRUE), b = c(1,0,0,1)); xlist
+
+lapply(xlist, quantile, probs = 1:3/4)
+sapply(xlist, quantile, probs = 1:3/4)
+
+x <- cbind(x1 = 3, x2 = c(4:1, 2:5)) # columnas enlazadas
+x; dimnames(x)
+dimnames(x)[[1]] <- letters[1:8]; x
+
+apply(x, 2, sum)
+apply(x, 1, sum)
+mapply(paste, 1:4, 4:1)
+
+
+```
+
+**Cómo guardar bien los resultados**
+
+* Los objetos de R se pueden guardar en ficheros con la función `save`. 
+* Los ficheros se guardan por convención con la extensión `.rda` o `.rdata` (aunque a veces también se escribe la `r` e incluso la `d` en mayúscula, por ejemplo `.RData`)
+* Los resultados, si son matrices, data frames o tablas, además, también se pueden guardar en ficheros `.csv` o con formatos de excel (veremos después algún ejemplo).
+* En cualquier caso, en general pueden ser guardados en un fichero de texto con la función `sink`.
+* A no ser que se especifique la dirección del fichero, serán guardados en el directorio donde R está trabajando (`getwd()`)
+
+```{r, echo=TRUE}
+
+save(x, y, file = "example.rda")
+rm(x)
+
+test_table <- table(BD$edad,BD$varon)
+
+sink("output.log") # se crea el fichero donde se quieren guardar los resultados
+# si el fichero ya existe con resultados anteriores que no se quieren borrar, se tiene que poner sink("output.log", append = TRUE)
+test_table
+cor.test(BD$edad,BD$estatura)
+sink()
+```
+
+* Recíprocamente, para cargar ficheros de datos de R, tenemos las funciones `load` y `attach`. Debido a la complejidad de esta última, sólo explicamos la primera
+
+```{r, echo=TRUE}
+
+load(file = "example.rda") # carga los objetos guardados con el mismo nombre con el que fueron guardados; sobreescribe los objetos cargados con el mismo nombre
+
+```
+
+* Antes explicamos que la sintaxis de R se guarda en un archivo de texto con la extensión `.r`, que se puede ejecutar fácilmente desde RStudio, o que se puede cargar también desde R. Otra manera de ejecutarlo es a través de la función `source`. Por ejemplo `source("fichero.r)`.
+
+
+## Operadores aritméticos y lógicos
+
+```{r, echo=TRUE}
+
+x <- 4
 2+3
 x+5
 y <- x-3*7 + 24 # los espacios aquí no afectan
-y
 
-# log()
-# ln()
+y
+y^x # potencia
+
+y %% x # residuo
+
+# floor()
+# log(), log10(), log2()
 # exp()
-# log10()
 # sqrt()
 # factorial()
 
+3 == 4
+3 == 3
+3 < 3
+3 <= 3
+
+TRUE & TRUE
+TRUE & FALSE
+FALSE | FALSE
+FALSE | TRUE
+
+nchar(paste(x, 4)) == 3 # el número de caracteres de la cadena "x 4" es 3
+
+length(c(1:3,7,10)) > 6
 
 ```
 
-## Operadores aritméticos y lógicos
-## Vectores y data frames 
 
 # Funciones y librerías para interaccionar con otros softwares estadísticos como SPSS o STATA
 
-#### ¿Se puede abrir un fichero en dta (stata) en R y cambiar su versión, por ejemplo de la 15 a la 13?
+**.csv**
+
+```{r, echo=TRUE}
+
+?read.csv
+md_data <- read.csv("MissingData.csv")
+str(md_data)
+
+# Para guardar una matriz o data frame en un fichero csv podemos usar write.csv
+write.csv(test_table, file = "foo.csv")
+
+```
+
+**Excel**
+
+* Hay muchas librerías que nos permiten trabajar con ficheros de excel, entre ellas `readxl` y `openxlsx`
+
+```{r, echo=TRUE}
+
+library(readxl)
+df <- read_excel("example_sheets2.xlsx")
+head(df)
+str(df)
+df <- as.data.frame(df)
+
+library(openxlsx)
+df <- read.xlsx("readTest.xlsx",sheet = 1, skipEmptyRows = FALSE); df
+df <- read.xlsx("readTest.xlsx",sheet = 3, skipEmptyRows = TRUE); str(df)
+df$Date <- convertToDate(df$Date)
+str(df)
+df2 <- read.xlsx("readTest.xlsx", sheet = 3, skipEmptyRows = TRUE, detectDates = TRUE)
+str(df2)
+
+wb <- loadWorkbook("readTest.xlsx") # útil para trabajar con un fichero de excel y escribir en él junto a funciones como writeData y saveWorkbook
+df3 <- read.xlsx(wb, sheet = 2, skipEmptyRows = FALSE, colNames = TRUE)
+str(df3)
+df4 <- read.xlsx("readTest.xlsx", sheet = 2, skipEmptyRows = FALSE, colNames = TRUE)
+identical(df3,df4)
+
+```
+
+**¿Se puede abrir un fichero en dta (stata) en R y cambiar su versión, por ejemplo de la 15 a la 13?**
 
 * La librería [haven](https://haven.tidyverse.org/) nos lo permite (entre las versiones 8 y 15).
 * Otras librerías que pueden ayudar son: `foreign` y `readstata13`
@@ -281,19 +429,216 @@ dta_data
 str(dta_data)
 
 # file from https://digitalcommons.usu.edu/all_datasets/27/
-foreign::read.dta("Jakus_NCDA.dta") # archivo de stata 15
+dta_data2 <- foreign::read.dta("Jakus_NCDA.dta") # con un archivo de stata 15
 dta_data2 <- read_dta("Jakus_NCDA.dta")
 str(dta_data2)
-write_dta(dta_data2, "Jakus_NCDA2.dta", version = 13)
+write_dta(dta_data2, "Jakus_NCDA2.dta", version = 12)
+dta_data2 <- foreign::read.dta("Jakus_NCDA2.dta")
+
+dta_data3 <- read_dta("gss_sample.dta")
+dim(dta_data3)
+table(is.na(dta_data3$prestg10)) # cuántos valores missing hay?
+table(na_tag(dta_data3$prestg10), useNA = "ifany") # cuántos hay de cada categoría?
+
+# Se pueden guardar datos en un fichero dta con la función write_dta
+?write_dta
+
+```
+
+También con la librería `haven`:
+
+**SPSS - .sav**
+
+```{r, echo=TRUE}
+
+sav_data <- read_sav("survey.sav")
+dim(sav_data)
+str(sav_data[,1:10])
+
+# Se pueden guardar datos en un fichero sav con la función write_sav
+?write_sav
+
+
+```
+
+
+**SAS**
+
+```{r, echo=TRUE}
+
+sas_data <- read_sas(data_file = "nyts2017.sas7bdat", catalog_file = "formats.sas7bcat")
+head(sas_data[, 1:5])
+names(sas_data)
+
+sapply(sas_data,class)
+sapply(sas_data,mode)
+
+# Se pueden guardar datos en un fichero sav con la función write_sas
+?write_sas
+
+```
+
+**Neuroimagen - .nii**
+
+* Para saber más:
+    + [https://www.alexejgossmann.com/MRI_viz/]
+    + [https://johnmuschelli.com/]
+
+```{r, echo=TRUE}
+
+library(oro.nifti)
+library(neurobase)
+t1 = readnii("Template-T1-U8-RALPFH-BR.nii.gz")
+class(t1)
+dim(t1)
+t1
+image(t1, z = 225, plot.type = "single")
+# image(t1) # tarda algo de tiempo en ejecutarse
+orthographic(t1)
+ortho2(t1)
+
+```
+
+
+# Manejo de datos con las librerías dplyr & tidyr 
+
+**Prólogo: la librería `magrittr` y 3 pipas. Una gramática diferente**
+
+* Para saber más, [https://www.datacamp.com/community/tutorials/pipe-r-tutorial]
+
+```{r, echo=TRUE}
+
+head(names(sav_data))
+
+sav_data %>% # la pipa más habitual: envía los datos de la izquierda a la función que sigue (a la derecha o abajo) y retorna su evaluación
+  names() %>% # está incluida en la librería dplyr
+  head()
+
+sav_data %T>% # como la anterior, pero retorna de nuevo los datos de la izquierda
+  View() %>% # sirve para usar los datos en más de una función, cuando las intermedias no retornan nada, como View, plot, ...
+  names() %>%
+  head()
+
+sav_data %$% # para funciones sin un argumento para data.frame's
+  cor.test(age,educ)
+
+sas_data %$%
+  table(Q2, Q3)
+
+```
+
+* **Ojo**: en ocasiones no conviene usar la pipa: por ejemplo, es mejor `save(data, file)` que `data %>% save(file)`, ya que la segunda opción da lugar a comportamientos inesperados.
+
+**Merge de data frames**
+
+```{r, echo=TRUE}
+
+library(dplyr)
+
+iris %>%
+  head()
+mtcars %>%
+  head()
+
+```
+
+## Selección y filtro de variables 
+
+```{r, echo=TRUE}
+
+select(iris, starts_with("Petal"))
+
+iris %>% select(ends_with("Width"))
+
+iris %>% 
+  select(-contains("Length"))
+
+iris %>%
+  pull(Species) %>%
+  table()
+
+iris %>%
+  pull(Species) %>%
+  class()
+
+mtcars %>%
+  select(drat:qsec)
+
+mtcars %>%
+  select(-drat:-qsec)
+
+mtcars %>%
+  select(-c(2,8:9))
+
+iris %>%
+  filter(Species == "setosa")
+
 
 ```
 
 
 
-# Manejo de datos con las librerías dplyr & tidyr 
-
-## Selección y filtro de variables 
 ## Transformación de variables 
+
+**Mutate**
+
+```{r, echo=TRUE}
+
+?mutate_all
+
+sas_data %>%
+  select(Q1:Q4C) %>%
+  mutate_all(zap_empty) %>% # transforma todas las celdas "" en NA's
+  mutate(QAN = paste(Q1,Q3)) %>%
+  head()
+
+```
+
+
+
+**Pivotaje**
+
+```{r, echo=TRUE}
+
+library(tidyr)
+data("anscombe")
+anscombe
+
+# 1) pasar de forma ancha a larga las x's
+
+anscombe %>%
+  pivot_longer(cols = c(starts_with("x")),
+               names_to = "x_cases",
+               values_to = "x") %T>%
+  View() %>%
+  str()
+
+# 1.1) además, renombrar la columna resultante
+
+anscombe %>%
+  pivot_longer(cols = c(starts_with("x")),
+               names_to = "x_cases",
+               names_prefix = "x",
+               values_to = "x") %T>%
+  View() %>%
+  str()
+
+# 2) pasar de forma ancha a larga las x's y las y's
+
+anscombe2 <- anscombe %>%
+  # tibble::rownames_to_column('rn') %>%
+  pivot_longer(cols = c(starts_with("x"),starts_with("y")),
+               names_to = c(".value", "id_cases"),
+               names_pattern = "([a-z]+)([0-9]+)") %T>%
+  View() %>%
+  str()
+
+anscombe2
+
+```
+
+
+
 ## Estadísticos descriptivos 
 ```{r, echo=TRUE}
 head(iris)
