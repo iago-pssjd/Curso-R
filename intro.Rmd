@@ -710,6 +710,9 @@ table(starwars$hair_color, starwars$eye_color)
 
 # Gráficos con la librería ggplot2
 
+**¿Cómo hacer gráficos (los habituales)? y, ¿cómo guardarlos?**
+
+
 * `ggplot2` es una libreria que permite hacer gran variedad de gràficos "bonitos" de manera sencilla. 
 * Todos los gràficos de `ggplot2` se podrían hacer también con R básico pero es más complejo. Por otro lado, ggplot2 es un poco más robusto que R básico, es decir, no te permite modificar tantas cosas dado que ya viene predeterminado.
 * Las funciones que se utilizan: 
