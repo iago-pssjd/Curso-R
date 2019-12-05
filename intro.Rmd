@@ -891,3 +891,32 @@ plot(mod2)
 exp(mod2$coefficients)
 ```
 
+
+# Apéndice
+
+* **Ojo**: 
+    + Hay una cantidad enorme de librerías, muchas de las cuales comparten funciones (porque unas llaman a otras), pero también muchas de las cuales comparten nombres de funciones que son distintas (como muestra la advertencia al cargar la librería con funciones que ya están en el entorno). 
+    + Por ejemplo, las librerías `plyr` -que no veremos- y `dplyr` -la veremos abajo- comparten varias funciones, entre ellas `rename`. Si se tienen ambas librerías cargadas y R entiende que `rename` se refiere a la función de `plyr`, pero la usamos como la función de `dplyr`, es probable que se produzca un error.
+    + Es de los más frecuentes y extraños, por ello hay varias maneras de solucionarlo.
+
+```{r, echo=TRUE}
+
+lapply(paste('package:',names(sessionInfo()$otherPkgs),sep=""),detach,character.only=TRUE,unload=TRUE)
+
+library(dplyr)
+library(plyr)
+?rename # con la ayuda podemos ver que esta función está en varias librerías actualmente cargadas
+
+names(mtcars)
+names(rename(mtcars, x = gear)) # error
+names(dplyr::rename(mtcars, x = gear)) # especificamos que la función que queremos es la de dplyr
+names(plyr::rename(mtcars, x = gear)) # comprobamos que la función que estaba usando antes era la de plyr, ya que genera el mismo error
+rename <- dplyr::rename # otra solución es asignar al nombre la función de dplyr
+names(rename(mtcars, x = gear)) # ya no hay error
+
+
+detach("package:plyr", unload=TRUE)
+detach("package:dplyr", unload=TRUE)
+
+
+```
