@@ -92,6 +92,7 @@ output:
 
 * Se pueden escribir comentarios (secciones de código que el programa no ejecuta), situando antes un símbolo `#`
 * R es un lenguaje orientado a objetos. Para asignar nombre a los objetos usamos el símbolo `<-`
+* Los missings en R se representan con el símbolo NaN (objetos numéricos) NA (cualquier clase de objetos)
 * Los objetos elementales básicos pueden ser de las siquientes clases:
     + Lógicos (`TRUE` y `FALSE`)
     + Numéricos
@@ -114,9 +115,8 @@ estatura <- 1.77
     + Vectores
     + Factores
     + Matrices
-    + Data frames: `data.frame(...)`
-    + Listas: `list(...)` 
-    + Funciones: `function(...){...}`
+    + Data frames:
+    + Listas:` 
 
 * Para saber más, [Understanding basic data types in R](https://www.diegobarneche.com/2014-12-11-ufsc/lessons/01-intro_r/data-structures.html)
 
@@ -185,7 +185,7 @@ ejema[1,1]
 
 * Es la clase de objeto que R asigna a bases de datos. Las filas son individuos o casos y las columnas variables.
 * Se crean con la función `data.frame()`
-* Cada columna tiene que tener los elementos del mismo tipo.
+* Cada columna tiene que tener los elementos del mismo tipo y todas deben tener la misma longitud.
 * Para seleccionar una variable: `NombreDataFrame$NombreVariable`, o lo que es lo mismo `NombreDataFrame[["NombreVariable"]]`
 * Para saber la dimensión: `dim()`
 * La clase propiamente dicha de un data frame en R es `data.frame`(el resultado de aplicar la función `class`). Sin embargo, la mayoría de librerías que veremos después trabajan con un data frame expandido llamado `tibble` (en este caso el resultado de la función `class` es un vector de 3 componentes, `tbl_df`, `tbl` y `data.frame`).
@@ -193,11 +193,10 @@ ejema[1,1]
 
 ```{r, echo=TRUE}
 
-BD <- data.frame(nombre = c("Luis","Maria","Juan"), edad = c(23,24,25), varon = c(TRUE,FALSE, TRUE), estatura = c(1.77,1.64,1.70))
+BD <- data.frame(nombre = c("Luis","Maria","Jesus"), edad = c(23,24,50), varon = c(TRUE,FALSE, TRUE), estatura = c(1.77,1.64,1.50))
 BD
 
 dim(BD)
-class(BD)
 
 BD$nombre
 
@@ -219,7 +218,7 @@ BD[,2]
 
 
 ```{r, echo=TRUE}
-ejemplolista <- list(nombre="Pedro", casado=T,esposa="Maria", no.hijos=3, edad.hijos=c(4,7,9))
+ejemplolista <- list(nombre="Pedro", casado=T, esposa="Maria", no.hijos=3, edad.hijos=c(4,7,9))
 ejemplolista
 
 ejemplolista[[5]]
@@ -227,65 +226,96 @@ ejemplolista[[5]]
 ejemplolista[[5]][2]
 ```
 
-## Funciones
+## Funciones básicas
+
+* Clase de un objeto
 
 ```{r, echo=TRUE}
+class(ejema)
+class(BD) 
+class(ejemplolista)
+```
 
-x <- 4
-class(x) # clase de un objeto
-attributes(x) # sus atributos; en este caso no tiene
-str(x) # estructura de un objeto; sus características y sus datos
+
+* Atributos de un objeto 
+
+```{r, echo=TRUE}
+attributes(ejema) 
+attributes(BD) 
+attr(BD, "class")
+attributes(ejemplolista) 
+```
+
+* Estructura de un objeto; sus características y sus datos
+
+```{r, echo=TRUE}
+str(ejema)
+str(BD)
+str(ejemplolista)
+```
+
+* Longitud de un objeto
+
+```{r, echo=TRUE}
+length(ejema)
+length(BD)
+length(ejemplolista)
+```
+
+
+* También se puede verificar o modificar la clase de un objeto
+
+```{r, echo=TRUE}
 is.character(4) # podemos comprobar si un objeto es de una determinada clase
+is.character(BD$nombre)
+
 as.character(4) # un objeto numérico se puede coercionar a un carácter
+
 as.numeric("a") # al revés, no
+
 as.numeric(FALSE) # un objeto lógico se puede coercionar a uno numérico
 as.numeric(TRUE)
-
-# las cadenas de caracteres se pueden pegar
-paste("a", x) # con un espacio por defecto que se puede cambiar con la opción sep
-paste("a", x, sep = ";")
-paste0("a", x, "b", 3) # sin separación por defecto
+```
 
 
-# todo lo anterior es igual para un vector
-y <- c(2:4)
-y
-class(y)
-length(x); length(y) # las longitudes
-paste0(y,y+3)
+* Se pueden crear secuencias de números facilmente
+```{r, echo=TRUE}
 
-table(BD$edad,BD$varon)
+# Enteros consecutivos
+1:10
 
+# Generar secuencias de numeros
+seq(from = 0, to = 1, by = 0.1)
+seq(from = 5, to = 20, by = 2)
+
+# Repetir secuencias
+rep(x = 1, times = 5)
+rep(x = c(1,3,5), times = 2)
+rep(c(1,3,5), each = 5)
+
+```
+
+* Crear cadenas de carácteres a partir de diferentes objetos
+
+```{r, echo=TRUE}
+x <- 4
+
+paste("a", x)
+paste("a", x, sep = "_")
+
+paste0("a", x, "b", 3)
 ```
 
 
 
+* Para aplicar una función a una matriz/data.frame/lista R dispone de las funciones de la familia apply: 
+    + lapply: Devuelve una lista de resultados al aplicar una función a un vector o lista.
+    + sapply: Devuelve un vector de resultados al aplicar una función a un vector o lista.
+    + apply: Devuelve el vector o la lista de valores obtenidos aplicando una función a un vector o matriz por grupos.
+    + tapply: Devuelve una lista con los resultados obtenidos al aplicar una función a un vector por grupos.
+    + mapply: Devuelve un vector resultado de aplicar una función a tuplas de elementos en paralelo.
 
-* Otras funciones prácticas:
-
-```{r, echo=TRUE}
-
-getwd() # el directorio donde R está trabajando
-# setwd("C:/...") # para cambiarlo
-
-list.files() # archivos en el directorio donde R está trabajando
-
-ls() # objetos cargados en el entorno de R (los objetos de R con los que podemos trabajar en este momento)
-rm(x, ejemplolista) # para eliminar objetos del entorno
-ls()
-
-
-
-install.packages("magrittr") # para instalar librerías (en este caso, la librería magrittr)
-library(magrittr) # para cargar librerías
-(.packages()) # para ver qué librerías tenemos cargadas en este momento
-
-# para buscar ayuda sobre una función
-help(print) # o bien
-?cat
-
-
-
+```{r}
 xlist <- list(a = 1:10, logic = c(TRUE,FALSE,FALSE,TRUE), b = c(1,0,0,1)); xlist
 
 lapply(xlist, quantile, probs = 1:3/4)
@@ -298,9 +328,42 @@ dimnames(x)[[1]] <- letters[1:8]; x
 apply(x, 2, sum)
 apply(x, 1, sum)
 mapply(paste, 1:4, 4:1)
+```
 
+
+
+
+
+## Directorio
+
+* El entorno de R tiene como referencia un directorio concreto. Esto nos permite no tener que introducir la dirección de la carpeta cuando queremos acceder a algún elemento de esta (por ejemplo, bases de datos)
+* Para saber qué directorio es se utiliza la función `getwd()`
+* Para cambiar el directorio se utiliza la función `setwd()`. De manera alternativa, `Session > Set Working Directory > Choose Directory`
+
+```{r, echo=TRUE}
+
+getwd() # el directorio donde R está trabajando
+setwd("C:/...") # para cambiarlo
 
 ```
+
+
+* Se puede saber qué archivos hay en el directorio donde R está trabajando con la función `list.files()` 
+
+```{r}
+list.files() 
+```
+
+
+* Se pueden conocer los objetos que tenemos cargados en R (los objetos de R con los que podemos trabajar en este momento) con la función `ls()`
+* También podemos eliminar objetos cargados
+```{r, echo=TRUE}
+ls() 
+rm(x, ejemplolista) # para eliminar objetos del entorno
+ls()
+```
+
+
 
 **Cómo guardar bien los resultados**
 
@@ -312,8 +375,8 @@ mapply(paste, 1:4, 4:1)
 
 ```{r, echo=TRUE}
 
-save(x, y, file = "example.rda")
-rm(x)
+save(x, ejema, file = "example.rda")
+rm(x, ejema)
 
 test_table <- table(BD$edad,BD$varon)
 
@@ -324,6 +387,7 @@ cor.test(BD$edad,BD$estatura)
 sink()
 ```
 
+
 * Recíprocamente, para cargar ficheros de datos de R, tenemos las funciones `load` y `attach`. Debido a la complejidad de esta última, sólo explicamos la primera
 
 ```{r, echo=TRUE}
@@ -333,6 +397,57 @@ load(file = "example.rda") # carga los objetos guardados con el mismo nombre con
 ```
 
 * Antes explicamos que la sintaxis de R se guarda en un archivo de texto con la extensión `.r`, que se puede ejecutar fácilmente desde RStudio, o que se puede cargar también desde R. Otra manera de ejecutarlo es a través de la función `source`. Por ejemplo `source("fichero.r)`.
+
+
+## Ayuda de R
+
+* R dispone de una ayuda muy completa sobre todas las funciones, procedimientos y elementos que configuran el lenguaje
+* Se puede acceder a ella con la función `help()` o mediante `?`
+
+```{r, echo=TRUE}
+help(print)
+?cat
+```
+
+
+
+
+
+## Librerías
+
+* Multitud de usuarios desarrollan técnicas y las comparten creando librerías de funciones adicionales.
+* Para utilizar tales librerías, es necesario descargarlas y cargarlas en cada sesión de R.
+* Para descargarlas se utiliza la función `install.packages("NombreLibreria")`.
+* Para cargarlas se utiliza la función `library(NombreLibreria)`.
+
+```{r, echo=TRUE}
+
+install.packages("magrittr") # para instalar librerías
+library(magrittr) # para cargar librerías
+(.packages()) # para ver qué librerías tenemos cargadas en este momento
+
+```
+
+
+* Recodificar variables con la ayuda del paquete `car`
+
+```{r, echo=TRUE}
+
+# cargamos la librería
+library(car)
+
+BD$nombre 
+recode(BD$nombre, "'Maria' = 'Nuria'")
+
+# Para guardar este cambio en nuestra base de datos:
+BD$nombre <- recode(BD$nombre, "'Maria' = 'Nuria'")
+
+# También funciona con variables numéricas
+BD$edad
+recode(BD$edad, "50 = 45; 24 = 30")
+
+```
+
 
 
 ## Operadores aritméticos y lógicos
@@ -368,6 +483,9 @@ FALSE | TRUE
 nchar(paste(x, 4)) == 3 # el número de caracteres de la cadena "x 4" es 3
 
 length(c(1:3,7,10)) > 6
+
+x <- c(1,3,5,7, NA, 8,5, NA)
+sum(is.na(x))
 
 ```
 
@@ -542,6 +660,33 @@ mtcars %>%
 
 ```
 
+
+<!-- * Combinar bases de datos: -->
+<!--     + Añadir columnas: Para combinar dos bases de datos se utiliza la función `merge()`. Se fusionan en base a una o más variables clave. -->
+
+<!-- ```{r} -->
+<!-- BD -->
+<!-- BD2 <- data.frame(nombre = c("Luis","Maria", "Jesus"), color_pelo = c("azul", "castaño", "moreno")) -->
+
+<!-- merge(BD, BD2, by = "nombre") -->
+
+<!-- BD3 <- data.frame(nombre = c("Luis","Maria", "Jesus", "Esteve"), color_pelo = c("azul", "castaño", "moreno", "castaño")) -->
+
+<!-- merge(BD, BD3, by = "nombre") -->
+<!-- merge(BD, BD3, by = "nombre", all = TRUE) #Para que una todos los individuos pese a no estar en las dos BD -->
+<!-- ``` -->
+
+<!--     + Añadir filas: para fusionar dos bases de datos verticalmente se utiliza la función `rbind()`. Para ello es necesario que ambas bases de datos tengan exactamente las mismas variables pero no es necesario que esten en el mismo orden. -->
+
+<!-- ```{r} -->
+<!-- BD -->
+<!-- BD2 <- data.frame(nombre = c("Julian", "Laura", "Cristina"), varon = c(TRUE,TRUE, FALSE), edad = c(20, 65, 41),estatura = c(1.6, 1.75, 1.72)) -->
+
+<!-- rbind(BD, BD2) -->
+<!-- ``` -->
+
+
+
 ## Selección y filtro de variables 
 
 ```{r, echo=TRUE}
@@ -639,7 +784,7 @@ anscombe2
 
 
 
-## Estadísticos descriptivos 
+# Estadísticos descriptivos 
 
 Datos que usaremos: 
 
@@ -725,6 +870,16 @@ table(starwars$hair_color, starwars$eye_color)
 ```{r}
 library(ggplot2)
 
+SW <- starwars %>% 
+  select(height:species) %>% 
+  mutate(hair_color = as.factor(hair_color), 
+         skin_color = as.factor(skin_color), 
+         eye_color = as.factor(eye_color), 
+         gender = as.factor(gender), 
+         homeworld = as.factor(homeworld), 
+         species = as.factor(species))
+
+
 ggplot(SW, aes(x = mass, y = height)) + 
   geom_point()
 
@@ -809,14 +964,6 @@ summary(anova)
 * $y = a+bX$
 
 ```{r}
-SW <- starwars %>% 
-  select(height:species) %>% 
-  mutate(hair_color = as.factor(hair_color), 
-         skin_color = as.factor(skin_color), 
-         eye_color = as.factor(eye_color), 
-         gender = as.factor(gender), 
-         homeworld = as.factor(homeworld), 
-         species = as.factor(species))
 
 pairs(SW)
 
