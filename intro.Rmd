@@ -876,6 +876,7 @@ iris %>%
     TRUE ~ "big"
   )) %>% # case_when permite multiples outputs según las condiciones sin tener que recurrir a múltiples if-else y, a diferencia de una función de recode, permite condiciones complejas
   head()
+
 ```
 
 
