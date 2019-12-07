@@ -29,7 +29,7 @@ output:
     * [https://www.uv.es/vcoll/preliminares.html]
     * [http://people.math.aau.dk/~sorenh/misc/rdocs/Rintro-notes.pdf]
     * en la pestaña Resources de la web de [RStudio](https://rstudio.com/)
-    * [otros](https://github.com/iago-pssjd/Curso-R/archive/v1.0.zip)
+    * [otros](https://github.com/iago-pssjd/Curso-R/archive/v1.5.zip)
 
 * ... y foros:
     + principalmente [https://stackoverflow.com/questions/tagged/r]
