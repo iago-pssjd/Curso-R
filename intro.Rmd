@@ -805,7 +805,7 @@ iris %>%
   head()
 
 iris %>%
-  pull(Species) %>%
+  pull(Species) %>% # pull extrae una variable del data frame como vector
   table()
 
 iris %>%
@@ -813,7 +813,17 @@ iris %>%
   class()
 
 iris %>%
-  filter(Species == "setosa")
+  filter(Species == "setosa") # el outpup de filter es el subdata.frame cumpliendo la condición dada
+
+# ordenar observaciones por una o más variables
+iris %>% arrange(Sepal.Length)
+iris %>% arrange(Sepal.Length, Petal.Length)
+
+# filtrar casos únicos
+dta_data
+dta_data %>% distinct(cars)
+dta_data %>% distinct(cars, .keep_all = TRUE)
+dta_data %>% distinct(cars, hhsize)
 
 ```
 
@@ -821,7 +831,6 @@ iris %>%
 
 ## Transformación de variables 
 
-**Mutate**
 
 ```{r, echo=TRUE}
 
@@ -853,6 +862,20 @@ iris %>%
   mutate_at(vars(matches("Sepal")), log) %>%
   head()
 
+x <- 1:50
+case_when(
+  x %% 35 == 0 ~ "fizz buzz",
+  x %% 5 == 0 ~ "fizz",
+  x %% 7 == 0 ~ "buzz",
+  TRUE ~ as.character(x)
+)
+
+iris %>%
+  mutate(size = case_when(
+    Sepal.Length < 5.0 ~ "small",
+    TRUE ~ "big"
+  )) %>% # case_when permite multiples outputs según las condiciones sin tener que recurrir a múltiples if-else y, a diferencia de una función de recode, permite condiciones complejas
+  head()
 ```
 
 
@@ -885,7 +908,7 @@ md_data %>%
 
 
 
-**Pivotaje**
+* Pivotaje
 
 **¿Cómo deben estar organizadas las filas/columnas en bases de datos longitudinales para leerlas con R? (II)**
 
@@ -1021,6 +1044,18 @@ anscombe %>%
 
 ```
 
+* Sampleo: conservar al azar un determinado porcentaje de la muestra
+
+```{r, echo=TRUE}
+
+?sample # tanto la función de R sample como las funciones de dplyr sample_n y sample_frac son interesantes
+
+
+iris %>%
+  group_by(Species) %>%
+  sample_n(3) # escogemos 3 observaciones al azar para cada especie
+
+```
 
 # Estadísticos descriptivos 
 
@@ -1150,6 +1185,8 @@ ggplot(SW, aes(x = mass, y = height, colour = gender, size=birth_year, alpha = 0
 
 ggplot(SW, aes(x = mass, y = height, colour = gender, fill = gender, size=birth_year, alpha = 0.5)) + 
   geom_point(shape=23)
+
+ggplot(BD, aes(x=nombre,y=edad)) + geom_point() + theme(axis.text.x = element_text(angle = 10))
 
 ```
 
