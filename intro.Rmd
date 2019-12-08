@@ -1201,6 +1201,23 @@ ggplot(dta_data2, aes(x=Age)) + geom_histogram(color = "green", fill = "blue", b
 
 ```
 
+### Boxplot
+
+
+```{r, echo=TRUE}
+
+SW %>%
+  ggplot(aes(y=mass)) + geom_boxplot()
+
+
+SW %>%
+  ggplot(aes(x = gender, y=mass)) + geom_boxplot()
+
+SW %>%
+  ggplot(aes(x = gender, y=mass)) + geom_boxplot() + coord_flip()
+
+```
+
 ### Guardar gráficos
 
 
