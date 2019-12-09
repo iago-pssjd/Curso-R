@@ -245,7 +245,7 @@ ejemplolista[[5]][2]
 ```{r, echo=TRUE}
 
 ls() 
-rm(x, ejemplolista) # para eliminar objetos del entorno
+rm(f, ford) # para eliminar objetos del entorno
 ls()
 
 ```
@@ -309,7 +309,11 @@ as.numeric("a") # al revés, no
 as.numeric(FALSE) # un objeto lógico se puede coercionar a uno numérico
 as.numeric(TRUE)
 
-is.na(BD$edad_BD) # podemos ver si un objeto tiene valores missing
+strDates <- c("01/05/1965", "08/16/1975")
+dates <- as.Date(strDates, "%m/%d/%Y") # damos formato de fecha a objetor de clase carácter
+
+
+is.na(BD$edad) # podemos ver si un objeto tiene valores missing
 
 ```
 
@@ -346,6 +350,8 @@ paste0("a", x, "b", 3)
 paste0("x", c(1:10))
 paste0(c("a","b"), c(1,2))
 names(BD) <- paste0(names(BD),"_BD")
+names(BD)
+names(BD) <- c("nombre","edad","varon","estatura")
 names(BD)
 
 ```
@@ -487,6 +493,7 @@ load(file = "example.rda") # carga los objetos guardados con el mismo nombre con
 
 help(print)
 ?cat
+?as.POSIXct
 
 ```
 
@@ -553,6 +560,7 @@ y %% x # residuo
 # exp()
 # sqrt()
 # factorial()
+round(21.53667674,3)
 
 3 == 4
 3 == 3
@@ -1182,7 +1190,8 @@ ggplot(SW, aes(x = mass, y = height)) +
   geom_point()
 
 ggplot(SW, aes(x = mass, y = height, colour = "red")) + 
-  geom_point()
+  geom_point() + 
+  annotate("text", label = paste("cor:", round(cor(SW$height,SW$mass, use = "complete.obs"),3)), x = 1000, y = 250)
 
 ggplot(SW, aes(x = mass, y = height, colour = gender)) + 
   geom_point()
@@ -1204,6 +1213,25 @@ ggplot(BD, aes(x=nombre,y=edad)) + geom_point() + theme(axis.text.x = element_te
 ggplot(dta_data2, aes(x=Age)) + geom_histogram()
 
 ggplot(dta_data2, aes(x=Age)) + geom_histogram(color = "green", fill = "blue", bins = 50)
+
+ggplot(dta_data2, aes(x=Age)) + geom_histogram(color = "green", fill = "blue", bins = 50) + ylab("Frecuencia") + ggtitle("Histograma de edad")
+
+```
+
+### Boxplot
+
+
+```{r, echo=TRUE}
+
+SW %>%
+  ggplot(aes(y=mass)) + geom_boxplot()
+
+
+SW %>%
+  ggplot(aes(x = gender, y=mass)) + geom_boxplot()
+
+SW %>%
+  ggplot(aes(x = gender, y=mass)) + geom_boxplot() + coord_flip()
 
 ```
 
