@@ -1176,7 +1176,8 @@ ggplot(SW, aes(x = mass, y = height)) +
   geom_point()
 
 ggplot(SW, aes(x = mass, y = height, colour = "red")) + 
-  geom_point()
+  geom_point() + 
+  annotate("text", label = paste("cor:", round(cor(SW$height,SW$mass, use = "complete.obs"),3)), x = 1000, y = 250)
 
 ggplot(SW, aes(x = mass, y = height, colour = gender)) + 
   geom_point()
@@ -1198,6 +1199,8 @@ ggplot(BD, aes(x=nombre,y=edad)) + geom_point() + theme(axis.text.x = element_te
 ggplot(dta_data2, aes(x=Age)) + geom_histogram()
 
 ggplot(dta_data2, aes(x=Age)) + geom_histogram(color = "green", fill = "blue", bins = 50)
+
+ggplot(dta_data2, aes(x=Age)) + geom_histogram(color = "green", fill = "blue", bins = 50) + ylab("Frecuencia") + ggtitle("Histograma de edad")
 
 ```
 
