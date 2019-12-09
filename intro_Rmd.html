@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
 
 <meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -155,7 +156,6 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
-  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -372,12 +372,14 @@ estatura &lt;- 1.77</code></pre>
 <li>Todos los elementos del vector han de ser del mismo tipo:</li>
 <li>Se crean y se unen con la función <code>c(...)</code></li>
 <li>vector[i] para acceder al i-ésimo elemento del vector</li>
+<li>Para saber la longitud del vector, es decir, cuantos elementos tiene, usamos la función <code>lenght()</code></li>
 </ul>
 <pre class="r"><code>nombre &lt;- c(&quot;Luis&quot;,&quot;Maria&quot;)
 edad &lt;- c(23,24)
 varon &lt;- c(TRUE,FALSE)
 estatura &lt;- c(1.77, 1.64) # entre los objetos y las comas puede haber espacios
 
+length(edad)
 estatura[2]</code></pre>
 </div>
 <div id="factores" class="section level3">
@@ -511,7 +513,10 @@ as.numeric(FALSE) # un objeto lógico se puede coercionar a uno numérico
 as.numeric(TRUE)
 
 strDates &lt;- c(&quot;01/05/1965&quot;, &quot;08/16/1975&quot;)
-dates &lt;- as.Date(strDates, &quot;%m/%d/%Y&quot;) # damos formato de fecha a objetor de clase carácter
+dates &lt;- as.Date(strDates, &quot;%m/%d/%Y&quot;) # damos formato de fecha a objetos de clase carácter
+
+strDates2 &lt;- c(&quot;01-05-1965&quot;, &quot;08-16-1975&quot;)
+dates &lt;- as.Date(strDates2, &quot;%m-%d-%Y&quot;) # damos formato de fecha a objetos de clase carácter
 
 
 is.na(BD$edad) # podemos ver si un objeto tiene valores missing</code></pre>
@@ -608,7 +613,7 @@ sink()</code></pre>
 </ul>
 <pre class="r"><code>load(file = &quot;example.rda&quot;) # carga los objetos guardados con el mismo nombre con el que fueron guardados; sobreescribe los objetos cargados con el mismo nombre</code></pre>
 <ul>
-<li>Antes explicamos que la sintaxis de R se guarda en un archivo de texto con la extensión <code>.r</code>, que se puede ejecutar fácilmente desde RStudio, o que se puede cargar también desde R. Otra manera de ejecutarlo es a través de la función <code>source</code>. Por ejemplo <code>source(&quot;fichero.r)</code>.</li>
+<li>Antes explicamos que la sintaxis de R se guarda en un archivo de texto con la extensión <code>.r</code>, que se puede ejecutar fácilmente desde RStudio, o que se puede cargar también desde R. Otra manera de ejecutarlo es a través de la función <code>source</code>. Por ejemplo <code>source(&quot;fichero.r&quot;)</code>.</li>
 </ul>
 </div>
 <div id="ayuda-de-r" class="section level2">
@@ -945,7 +950,7 @@ iris %&gt;%
 <ul>
 <li>Podemos tener bases de datos con una fila para cada individuo y tantas columnas como observaciones por variable;</li>
 <li>O bien, podemos tener bases de datos con tantas filas como observaciones se hayan hecho a todos los individuos y una columna por variable;</li>
-<li>Y podemos cambiar de uuna a otra pivotando:</li>
+<li>Y podemos cambiar de una a otra pivotando:</li>
 </ul>
 <pre class="r"><code>library(tidyr)
 
@@ -1016,7 +1021,7 @@ identical(anscombe,anscombe3)</code></pre>
 <li>Dataset: anscombe</li>
 <li>Imaginamos que <code>x1-x4</code> son 4 observaciones de la variable <code>x</code>, e <code>y1-y4</code> son 4 observaciones de la variable <code>y</code>.</li>
 <li>Queremos saber, para cada individuo, cuántas veces la observación de <code>y</code> es menor que la observación de <code>x</code> y mayor o igual que la última observación de <code>x</code> (<code>x4</code>).</li>
-<li>2 soluciones usando los pivotajes anteriores y una solución usando la librería <code>purrr</code></li>
+<li>Una solución usando los pivotajes anteriores y una solución usando la librería <code>purrr</code></li>
 </ul></li>
 <li>Sampleo: conservar al azar un determinado porcentaje de la muestra</li>
 </ul>
@@ -1050,7 +1055,7 @@ median(iris$Sepal.Length) # Mediana
 min(iris$Sepal.Length) # Mínimo
 max(iris$Sepal.Length) # Máximo
 range(iris$Sepal.Length) # Rango
-quantile(iris$Sepal.Length, probs = c(0.025, 0.975)) # Cuantiles</code></pre>
+quantile(iris$Sepal.Length, probs = c(0.025, 0.975)) # Cuartiles</code></pre>
 <ul>
 <li>Con la función <code>summary()</code> obtenemos un resumen descriptivo de una variable o bien de todas las variables de un data.frame:</li>
 </ul>
