@@ -238,6 +238,7 @@ ejemplolista[[5]][2]
 
 * Se pueden conocer los objetos que tenemos cargados en R (los objetos de R con los que podemos trabajar en este momento) con la función `ls()`
 * También podemos eliminar objetos cargados
+
 ```{r, echo=TRUE}
 
 ls() 
@@ -306,10 +307,10 @@ as.numeric(FALSE) # un objeto lógico se puede coercionar a uno numérico
 as.numeric(TRUE)
 
 strDates <- c("01/05/1965", "08/16/1975")
-dates <- as.Date(strDates, "%m/%d/%Y") # damos formato de fecha a objeto de clase carácter
+dates <- as.Date(strDates, "%m/%d/%Y") # damos formato de fecha a objetos de clase carácter
 
 strDates2 <- c("01-05-1965", "08-16-1975")
-dates <- as.Date(strDates2, "%m-%d-%Y") # damos formato de fecha a objeto de clase carácter
+dates <- as.Date(strDates2, "%m-%d-%Y") # damos formato de fecha a objetos de clase carácter
 
 
 is.na(BD$edad_BD) # podemos ver si un objeto tiene valores missing
@@ -1009,7 +1010,6 @@ identical(anscombe,anscombe3)
     + Una solución usando los pivotajes anteriores y una solución usando la librería `purrr`
 
 ```{r, echo=FALSE}
-
 
 # solucion 1
 

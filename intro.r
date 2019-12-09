@@ -17,6 +17,7 @@ edad <- c(23,24)
 varon <- c(TRUE,FALSE)
 estatura <- c(1.77, 1.64) # entre los objetos y las comas puede haber espacios
 
+length(edad)
 estatura[2]
 
 ### Factores
@@ -100,7 +101,10 @@ as.numeric(FALSE) # un objeto lógico se puede coercionar a uno numérico
 as.numeric(TRUE)
 
 strDates <- c("01/05/1965", "08/16/1975")
-dates <- as.Date(strDates, "%m/%d/%Y") # damos formato de fecha a objetor de clase carácter
+dates <- as.Date(strDates, "%m/%d/%Y") # damos formato de fecha a objetos de clase carácter
+
+strDates2 <- c("01-05-1965", "08-16-1975")
+dates <- as.Date(strDates2, "%m-%d-%Y") # damos formato de fecha a objetos de clase carácter
 
 
 is.na(BD$edad) # podemos ver si un objeto tiene valores missing
@@ -173,6 +177,7 @@ while (length(x) > 5) {
 x <- 4       # asignamos el nombre x al objeto 4
 w <- "x"     # guardamos el nombre x en la variable w
 x
+w
 get(w)       # con la función get recuperamos el objeto asignado al nombre (x) guardado en la variable w
 assign(w,5)  # asignamos el valor 5 al caracter guardado en w (x)
 get(w)
@@ -589,21 +594,6 @@ identical(anscombe,anscombe3)
 
 anscombe %>%
   tibble::rownames_to_column('id') %>% # asignamos un número a cada individuo
-  pivot_longer(cols = c(starts_with("y")),
-               names_to = "observacion",
-               names_prefix = "y",
-               values_to = "y") %>% # pivotamos creando una columna observacion que nos dice la observacion de y
-  group_by(id) %>% # agrupamos por individuo
-  mutate(his_y = sum(y < get(paste0("x",observacion)) & y >= x4)) %>% # calculamos cuántas observaciones cumplen la condición por grupo (individuo)
-  # recordamos que con la función get obtenemos el valor de xi para la observación i
-  ungroup() %>%
-  pivot_wider(names_from = "observacion", values_from = "y", names_prefix = "y") %>% # se transforma al formato original
-  as.data.frame()
-
-# solucion 2
-
-anscombe %>%
-  tibble::rownames_to_column('id') %>% # asignamos un número a cada individuo
   pivot_longer(cols = c(starts_with("x"),starts_with("y")),
                names_to = c(".value", "id_cases"),
                names_pattern = "([a-z]+)([0-9]+)") %>% # pivotamos creando dos columnas con las observaciones respectivas de x e y
@@ -613,7 +603,7 @@ anscombe %>%
   pivot_wider(names_from = "id_cases", values_from = c("x","y"), names_sep = "") %>%  # se transforma al formato original
   as.data.frame()
 
-# solución 3
+# solución 2
 
 library(purrr)
 ?map_dfc
@@ -656,7 +646,7 @@ median(iris$Sepal.Length) # Mediana
 min(iris$Sepal.Length) # Mínimo
 max(iris$Sepal.Length) # Máximo
 range(iris$Sepal.Length) # Rango
-quantile(iris$Sepal.Length, probs = c(0.025, 0.975)) # Cuantiles
+quantile(iris$Sepal.Length, probs = c(0.025, 0.975)) # Cuartiles
 
 
 summary(iris$Sepal.Length) 
