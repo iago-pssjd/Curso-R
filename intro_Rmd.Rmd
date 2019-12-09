@@ -133,7 +133,7 @@ estatura <- 1.77
 * Todos los elementos del vector han de ser del mismo tipo:
 * Se crean y se unen con la función `c(...)`
 * vector[i] para acceder al i-ésimo elemento del vector
-* Para saber la longitud del vector, es decir, cuantos elementos tiene, usamos la función `lenght()`
+* Para saber la longitud del vector, es decir, cuantos elementos tiene, usamos la función `length()`
 
 ```{r, echo=TRUE}
 
