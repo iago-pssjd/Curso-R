@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -156,6 +155,7 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -466,7 +466,7 @@ ejemplolista[[5]][2]</code></pre>
 <li>También podemos eliminar objetos cargados</li>
 </ul>
 <pre class="r"><code>ls() 
-rm(x, ejemplolista) # para eliminar objetos del entorno
+rm(f, ford) # para eliminar objetos del entorno
 ls()</code></pre>
 </div>
 </div>
@@ -514,7 +514,7 @@ strDates &lt;- c(&quot;01/05/1965&quot;, &quot;08/16/1975&quot;)
 dates &lt;- as.Date(strDates, &quot;%m/%d/%Y&quot;) # damos formato de fecha a objetor de clase carácter
 
 
-is.na(BD$edad_BD) # podemos ver si un objeto tiene valores missing</code></pre>
+is.na(BD$edad) # podemos ver si un objeto tiene valores missing</code></pre>
 <ul>
 <li>Se pueden crear secuencias de números facilmente</li>
 </ul>
@@ -542,6 +542,8 @@ paste0(&quot;a&quot;, x, &quot;b&quot;, 3)
 paste0(&quot;x&quot;, c(1:10))
 paste0(c(&quot;a&quot;,&quot;b&quot;), c(1,2))
 names(BD) &lt;- paste0(names(BD),&quot;_BD&quot;)
+names(BD)
+names(BD) &lt;- c(&quot;nombre&quot;,&quot;edad&quot;,&quot;varon&quot;,&quot;estatura&quot;)
 names(BD)</code></pre>
 <ul>
 <li>Para aplicar una función a una matriz/data.frame/lista R dispone de las funciones de la familia apply:
