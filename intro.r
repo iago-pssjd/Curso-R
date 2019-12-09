@@ -99,6 +99,10 @@ as.numeric("a") # al revés, no
 as.numeric(FALSE) # un objeto lógico se puede coercionar a uno numérico
 as.numeric(TRUE)
 
+strDates <- c("01/05/1965", "08/16/1975")
+dates <- as.Date(strDates, "%m/%d/%Y") # damos formato de fecha a objetor de clase carácter
+
+
 is.na(BD$edad_BD) # podemos ver si un objeto tiene valores missing
 
 
@@ -198,6 +202,7 @@ load(file = "example.rda") # carga los objetos guardados con el mismo nombre con
 
 help(print)
 ?cat
+?as.POSIXct
 
 ## Librerías
 
@@ -239,6 +244,7 @@ y %% x # residuo
 # exp()
 # sqrt()
 # factorial()
+round(21.53667674,3)
 
 3 == 4
 3 == 3
@@ -694,7 +700,8 @@ ggplot(SW, aes(x = mass, y = height)) +
   geom_point()
 
 ggplot(SW, aes(x = mass, y = height, colour = "red")) + 
-  geom_point()
+  geom_point() + 
+  annotate("text", label = paste("cor:", round(cor(SW$height,SW$mass, use = "complete.obs"),3)), x = 1000, y = 250)
 
 ggplot(SW, aes(x = mass, y = height, colour = gender)) + 
   geom_point()
@@ -712,6 +719,8 @@ ggplot(BD, aes(x=nombre,y=edad)) + geom_point() + theme(axis.text.x = element_te
 ggplot(dta_data2, aes(x=Age)) + geom_histogram()
 
 ggplot(dta_data2, aes(x=Age)) + geom_histogram(color = "green", fill = "blue", bins = 50)
+
+ggplot(dta_data2, aes(x=Age)) + geom_histogram(color = "green", fill = "blue", bins = 50) + ylab("Frecuencia") + ggtitle("Histograma de edad")
 
 ### Boxplot
 
