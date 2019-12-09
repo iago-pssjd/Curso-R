@@ -63,7 +63,7 @@ ejemplolista[[5]][2]
 
 
 ls() 
-rm(x, ejemplolista) # para eliminar objetos del entorno
+rm(f, ford) # para eliminar objetos del entorno
 ls()
 
 ## Funciones básicas
@@ -103,7 +103,7 @@ strDates <- c("01/05/1965", "08/16/1975")
 dates <- as.Date(strDates, "%m/%d/%Y") # damos formato de fecha a objetor de clase carácter
 
 
-is.na(BD$edad_BD) # podemos ver si un objeto tiene valores missing
+is.na(BD$edad) # podemos ver si un objeto tiene valores missing
 
 
 # Enteros consecutivos
@@ -129,6 +129,8 @@ paste0("a", x, "b", 3)
 paste0("x", c(1:10))
 paste0(c("a","b"), c(1,2))
 names(BD) <- paste0(names(BD),"_BD")
+names(BD)
+names(BD) <- c("nombre","edad","varon","estatura")
 names(BD)
 
 
