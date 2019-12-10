@@ -391,7 +391,7 @@ mapply(paste, 1:4, 4:1)
 
 * Condiciones y loops
 
-```{r, echo=FALSE}
+```{r, echo=TRUE}
 
 x <- "R"
 
@@ -418,7 +418,7 @@ while (length(x) > 5) {
 
 * A veces conviene guardar el nombre de un objeto en una variable y trabajar con la misma.
 
-```{r, echo=FALSE}
+```{r, echo=TRUE}
 
 x <- 4       # asignamos el nombre x al objeto 4
 w <- "x"     # guardamos el nombre x en la variable w
@@ -780,7 +780,7 @@ band_members %>% full_join(band_instruments2, by = c("name" = "artist"))
 
 * Añadir filas: para fusionar dos bases de datos verticalmente se utiliza la función `rbind()`. Para ello es necesario que ambas bases de datos tengan exactamente las mismas variables pero no es necesario que esten en el mismo orden.
 
-```{r}
+```{r, echo=TRUE}
 
 BD <- data.frame(nombre = c("Luis","Maria","Jesus"), edad = c(23,24,50), varon = c(TRUE,FALSE, TRUE), estatura = c(1.77,1.64,1.50))
 
@@ -901,7 +901,7 @@ iris %>%
 
 * Datos agrupados
 
-```{r, echo=FALSE}
+```{r, echo=TRUE}
 
 mtcars
 mtcars %>%
@@ -1017,7 +1017,7 @@ identical(anscombe,anscombe3)
     + Queremos saber, para cada individuo, cuántas veces la observación de `y` es menor que la observación de `x` y mayor o igual que la última observación de `x` (`x4`).
     + Una solución usando los pivotajes anteriores y una solución usando la librería `purrr`
 
-```{r, echo=FALSE}
+```{r, echo=TRUE}
 
 # solucion 1
 
