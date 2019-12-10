@@ -182,6 +182,29 @@ ejema[1,1]
 
 ```
 
+
+
+### Listas
+
+* Una lista es un objeto consistente en una colección ordenada de objetos que se suelen llamar componentes.
+* No es necesario que los componentes sean del mismo tipo, ni de la misma longitud: una lista puede estar compuesta de, por ejemplo, un vector numérico de tamaño 2, un valor lógico, un vector de tamaño 3, una matriz y una función.
+* Se construyen con la función `list()`
+* La selección de elementos se hace con doble corchete.
+* El corchete simple se utiliza para seleccionar una sublista.
+
+
+```{r, echo=TRUE}
+
+ejemplolista <- list(nombre="Pedro", casado=T, esposa="Maria", no.hijos=3, edad.hijos=c(4,7,9))
+ejemplolista
+
+ejemplolista[[5]]
+
+ejemplolista[[5]][2]
+
+```
+
+
 ### Data frames
 
 **¿Cómo deben estar organizadas las filas/columnas en bases de datos longitudinales para leerlas con R? (I)**
@@ -209,28 +232,6 @@ BD$nombre
 BD[1,2]
 BD[1,]
 BD[,2]
-
-```
-
-
-
-### Listas
-
-* Una lista es un objeto consistente en una colección ordenada de objetos que se suelen llamar componentes.
-* No es necesario que los componentes sean del mismo tipo, ni de la misma longitud: una lista puede estar compuesta de, por ejemplo, un vector numérico de tamaño 2, un valor lógico, un vector de tamaño 3, una matriz y una función.
-* Se construyen con la función `list()`
-* La selección de elementos se hace con doble corchete.
-* El corchete simple se utiliza para seleccionar una sublista.
-
-
-```{r, echo=TRUE}
-
-ejemplolista <- list(nombre="Pedro", casado=T, esposa="Maria", no.hijos=3, edad.hijos=c(4,7,9))
-ejemplolista
-
-ejemplolista[[5]]
-
-ejemplolista[[5]][2]
 
 ```
 
@@ -318,7 +319,7 @@ is.na(BD$edad) # podemos ver si un objeto tiene valores missing
 ```
 
 
-* Se pueden crear secuencias de números facilmente
+* Se pueden crear secuencias de números fácilmente
 
 ```{r, echo=TRUE}
 
@@ -357,6 +358,33 @@ names(BD)
 ```
 
 
+* Condiciones y loops
+
+```{r, echo=TRUE}
+
+x <- "R"
+
+if(x==5){
+  x <- x+2
+} else if (x=="R"){
+  cat("El programa se llama",x)
+} else{
+  cat("Qué es ",x,"?", sep = "")
+}
+
+for(i in 1:10){
+  print(2*i)
+}
+
+x <- c(20:5)
+
+while (length(x) > 5) {
+  print(x)
+  x <- x[-1]
+}
+
+```
+
 
 * Para aplicar una función a una matriz/data.frame/lista R dispone de las funciones de la familia apply: 
     + lapply: Devuelve una lista de resultados al aplicar una función a un vector o lista.
@@ -383,36 +411,9 @@ mapply(paste, 1:4, 4:1)
 ```
 
 
-* Condiciones y loops
-
-```{r, echo=FALSE}
-
-x <- "R"
-
-if(x==5){
-  x <- x+2
-} else if (x=="R"){
-  cat("El programa se llama",x)
-} else{
-  cat("Qué es ",x,"?", sep = "")
-}
-
-for(i in 1:10){
-  print(2*i)
-}
-
-x <- c(20:5)
-
-while (length(x) > 5) {
-  print(x)
-  x <- x[-1]
-}
-
-```
-
 * A veces conviene guardar el nombre de un objeto en una variable y trabajar con la misma.
 
-```{r, echo=FALSE}
+```{r, echo=TRUE}
 
 x <- 4       # asignamos el nombre x al objeto 4
 w <- "x"     # guardamos el nombre x en la variable w
@@ -428,7 +429,9 @@ get(w)
 
 * El entorno de R tiene como referencia un directorio concreto. Esto nos permite no tener que introducir la dirección de la carpeta cuando queremos acceder a algún elemento de esta (por ejemplo, bases de datos)
 * Para saber qué directorio es se utiliza la función `getwd()`
-* Para cambiar el directorio se utiliza la función `setwd()`. De manera alternativa, `Session > Set Working Directory > Choose Directory`
+* Para cambiar el directorio se utiliza la función `setwd()`. De maneras alternativa: 
+    + `Session > Set Working Directory > Choose Directory`
+    + `Session > Set Working Directory > To Source File Location`
 
 ```{r, echo=TRUE}
 
@@ -772,9 +775,9 @@ band_members %>% full_join(band_instruments2, by = c("name" = "artist"))
 ```
 
 
-* Añadir filas: para fusionar dos bases de datos verticalmente se utiliza la función `rbind()`. Para ello es necesario que ambas bases de datos tengan exactamente las mismas variables pero no es necesario que esten en el mismo orden.
+* Añadir filas/columnas a un data frame
 
-```{r}
+```{r, echo=TRUE}
 
 BD <- data.frame(nombre = c("Luis","Maria","Jesus"), edad = c(23,24,50), varon = c(TRUE,FALSE, TRUE), estatura = c(1.77,1.64,1.50))
 
@@ -895,7 +898,7 @@ iris %>%
 
 * Datos agrupados
 
-```{r, echo=FALSE}
+```{r, echo=TRUE}
 
 mtcars
 mtcars %>%
@@ -937,15 +940,11 @@ library(tidyr)
 dta_data
 dta_data %>% 
   group_by(cars) %>% 
-  mutate(wave=dplyr::row_number())
+  mutate(wave=row_number())
 
 dta_data %>% 
   group_by(cars) %>% 
-  mutate(wave=dplyr::row_number())
-
-dta_data %>% 
-  group_by(cars) %>% 
-  mutate(wave=dplyr::row_number()) %>%  # si no tenemos una variable que indique la ola y suponemos que los datos empizar desde la primera hasta que se acaban, la creamos
+  mutate(wave=dplyr::row_number()) %>%  # si no tenemos una variable que indique la ola y suponemos que los datos empiezan desde la primera hasta que se acaban, la creamos
   # ungroup() %>% 
   pivot_wider(names_from = wave, values_from = "hhsize", names_prefix = "hhsize_wave")
 
@@ -1011,7 +1010,7 @@ identical(anscombe,anscombe3)
     + Queremos saber, para cada individuo, cuántas veces la observación de `y` es menor que la observación de `x` y mayor o igual que la última observación de `x` (`x4`).
     + Una solución usando los pivotajes anteriores y una solución usando la librería `purrr`
 
-```{r, echo=FALSE}
+```{r, echo=TRUE}
 
 # solucion 1
 
