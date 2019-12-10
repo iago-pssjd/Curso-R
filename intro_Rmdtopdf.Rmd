@@ -4,10 +4,16 @@ author: "Laia Egea e Iago Giné"
 date: "10-12/12/2019"
 abstract: "El objetivo de este curso es introducir el software R a todas las personas que trabajen con datos y darles las herramientas para el manejo y visualización de datos, así como para algunos análisis estadísticos básicos."
 output: 
-  html_notebook:
+  pdf_document:
     toc: yes
 
 ---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```
+
 
 # Presentación del entorno R y Rstudio
 
@@ -23,42 +29,42 @@ output:
         * Ofrece otras posibilidades más allá de R como crear páginas web, pdf's o archivos word con R integrado, que va más allá de este curso.
 
 * Entre las consecuencias de lo ampliamente usado de R está que podemos encontrar en internet muchos tutoriales introductorios en cualquier idioma:
-    * [http://rosuda.org/mitarbeiter/pilhoefer/rkurs2.pdf]
-    * [http://b2slab.upc.edu/software-and-tutorials/r-nutshell/]
-    * [https://www.cyclismo.org/tutorial/R/index.html]
-    * [https://www.uv.es/vcoll/preliminares.html]
-    * [http://people.math.aau.dk/~sorenh/misc/rdocs/Rintro-notes.pdf]
+    * <http://rosuda.org/mitarbeiter/pilhoefer/rkurs2.pdf>
+    * <http://b2slab.upc.edu/software-and-tutorials/r-nutshell/>
+    * <https://www.cyclismo.org/tutorial/R/index.html>
+    * <https://www.uv.es/vcoll/preliminares.html>
+    * <http://people.math.aau.dk/~sorenh/misc/rdocs/Rintro-notes.pdf>
     * en la pestaña Resources de la web de [RStudio](https://rstudio.com/)
     * [otros](https://github.com/iago-pssjd/Curso-R/archive/v1.5.zip)
 
 * ... y foros:
-    + principalmente [https://stackoverflow.com/questions/tagged/r]
-    + para cuestiones relacionadas con RStudio, pero también con las librerías de la familia tidyverse y otros: [https://community.rstudio.com/]
+    + principalmente <https://stackoverflow.com/questions/tagged/r>
+    + para cuestiones relacionadas con RStudio, pero también con las librerías de la familia tidyverse y otros: <https://community.rstudio.com/>
 
 * ... y blogs:
-    + principalmente: [https://www.r-bloggers.com/]
-    + [https://statisticsglobe.com/r-programming-language/]
+    + principalmente: <https://www.r-bloggers.com/>
+    + <https://statisticsglobe.com/r-programming-language/>
     + enfocados a la estadística, pero no sólo (de hecho, diría que los siguientes son los mejores): 
-        * [http://www.sthda.com/english/]
-        * [http://www.flutterbys.com.au/stats/course.html]
-        * [http://www.r-tutor.com/](http://www.r-tutor.com/sitemap)
+        * <http://www.sthda.com/english/>
+        * <http://www.flutterbys.com.au/stats/course.html>
+        * <http://www.r-tutor.com/>(http://www.r-tutor.com/sitemap)
     + enfocado a la investigación en psicología:
-        * [http://personality-project.org/r/](http://personality-project.org/r/)
-    + centrado en RStudio: [https://support.rstudio.com/hc/en-us]
-    + [https://www.statmethods.net/index.html]
-    + [https://www.datacamp.com/community/tags/r-programming]
+        * <http://personality-project.org/r/>(http://personality-project.org/r/)
+    + centrado en RStudio: <https://support.rstudio.com/hc/en-us>
+    + <https://www.statmethods.net/index.html>
+    + <https://www.datacamp.com/community/tags/r-programming>
     
 * ... y sobre librerías o materias específicas:
     + sobre librerías en general:
-        * [https://rdrr.io/]
-        * [https://www.maths.lancs.ac.uk/~rowlings/R/TaskViews/]
+        * <https://rdrr.io/>
+        * <https://www.maths.lancs.ac.uk/~rowlings/R/TaskViews/>
     + gráficas en general:
-        * [https://www.r-graph-gallery.com/]
+        * <https://www.r-graph-gallery.com/>
     + formas de mostrar descriptivos:
-        * [https://dabblingwithdata.wordpress.com/2018/01/02/my-favourite-r-package-for-summarising-data/]
+        * <https://dabblingwithdata.wordpress.com/2018/01/02/my-favourite-r-package-for-summarising-data/>
 
 
-* ... e incluso multitud de libros que podéis encontrar en [https://bookdown.org/]
+* ... e incluso multitud de libros que podéis encontrar en <https://bookdown.org/>
 
 * ... además de diversos cursos online (MOOC's) en plataformas como Coursera, edX, etc.
 
@@ -68,7 +74,7 @@ output:
     + [R](https://www.r-project.org/), [CRAN](https://cran.r-project.org/)
     + las publicaciones del projecto: [R News](https://www.r-project.org/doc/Rnews/index.html) (2001 - 2008) y [R Journal](https://journal.r-project.org/archive/) (2009 - presente)
     + [R Forge](https://r-forge.r-project.org/)
-    + [https://stat.ethz.ch/R-manual/]
+    + <https://stat.ethz.ch/R-manual/>
 
 * Entonces, este curso, para qué?
 
@@ -106,7 +112,8 @@ output:
 nombre <- "Luis"
 nombre # para ver el contenido de un objeto, basta escribir su nombre
 varon <- TRUE
-edad <- 23; edad # se pueden introducir diferentes instrucciones en una misma línea separadas por ; (indiferentemente de los espacios en blanco en medio)
+# se pueden introducir diferentes instrucciones en una misma línea separadas por ;
+edad <- 23; edad  # indiferentemente de los espacios en blanco en medio
 estatura <- 1.77
 
 ```
@@ -182,8 +189,6 @@ ejema[1,1]
 
 ```
 
-
-
 ### Listas
 
 * Una lista es un objeto consistente en una colección ordenada de objetos que se suelen llamar componentes.
@@ -195,7 +200,11 @@ ejema[1,1]
 
 ```{r, echo=TRUE}
 
-ejemplolista <- list(nombre="Pedro", casado=T, esposa="Maria", no.hijos=3, edad.hijos=c(4,7,9))
+ejemplolista <- list(nombre="Pedro", 
+                     casado=T, 
+                     esposa="Maria", 
+                     no.hijos=3, 
+                     edad.hijos=c(4,7,9))
 ejemplolista
 
 ejemplolista[[5]]
@@ -219,7 +228,10 @@ ejemplolista[[5]][2]
 
 ```{r, echo=TRUE}
 
-BD <- data.frame(nombre = c("Luis","Maria","Jesus"), edad = c(23,24,50), varon = c(TRUE,FALSE, TRUE), estatura = c(1.77,1.64,1.50))
+BD <- data.frame(nombre = c("Luis","Maria","Jesus"), 
+                 edad = c(23,24,50), 
+                 varon = c(TRUE,FALSE, TRUE), 
+                 estatura = c(1.77,1.64,1.50))
 BD
 
 dim(BD)
@@ -234,6 +246,7 @@ BD[1,]
 BD[,2]
 
 ```
+
 
 
 
@@ -308,10 +321,12 @@ as.numeric(FALSE) # un objeto lógico se puede coercionar a uno numérico
 as.numeric(TRUE)
 
 strDates <- c("01/05/1965", "08/16/1975")
-dates <- as.Date(strDates, "%m/%d/%Y") # damos formato de fecha a objetos de clase carácter
+# damos formato de fecha a objetos de clase carácter
+dates <- as.Date(strDates, "%m/%d/%Y") 
 
 strDates2 <- c("01-05-1965", "08-16-1975")
-dates <- as.Date(strDates2, "%m-%d-%Y") # damos formato de fecha a objetos de clase carácter
+# damos formato de fecha a objetos de clase carácter
+dates <- as.Date(strDates2, "%m-%d-%Y") 
 
 
 is.na(BD$edad) # podemos ver si un objeto tiene valores missing
@@ -419,7 +434,9 @@ x <- 4       # asignamos el nombre x al objeto 4
 w <- "x"     # guardamos el nombre x en la variable w
 x
 w
-get(w)       # con la función get recuperamos el objeto asignado al nombre (x) guardado en la variable w
+# con la función get recuperamos el objeto asignado al nombre (x) 
+# guardado en la variable w
+get(w)       
 assign(w,5)  # asignamos el valor 5 al caracter guardado en w (x)
 get(w)
 
@@ -467,7 +484,8 @@ rm(x, ejema)
 test_table <- table(BD$edad,BD$varon)
 
 sink("output.log") # se crea el fichero donde se quieren guardar los resultados
-# si el fichero ya existe con resultados anteriores que no se quieren borrar, se tiene que poner sink("output.log", append = TRUE)
+# si el fichero ya existe con resultados anteriores que no se quieren borrar, 
+# se tiene que poner sink("output.log", append = TRUE)
 test_table
 cor.test(BD$edad,BD$estatura)
 sink()
@@ -479,7 +497,9 @@ sink()
 
 ```{r, echo=TRUE}
 
-load(file = "example.rda") # carga los objetos guardados con el mismo nombre con el que fueron guardados; sobreescribe los objetos cargados con el mismo nombre
+load(file = "example.rda") 
+# carga los objetos guardados con el mismo nombre con el que fueron guardados; 
+# sobreescribe los objetos cargados con el mismo nombre
 
 ```
 
@@ -631,7 +651,9 @@ str(df)
 df2 <- read.xlsx("readTest.xlsx", sheet = 3, skipEmptyRows = TRUE, detectDates = TRUE)
 str(df2)
 
-wb <- loadWorkbook("readTest.xlsx") # útil para trabajar con un fichero de excel y escribir en él junto a funciones como writeData y saveWorkbook
+wb <- loadWorkbook("readTest.xlsx") 
+# útil para trabajar con un fichero de excel y escribir en él 
+# junto a funciones como writeData y saveWorkbook
 df3 <- read.xlsx(wb, sheet = 2, skipEmptyRows = FALSE, colNames = TRUE)
 str(df3)
 df4 <- read.xlsx("readTest.xlsx", sheet = 2, skipEmptyRows = FALSE, colNames = TRUE)
@@ -705,8 +727,8 @@ sapply(sas_data,mode)
 **Neuroimagen - .nii**
 
 * Para saber más:
-    + [https://www.alexejgossmann.com/MRI_viz/]
-    + [https://johnmuschelli.com/]
+    + <https://www.alexejgossmann.com/MRI_viz/>
+    + <https://johnmuschelli.com/>
 
 ```{r, echo=TRUE}
 
@@ -729,19 +751,19 @@ ortho2(t1)
 
 **Prólogo: la librería `magrittr` y 3 pipas. Una gramática diferente**
 
-* Para saber más, [https://www.datacamp.com/community/tutorials/pipe-r-tutorial]
+* Para saber más, <https://www.datacamp.com/community/tutorials/pipe-r-tutorial>
 
 ```{r, echo=TRUE}
 
 head(names(sav_data))
 
-sav_data %>% # la pipa más habitual: envía los datos de la izquierda a la función que sigue (a la derecha o abajo) y retorna su evaluación
-  names() %>% # está incluida en la librería dplyr
-  head()
+sav_data %>% # la pipa más habitual: envía los datos de la izquierda a la función
+  names() %>% # que sigue (a la derecha o abajo) y retorna su evaluación
+  head() # está incluida en la librería dplyr
 
 sav_data %T>% # como la anterior, pero retorna de nuevo los datos de la izquierda
-  View() %>% # sirve para usar los datos en más de una función, cuando las intermedias no retornan nada, como View, plot, ...
-  names() %>%
+  View() %>% # sirve para usar los datos en más de una función
+  names() %>% # cuando las intermedias no retornan nada, como View, plot, ...
   head()
 
 sav_data %$% # para funciones sin un argumento para data.frame's
@@ -779,9 +801,16 @@ band_members %>% full_join(band_instruments2, by = c("name" = "artist"))
 
 ```{r, echo=TRUE}
 
-BD <- data.frame(nombre = c("Luis","Maria","Jesus"), edad = c(23,24,50), varon = c(TRUE,FALSE, TRUE), estatura = c(1.77,1.64,1.50))
+BD <- data.frame(nombre = c("Luis","Maria","Jesus"), 
+                 edad = c(23,24,50), 
+                 varon = c(TRUE,FALSE, TRUE), 
+                 estatura = c(1.77,1.64,1.50))
 
-BD2 <- data.frame(nombre = c("Julian", "Laura", "Cristina"), varon = c(TRUE,TRUE, FALSE), edad = c(20, 65, 41),estatura = c(1.6, 1.75, 1.72), peso = c(71,67,65))
+BD2 <- data.frame(nombre = c("Julian", "Laura", "Cristina"), 
+                  varon = c(TRUE,TRUE, FALSE), 
+                  edad = c(20, 65, 41),
+                  estatura = c(1.6, 1.75, 1.72), 
+                  peso = c(71,67,65))
 
 bind_rows(BD, BD2)
 
@@ -829,7 +858,8 @@ iris %>%
   class()
 
 iris %>%
-  filter(Species == "setosa") # el outpup de filter es el subdata.frame cumpliendo la condición dada
+  filter(Species == "setosa") # el outpup de filter es
+# el subdata.frame que cumple la condición dada
 
 # ordenar observaciones por una o más variables
 iris %>% arrange(Sepal.Length)
@@ -887,10 +917,10 @@ case_when(
 )
 
 iris %>%
-  mutate(size = case_when(
-    Sepal.Length < 5.0 ~ "small",
-    TRUE ~ "big"
-  )) %>% # case_when permite multiples outputs según las condiciones sin tener que recurrir a múltiples if-else y, a diferencia de una función de recode, permite condiciones complejas
+  mutate(size = case_when( # case_when permite multiples outputs según las condiciones
+    Sepal.Length < 5.0 ~ "small", # sin tener que recurrir a múltiples if-else
+    TRUE ~ "big"                  # y, a diferencia de una función de recode,
+  )) %>%                          # permite condiciones complejas
   head()
 
 ```
@@ -904,9 +934,9 @@ mtcars
 mtcars %>%
   group_by(cyl) %>%
   summarise(disp = mean(disp),
-            hp = mean(hp),
-            n = n(),
-            distinct_gear = n_distinct(gear)) # medias por grupo, casos en cada grupo y observaciones diferentes en cada grupo
+            hp = mean(hp), # medias por grupo,
+            n = n(),  # casos en cada grupo
+            distinct_gear = n_distinct(gear)) # y observaciones diferentes en cada grupo
 
 md_data %>%
   group_by(Age) %>%
@@ -916,7 +946,9 @@ md_data %>%
 
 md_data %>%
   group_by(Age) %>%
-  mutate(rmaxR = max(Response), maxR = max(Response, na.rm = TRUE), fR = sum(Response, na.rm = TRUE)) %>%
+  mutate(rmaxR = max(Response), 
+         maxR = max(Response, na.rm = TRUE), 
+         fR = sum(Response, na.rm = TRUE)) %>%
   ungroup() %>%
   View() #estadísticos por grupo añadidos al data frame original
 
@@ -946,10 +978,11 @@ dta_data %>%
   group_by(cars) %>% 
   mutate(wave=dplyr::row_number())
 
+# si no tenemos una variable que indique la ola
+# y suponemos que los datos empiezan desde la primera hasta que se acaban, la creamos
 dta_data %>% 
   group_by(cars) %>% 
-  mutate(wave=dplyr::row_number()) %>%  # si no tenemos una variable que indique la ola y suponemos que los datos empiezan desde la primera hasta que se acaban, la creamos
-  # ungroup() %>% 
+  mutate(wave=dplyr::row_number()) %>%    # ungroup() %>% 
   pivot_wider(names_from = wave, values_from = "hhsize", names_prefix = "hhsize_wave")
 
 ```
@@ -961,6 +994,7 @@ data("anscombe")
 anscombe
 anscombe %>%
   tibble::rownames_to_column('id')
+
 # 1) pasar de forma ancha a larga las x's
 
 anscombe %>%
@@ -1020,13 +1054,13 @@ identical(anscombe,anscombe3)
 
 anscombe %>%
   tibble::rownames_to_column('id') %>% # asignamos un número a cada individuo
-  pivot_longer(cols = c(starts_with("x"),starts_with("y")),
-               names_to = c(".value", "id_cases"),
-               names_pattern = "([a-z]+)([0-9]+)") %>% # pivotamos creando dos columnas con las observaciones respectivas de x e y
-  group_by(id) %>% # agrupamos por individuo
-  mutate(his_y = sum(y < x & y >= x[id_cases == 4])) %>% # calculamos cuántas observaciones cumplen la condición por grupo (individuo)
-  ungroup() %>%
-  pivot_wider(names_from = "id_cases", values_from = c("x","y"), names_sep = "") %>%  # se transforma al formato original
+  pivot_longer(cols = c(starts_with("x"),starts_with("y")), # pivotamos creando 2 columnas
+               names_to = c(".value", "id_cases"), # con las observaciones de x e y
+               names_pattern = "([a-z]+)([0-9]+)") %>%
+  group_by(id) %>% # agrupamos por individuo: luego calculamos por grupo (individuo)
+  mutate(his_y = sum(y < x & y >= x[id_cases == 4])) %>% #cuántas obs cumplen la condición
+  ungroup() %>% # luego se transforma al formato original
+  pivot_wider(names_from = "id_cases", values_from = c("x","y"), names_sep = "") %>% 
   as.data.frame()
 
 # solución 2
@@ -1035,8 +1069,10 @@ library(purrr)
 ?map_dfc
 
 # map_dfc crea un data.frame de 4 columnas (1:4) y tantas filas como el original, anscombe
-# el valor en la columna i es TRUE o FALSE según se cumple o no la condición yi < xi & yi >= x4
-# con rowSums, sumamos para cada fila del data frame creado cuántas veces se cumple la condición
+# el valor en la columna i es TRUE o FALSE según se cumple o no la condición 
+# yi < xi & yi >= x4
+# con rowSums, sumamos para cada fila del data frame creado 
+# cuántas veces se cumple la condición
 
 anscombe %>%
   mutate(hist_y = rowSums(map_dfc(
@@ -1050,7 +1086,8 @@ anscombe %>%
 
 ```{r, echo=TRUE}
 
-?sample # tanto la función de R sample como las funciones de dplyr sample_n y sample_frac son interesantes
+?sample # tanto la función de R sample 
+# como las funciones de dplyr sample_n y sample_frac son interesantes
 
 
 iris %>%
@@ -1124,7 +1161,7 @@ table(starwars$gender)
 ```
 
 
-* Para arreglarlo hay que añadir `na.rm = TRUE` para funciones de estadística descriptiva o useNA = 'always' o 'ifany'. 
+* Para arreglarlo hay que añadir `na.rm = TRUE` para funciones de estadística descriptiva o `useNA = 'always'` o `useNA = 'ifany'`. 
 
 ```{r, echo=TRUE}
 
@@ -1155,7 +1192,7 @@ table(starwars$hair_color, starwars$eye_color)
     + `ggplot()`: Crea un gráfico nuevo
     + `aes()`: Especifica cómo y qué variables intervendrán en todo el gráfico
     + `+`: Añade capas
-* Para saber más, [http://www.sthda.com/english/wiki/ggplot2-essentials].
+* Para saber más, <http://www.sthda.com/english/wiki/ggplot2-essentials>.
 
 ### Gráfico de puntos
 
@@ -1178,7 +1215,9 @@ ggplot(SW, aes(x = mass, y = height)) +
 
 ggplot(SW, aes(x = mass, y = height, colour = "red")) + 
   geom_point() + 
-  annotate("text", label = paste("cor:", round(cor(SW$height,SW$mass, use = "complete.obs"),3)), x = 1000, y = 250)
+  annotate("text", 
+           label = paste("cor:", round(cor(SW$height,SW$mass, use = "complete.obs"),3)), 
+           x = 1000, y = 250)
 
 ggplot(SW, aes(x = mass, y = height, colour = gender)) + 
   geom_point()
@@ -1186,10 +1225,14 @@ ggplot(SW, aes(x = mass, y = height, colour = gender)) +
 ggplot(SW, aes(x = mass, y = height, colour = gender, size=birth_year, alpha = 0.5)) + 
   geom_point(shape=23)
 
-ggplot(SW, aes(x = mass, y = height, colour = gender, fill = gender, size=birth_year, alpha = 0.5)) + 
+ggplot(SW, 
+       aes(x = mass, y = height, 
+           colour = gender, fill = gender, size = birth_year, alpha = 0.5)) + 
   geom_point(shape=23)
 
-ggplot(BD, aes(x=nombre,y=edad)) + geom_point() + theme(axis.text.x = element_text(angle = 10))
+ggplot(BD, aes(x=nombre,y=edad)) + 
+  geom_point() + 
+  theme(axis.text.x = element_text(angle = 10))
 
 ```
 
@@ -1201,7 +1244,10 @@ ggplot(dta_data2, aes(x=Age)) + geom_histogram()
 
 ggplot(dta_data2, aes(x=Age)) + geom_histogram(color = "green", fill = "blue", bins = 50)
 
-ggplot(dta_data2, aes(x=Age)) + geom_histogram(color = "green", fill = "blue", bins = 50) + ylab("Frecuencia") + ggtitle("Histograma de edad")
+ggplot(dta_data2, aes(x=Age)) + 
+  geom_histogram(color = "green", fill = "blue", bins = 50) + 
+  ylab("Frecuencia") + 
+  ggtitle("Histograma de edad")
 
 ```
 
@@ -1230,7 +1276,8 @@ SW %>%
 # Para guardar el último gráfico generado
 ggsave(filename = "graf.tiff", dpi = "print")
 
-#para más información sobre cómo especificar el tamaño o qué otros formatos de imagen admite:
+#para más información sobre cómo especificar el tamaño 
+# o qué otros formatos de imagen admite:
 ?ggsave
 
 # Si previamente se ha guardado un gráfico mediante
@@ -1269,7 +1316,8 @@ t.test(iris$Sepal.Length, iris$Sepal.Width, alternative = "two.sided", mu = 2.8)
 
 ```{r, echo=TRUE}
 
-wilcox.test(x = iris$Sepal.Length, y = iris$Sepal.Width, alternative = "two.sided", mu = 0,
+wilcox.test(x = iris$Sepal.Length, y = iris$Sepal.Width, 
+            alternative = "two.sided", mu = 0,
             paired = FALSE, conf.int = 0.95)
 
 ```
@@ -1325,9 +1373,12 @@ summary(anova)
 
 pairs(SW)
 
-# Se puede crear una gráfica similar creada a partir de ggplot gracias a la función ggpairs de la librería GGally
+# Se puede crear una gráfica similar creada a partir de ggplot 
+# gracias a la función ggpairs de la librería GGally
 
-ggplot(SW, aes(x = mass, y = height)) + geom_point(shape = 1)+ scale_x_continuous(breaks = seq(0, 1400,200))+theme_bw()
+ggplot(SW, aes(x = mass, y = height)) + 
+  geom_point(shape = 1)+ 
+  scale_x_continuous(breaks = seq(0, 1400,200))+theme_bw()
 
 mod0 <- lm(SW$height ~ SW$mass, data = iris)
 summary(mod0)
@@ -1335,11 +1386,13 @@ summary(mod0)
 mode(mod0)
 mod0$coefficients
 
-confint(object = mod0, level = 0.95 ) #Intervalo de confianza de los coeficientes de la regressión 
+# Intervalo de confianza de los coeficientes de la regressión 
+confint(object = mod0, level = 0.95 ) 
 
 plot(mod0) # Diagnóstico del modelo:
 
-# La librería ggfortify nos pemite crear gráficos equivalentes de diagnóstico del modelo a partir de ggplot, tanto para lm como para glm
+# La librería ggfortify nos pemite crear gráficos equivalentes de diagnóstico del modelo 
+# a partir de ggplot, tanto para lm como para glm
 
 library(ggfortify)
 autoplot(mod0, which = 1:6, ncol = 2, label.size = 3) # Diagnóstico del modelo:
@@ -1351,21 +1404,25 @@ autoplot(mod0, which = 1:6, ncol = 2, label.size = 3) # Diagnóstico del modelo:
 starwars$name[starwars$mass == 1358]
 
 SW <- SW[-which(starwars$mass == 1358),]
-ggplot(SW, aes(x = mass, y = height)) + geom_point(shape = 1)+ scale_x_continuous(breaks = seq(20, 160,20))+theme_bw()
+ggplot(SW, aes(x = mass, y = height)) + 
+  geom_point(shape = 1)+ 
+  scale_x_continuous(breaks = seq(20, 160,20)) +
+  theme_bw()
 
 mod0_1 <- lm(SW$height ~ SW$mass, data = iris)
 summary(mod0_1)
 
 mod0_1$coefficients
 
-confint(object = mod0_1, level = 0.95 ) #Intervalo de confianza de los coeficientes de la regressión 
+# Intervalo de confianza de los coeficientes de la regressión 
+confint(object = mod0_1, level = 0.95 ) 
 
 plot(mod0_1) # Diagnóstico del modelo:
 
 ```
 
 
-* $\text{height} = 103.5133 + 0.9327 \cdot \text{mass} $
+* $\text{height} = 103.5133 + 0.9327 \cdot \text{mass}$
 * Podemos graficarlo:
 
 ```{r, echo=TRUE}
@@ -1384,7 +1441,8 @@ ggplot(SW, aes(x = mass, y = height)) +
 
 ```{r, echo=TRUE}
 
-# Creamos un data.frame con los valores de la variable independiente de los que queremos hacer la predicción:
+# Creamos un data.frame 
+# con los valores de la variable independiente de los que queremos hacer la predicción:
 nuevas <- data.frame(mass = c(80, 60, 20))
 
 # Calculamos las predicciones:
@@ -1414,7 +1472,9 @@ predict(mod1, nuevas)
 SW$gender <- car::recode(SW$gender, "'none' = NA")
 SW$gender <- factor(SW$gender)
 
-mod2 <- glm(gender ~ height + mass + hair_color + eye_color + birth_year, data = SW, family="binomial")
+mod2 <- glm(gender ~ height + mass + hair_color + eye_color + birth_year, 
+            data = SW, 
+            family="binomial")
 summary(mod2)
 plot(mod2)
 
@@ -1432,17 +1492,24 @@ exp(mod2$coefficients)
 
 ```{r, echo=TRUE}
 
-lapply(paste('package:',names(sessionInfo()$otherPkgs),sep=""),detach,character.only=TRUE,unload=TRUE)
+lapply(
+  paste('package:',names(sessionInfo()$otherPkgs),sep=""),
+  detach,
+  character.only=TRUE, unload=TRUE)
 
 library(dplyr)
 library(plyr)
-?rename # con la ayuda podemos ver que esta función está en varias librerías actualmente cargadas
+?rename 
+# con la ayuda podemos ver que esta función está en varias librerías actualmente cargadas
 
 names(mtcars)
 names(rename(mtcars, x = gear)) # error
-names(dplyr::rename(mtcars, x = gear)) # especificamos que la función que queremos es la de dplyr
-names(plyr::rename(mtcars, x = gear)) # comprobamos que la función que estaba usando antes era la de plyr, ya que genera el mismo error
-rename <- dplyr::rename # otra solución es asignar al nombre la función de dplyr
+# especificamos que la función que queremos es la de dplyr
+names(dplyr::rename(mtcars, x = gear))
+# comprobamos antes estaba usando la función de plyr, ya que genera el mismo error
+names(plyr::rename(mtcars, x = gear)) 
+# otra solución es asignar al nombre la función de dplyr
+rename <- dplyr::rename 
 names(rename(mtcars, x = gear)) # ya no hay error
 
 

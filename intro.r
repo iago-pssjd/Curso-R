@@ -37,6 +37,16 @@ dim(ejema)
 
 ejema[1,1]
 
+### Listas
+
+ejemplolista <- list(nombre="Pedro", casado=T, esposa="Maria", no.hijos=3, edad.hijos=c(4,7,9))
+ejemplolista
+
+ejemplolista[[5]]
+
+ejemplolista[[5]][2]
+
+
 ### Data frames
 
 BD <- data.frame(nombre = c("Luis","Maria","Jesus"), edad = c(23,24,50), varon = c(TRUE,FALSE, TRUE), estatura = c(1.77,1.64,1.50))
@@ -52,15 +62,6 @@ BD$nombre
 BD[1,2]
 BD[1,]
 BD[,2]
-
-### Listas
-
-ejemplolista <- list(nombre="Pedro", casado=T, esposa="Maria", no.hijos=3, edad.hijos=c(4,7,9))
-ejemplolista
-
-ejemplolista[[5]]
-
-ejemplolista[[5]][2]
 
 
 ls() 
@@ -138,20 +139,6 @@ names(BD) <- c("nombre","edad","varon","estatura")
 names(BD)
 
 
-xlist <- list(a = 1:10, logic = c(TRUE,FALSE,FALSE,TRUE), b = c(1,0,0,1)); xlist
-
-lapply(xlist, quantile, probs = 1:3/4)
-sapply(xlist, quantile, probs = 1:3/4)
-
-x <- cbind(x1 = 3, x2 = c(4:1, 2:5)) # columnas enlazadas
-x; dimnames(x)
-dimnames(x)[[1]] <- letters[1:8]; x
-
-apply(x, 2, sum)
-apply(x, 1, sum)
-mapply(paste, 1:4, 4:1)
-
-
 x <- "R"
 
 if(x==5){
@@ -172,6 +159,20 @@ while (length(x) > 5) {
   print(x)
   x <- x[-1]
 }
+
+
+xlist <- list(a = 1:10, logic = c(TRUE,FALSE,FALSE,TRUE), b = c(1,0,0,1)); xlist
+
+lapply(xlist, quantile, probs = 1:3/4)
+sapply(xlist, quantile, probs = 1:3/4)
+
+x <- cbind(x1 = 3, x2 = c(4:1, 2:5)) # columnas enlazadas
+x; dimnames(x)
+dimnames(x)[[1]] <- letters[1:8]; x
+
+apply(x, 2, sum)
+apply(x, 1, sum)
+mapply(paste, 1:4, 4:1)
 
 
 x <- 4       # asignamos el nombre x al objeto 4
@@ -536,7 +537,7 @@ dta_data %>%
 
 dta_data %>% 
   group_by(cars) %>% 
-  mutate(wave=dplyr::row_number()) %>%  # si no tenemos una variable que indique la ola y suponemos que los datos empizar desde la primera hasta que se acaban, la creamos
+  mutate(wave=dplyr::row_number()) %>%  # si no tenemos una variable que indique la ola y suponemos que los datos empiezan desde la primera hasta que se acaban, la creamos
   # ungroup() %>% 
   pivot_wider(names_from = wave, values_from = "hhsize", names_prefix = "hhsize_wave")
 
