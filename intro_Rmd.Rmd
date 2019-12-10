@@ -35,7 +35,7 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
     * [https://www.uv.es/vcoll/preliminares.html]
     * [http://people.math.aau.dk/~sorenh/misc/rdocs/Rintro-notes.pdf]
     * en la pestaña Resources de la web de [RStudio](https://rstudio.com/)
-    * [otros](https://github.com/iago-pssjd/Curso-R/archive/v1.5.zip)
+    * [otros](https://tinyurl.com/ttgnglg)
 
 * ... y foros:
     + principalmente [https://stackoverflow.com/questions/tagged/r]
