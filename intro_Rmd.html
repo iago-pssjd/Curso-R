@@ -1011,15 +1011,11 @@ md_data %&gt;%
 dta_data
 dta_data %&gt;% 
   group_by(cars) %&gt;% 
-  mutate(wave=dplyr::row_number())
+  mutate(wave=row_number())
 
 dta_data %&gt;% 
   group_by(cars) %&gt;% 
-  mutate(wave=dplyr::row_number())
-
-dta_data %&gt;% 
-  group_by(cars) %&gt;% 
-  mutate(wave=dplyr::row_number()) %&gt;%  # si no tenemos una variable que indique la ola y suponemos que los datos empiezan desde la primera hasta que se acaban, la creamos
+  mutate(wave=row_number()) %&gt;%  # si no tenemos una variable que indique la ola y suponemos que los datos empiezan desde la primera hasta que se acaban, la creamos
   # ungroup() %&gt;% 
   pivot_wider(names_from = wave, values_from = &quot;hhsize&quot;, names_prefix = &quot;hhsize_wave&quot;)</code></pre>
 <pre class="r"><code>data(&quot;anscombe&quot;)
