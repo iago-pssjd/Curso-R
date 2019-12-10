@@ -943,6 +943,7 @@ md_data %>%
 
 library(tidyr)
 
+dta_data
 dta_data %>% 
   group_by(cars) %>% 
   mutate(wave=row_number())
