@@ -573,9 +573,38 @@ apply(x, 2, sum)
 apply(x, 1, sum)
 mapply(paste, 1:4, 4:1)</code></pre>
 <ul>
-<li><p>Condiciones y loops</p></li>
-<li><p>A veces conviene guardar el nombre de un objeto en una variable y trabajar con la misma.</p></li>
+<li>Condiciones y loops</li>
 </ul>
+<pre class="r"><code>x &lt;- &quot;R&quot;
+
+if(x==5){
+  x &lt;- x+2
+} else if (x==&quot;R&quot;){
+  cat(&quot;El programa se llama&quot;,x)
+} else{
+  cat(&quot;Qué es &quot;,x,&quot;?&quot;, sep = &quot;&quot;)
+}
+
+for(i in 1:10){
+  print(2*i)
+}
+
+x &lt;- c(20:5)
+
+while (length(x) &gt; 5) {
+  print(x)
+  x &lt;- x[-1]
+}</code></pre>
+<ul>
+<li>A veces conviene guardar el nombre de un objeto en una variable y trabajar con la misma.</li>
+</ul>
+<pre class="r"><code>x &lt;- 4       # asignamos el nombre x al objeto 4
+w &lt;- &quot;x&quot;     # guardamos el nombre x en la variable w
+x
+w
+get(w)       # con la función get recuperamos el objeto asignado al nombre (x) guardado en la variable w
+assign(w,5)  # asignamos el valor 5 al caracter guardado en w (x)
+get(w)</code></pre>
 </div>
 <div id="directorio" class="section level2">
 <h2>Directorio</h2>
@@ -943,8 +972,29 @@ iris %&gt;%
   )) %&gt;% # case_when permite multiples outputs según las condiciones sin tener que recurrir a múltiples if-else y, a diferencia de una función de recode, permite condiciones complejas
   head()</code></pre>
 <ul>
-<li><p>Datos agrupados</p></li>
-<li><p>Pivotaje</p></li>
+<li>Datos agrupados</li>
+</ul>
+<pre class="r"><code>mtcars
+mtcars %&gt;%
+  group_by(cyl) %&gt;%
+  summarise(disp = mean(disp),
+            hp = mean(hp),
+            n = n(),
+            distinct_gear = n_distinct(gear)) # medias por grupo, casos en cada grupo y observaciones diferentes en cada grupo
+
+md_data %&gt;%
+  group_by(Age) %&gt;%
+  summarise(rmaxR = max(Response), 
+            maxR = max(Response, na.rm = TRUE), 
+            fR = sum(Response, na.rm = TRUE)) # sumario por grupo
+
+md_data %&gt;%
+  group_by(Age) %&gt;%
+  mutate(rmaxR = max(Response), maxR = max(Response, na.rm = TRUE), fR = sum(Response, na.rm = TRUE)) %&gt;%
+  ungroup() %&gt;%
+  View() #estadísticos por grupo añadidos al data frame original</code></pre>
+<ul>
+<li>Pivotaje</li>
 </ul>
 <p><strong>¿Cómo deben estar organizadas las filas/columnas en bases de datos longitudinales para leerlas con R? (II)</strong></p>
 <ul>
@@ -1023,6 +1073,35 @@ identical(anscombe,anscombe3)</code></pre>
 <li>Queremos saber, para cada individuo, cuántas veces la observación de <code>y</code> es menor que la observación de <code>x</code> y mayor o igual que la última observación de <code>x</code> (<code>x4</code>).</li>
 <li>Una solución usando los pivotajes anteriores y una solución usando la librería <code>purrr</code></li>
 </ul></li>
+</ul>
+<pre class="r"><code># solucion 1
+
+anscombe %&gt;%
+  tibble::rownames_to_column('id') %&gt;% # asignamos un número a cada individuo
+  pivot_longer(cols = c(starts_with(&quot;x&quot;),starts_with(&quot;y&quot;)),
+               names_to = c(&quot;.value&quot;, &quot;id_cases&quot;),
+               names_pattern = &quot;([a-z]+)([0-9]+)&quot;) %&gt;% # pivotamos creando dos columnas con las observaciones respectivas de x e y
+  group_by(id) %&gt;% # agrupamos por individuo
+  mutate(his_y = sum(y &lt; x &amp; y &gt;= x[id_cases == 4])) %&gt;% # calculamos cuántas observaciones cumplen la condición por grupo (individuo)
+  ungroup() %&gt;%
+  pivot_wider(names_from = &quot;id_cases&quot;, values_from = c(&quot;x&quot;,&quot;y&quot;), names_sep = &quot;&quot;) %&gt;%  # se transforma al formato original
+  as.data.frame()
+
+# solución 2
+
+library(purrr)
+?map_dfc
+
+# map_dfc crea un data.frame de 4 columnas (1:4) y tantas filas como el original, anscombe
+# el valor en la columna i es TRUE o FALSE según se cumple o no la condición yi &lt; xi &amp; yi &gt;= x4
+# con rowSums, sumamos para cada fila del data frame creado cuántas veces se cumple la condición
+
+anscombe %&gt;%
+  mutate(hist_y = rowSums(map_dfc(
+    1:4,
+    ~ get(paste0(&quot;y&quot;,.)) &lt; get(paste0(&quot;x&quot;,.)) &amp; get(paste0(&quot;y&quot;,.)) &gt;= x4
+  ), na.rm = T)) </code></pre>
+<ul>
 <li>Sampleo: conservar al azar un determinado porcentaje de la muestra</li>
 </ul>
 <pre class="r"><code>?sample # tanto la función de R sample como las funciones de dplyr sample_n y sample_frac son interesantes
