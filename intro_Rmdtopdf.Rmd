@@ -797,7 +797,7 @@ band_members %>% full_join(band_instruments2, by = c("name" = "artist"))
 ```
 
 
-* Añadir filas: para fusionar dos bases de datos verticalmente se utiliza la función `rbind()`. Para ello es necesario que ambas bases de datos tengan exactamente las mismas variables pero no es necesario que esten en el mismo orden.
+* Añadir filas/columnas a un data frame
 
 ```{r, echo=TRUE}
 
