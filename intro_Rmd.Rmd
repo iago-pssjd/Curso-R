@@ -188,6 +188,29 @@ ejema[1,1]
 
 ```
 
+
+
+### Listas
+
+* Una lista es un objeto consistente en una colección ordenada de objetos que se suelen llamar componentes.
+* No es necesario que los componentes sean del mismo tipo, ni de la misma longitud: una lista puede estar compuesta de, por ejemplo, un vector numérico de tamaño 2, un valor lógico, un vector de tamaño 3, una matriz y una función.
+* Se construyen con la función `list()`
+* La selección de elementos se hace con doble corchete.
+* El corchete simple se utiliza para seleccionar una sublista.
+
+
+```{r, echo=TRUE}
+
+ejemplolista <- list(nombre="Pedro", casado=T, esposa="Maria", no.hijos=3, edad.hijos=c(4,7,9))
+ejemplolista
+
+ejemplolista[[5]]
+
+ejemplolista[[5]][2]
+
+```
+
+
 ### Data frames
 
 **¿Cómo deben estar organizadas las filas/columnas en bases de datos longitudinales para leerlas con R? (I)**
@@ -215,28 +238,6 @@ BD$nombre
 BD[1,2]
 BD[1,]
 BD[,2]
-
-```
-
-
-
-### Listas
-
-* Una lista es un objeto consistente en una colección ordenada de objetos que se suelen llamar componentes.
-* No es necesario que los componentes sean del mismo tipo, ni de la misma longitud: una lista puede estar compuesta de, por ejemplo, un vector numérico de tamaño 2, un valor lógico, un vector de tamaño 3, una matriz y una función.
-* Se construyen con la función `list()`
-* La selección de elementos se hace con doble corchete.
-* El corchete simple se utiliza para seleccionar una sublista.
-
-
-```{r, echo=TRUE}
-
-ejemplolista <- list(nombre="Pedro", casado=T, esposa="Maria", no.hijos=3, edad.hijos=c(4,7,9))
-ejemplolista
-
-ejemplolista[[5]]
-
-ejemplolista[[5]][2]
 
 ```
 
@@ -324,7 +325,7 @@ is.na(BD$edad) # podemos ver si un objeto tiene valores missing
 ```
 
 
-* Se pueden crear secuencias de números facilmente
+* Se pueden crear secuencias de números fácilmente
 
 ```{r, echo=TRUE}
 
@@ -363,32 +364,6 @@ names(BD)
 ```
 
 
-
-* Para aplicar una función a una matriz/data.frame/lista R dispone de las funciones de la familia apply: 
-    + lapply: Devuelve una lista de resultados al aplicar una función a un vector o lista.
-    + sapply: Devuelve un vector de resultados al aplicar una función a un vector o lista.
-    + apply: Devuelve el vector o la lista de valores obtenidos aplicando una función a un vector o matriz por grupos.
-    + tapply: Devuelve una lista con los resultados obtenidos al aplicar una función a un vector por grupos.
-    + mapply: Devuelve un vector resultado de aplicar una función a tuplas de elementos en paralelo.
-
-```{r, echo=TRUE}
-
-xlist <- list(a = 1:10, logic = c(TRUE,FALSE,FALSE,TRUE), b = c(1,0,0,1)); xlist
-
-lapply(xlist, quantile, probs = 1:3/4)
-sapply(xlist, quantile, probs = 1:3/4)
-
-x <- cbind(x1 = 3, x2 = c(4:1, 2:5)) # columnas enlazadas
-x; dimnames(x)
-dimnames(x)[[1]] <- letters[1:8]; x
-
-apply(x, 2, sum)
-apply(x, 1, sum)
-mapply(paste, 1:4, 4:1)
-
-```
-
-
 * Condiciones y loops
 
 ```{r, echo=TRUE}
@@ -416,6 +391,32 @@ while (length(x) > 5) {
 
 ```
 
+
+* Para aplicar una función a una matriz/data.frame/lista R dispone de las funciones de la familia apply: 
+    + lapply: Devuelve una lista de resultados al aplicar una función a un vector o lista.
+    + sapply: Devuelve un vector de resultados al aplicar una función a un vector o lista.
+    + apply: Devuelve el vector o la lista de valores obtenidos aplicando una función a un vector o matriz por grupos.
+    + tapply: Devuelve una lista con los resultados obtenidos al aplicar una función a un vector por grupos.
+    + mapply: Devuelve un vector resultado de aplicar una función a tuplas de elementos en paralelo.
+
+```{r, echo=TRUE}
+
+xlist <- list(a = 1:10, logic = c(TRUE,FALSE,FALSE,TRUE), b = c(1,0,0,1)); xlist
+
+lapply(xlist, quantile, probs = 1:3/4)
+sapply(xlist, quantile, probs = 1:3/4)
+
+x <- cbind(x1 = 3, x2 = c(4:1, 2:5)) # columnas enlazadas
+x; dimnames(x)
+dimnames(x)[[1]] <- letters[1:8]; x
+
+apply(x, 2, sum)
+apply(x, 1, sum)
+mapply(paste, 1:4, 4:1)
+
+```
+
+
 * A veces conviene guardar el nombre de un objeto en una variable y trabajar con la misma.
 
 ```{r, echo=TRUE}
@@ -434,7 +435,9 @@ get(w)
 
 * El entorno de R tiene como referencia un directorio concreto. Esto nos permite no tener que introducir la dirección de la carpeta cuando queremos acceder a algún elemento de esta (por ejemplo, bases de datos)
 * Para saber qué directorio es se utiliza la función `getwd()`
-* Para cambiar el directorio se utiliza la función `setwd()`. De manera alternativa, `Session > Set Working Directory > Choose Directory`
+* Para cambiar el directorio se utiliza la función `setwd()`. De maneras alternativa: 
+    + `Session > Set Working Directory > Choose Directory`
+    + `Session > Set Working Directory > To Source File Location`
 
 ```{r, echo=TRUE}
 
@@ -951,7 +954,7 @@ dta_data %>%
 
 dta_data %>% 
   group_by(cars) %>% 
-  mutate(wave=dplyr::row_number()) %>%  # si no tenemos una variable que indique la ola y suponemos que los datos empizar desde la primera hasta que se acaban, la creamos
+  mutate(wave=dplyr::row_number()) %>%  # si no tenemos una variable que indique la ola y suponemos que los datos empiezan desde la primera hasta que se acaban, la creamos
   # ungroup() %>% 
   pivot_wider(names_from = wave, values_from = "hhsize", names_prefix = "hhsize_wave")
 
@@ -964,6 +967,7 @@ data("anscombe")
 anscombe
 anscombe %>%
   tibble::rownames_to_column('id')
+
 # 1) pasar de forma ancha a larga las x's
 
 anscombe %>%
