@@ -529,15 +529,11 @@ library(tidyr)
 dta_data
 dta_data %>% 
   group_by(cars) %>% 
-  mutate(wave=dplyr::row_number())
+  mutate(wave=row_number())
 
 dta_data %>% 
   group_by(cars) %>% 
-  mutate(wave=dplyr::row_number())
-
-dta_data %>% 
-  group_by(cars) %>% 
-  mutate(wave=dplyr::row_number()) %>%  # si no tenemos una variable que indique la ola y suponemos que los datos empiezan desde la primera hasta que se acaban, la creamos
+  mutate(wave=row_number()) %>%  # si no tenemos una variable que indique la ola y suponemos que los datos empiezan desde la primera hasta que se acaban, la creamos
   # ungroup() %>% 
   pivot_wider(names_from = wave, values_from = "hhsize", names_prefix = "hhsize_wave")
 
