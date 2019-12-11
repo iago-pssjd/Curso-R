@@ -34,6 +34,7 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
     * <https://www.cyclismo.org/tutorial/R/index.html>
     * <https://www.uv.es/vcoll/preliminares.html>
     * <http://people.math.aau.dk/~sorenh/misc/rdocs/Rintro-notes.pdf>
+    * <https://cran.r-project.org/doc/contrib/Verzani-SimpleR.pdf>
     * en la pestaña Resources de la web de [RStudio](https://rstudio.com/)
     * [otros](https://tinyurl.com/ttgnglg)
 
