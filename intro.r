@@ -703,6 +703,16 @@ ggplot(SW, aes(x = mass, y = height, colour = gender, fill = gender, size=birth_
 
 ggplot(BD, aes(x=nombre,y=edad)) + geom_point() + theme(axis.text.x = element_text(angle = 10))
 
+ggplot(mtcars, aes(wt, mpg, label = rownames(mtcars), colour = factor(cyl))) +
+  geom_point() +
+  geom_text()
+
+library(ggrepel)
+
+ggplot(mtcars, aes(wt, mpg, label = rownames(mtcars), colour = factor(cyl))) +
+  geom_point() +
+  geom_text_repel()
+
 ### Gráfico de histogramas
 
 ggplot(dta_data2, aes(x=Age)) + geom_histogram()
