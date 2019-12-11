@@ -1152,7 +1152,7 @@ table(starwars$hair_color, starwars$eye_color)
     + `ggplot()`: Crea un gráfico nuevo
     + `aes()`: Especifica cómo y qué variables intervendrán en todo el gráfico
     + `+`: Añade capas
-* Otras librerías amplían las posibilidades de `ggplot`: `GGally`,`ggfortify`,`ggpmisc`,`ggstance`,`ggpubr`,`ggrepel`,...
+* Otras librerías amplían las posibilidades de `ggplot`: `GGally`, `ggfortify`, `ggpmisc`, `ggstance`, `ggpubr`, `ggrepel`, ...
 * Para saber más, [http://www.sthda.com/english/wiki/ggplot2-essentials].
 
 ### Gráfico de puntos
