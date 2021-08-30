@@ -1,0 +1,380 @@
+Introducción a R
+========================================================
+author: Iago Giné Vázquez
+date: 2021-09-13
+autosize: true
+width: 2560
+height: 1440
+css: RCP.css
+
+
+```{r include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+options(width=180, tibble.width=130)
+```
+
+
+The R Project for Statistical Computing
+========================================================
+
+<img src="https://www.r-project.org/logo/Rlogo.svg" width="200" height="200">
+<!-- ![Alt text](https://www.r-project.org/logo/Rlogo.svg) -->
+
+- https://www.r-project.org
+- Software estadístico libre, abierto y gratuito
+- Miles de librerías y proyectos complementan el software base en distintas plataformas:
+  + https://cran.r-project.org/
+  + https://r-forge.r-project.org/
+  + https://www.bioconductor.org/
+- Una gran comunidad de usuarios escribe en blogs y foros:
+  + https://www.r-bloggers.com/
+  + https://rweekly.org/
+  + https://stackoverflow.com/questions/tagged/r
+- Por qué R?
+  + Porque podéis escribir las instrucciones en R scripts, y ejecutarlas todas de una vez, sin tener que memorizar y repetir cada uno de los pasos.
+  + Porque en Internet podréis encontrar solución a (casi) todos los problemas que os encontréis
+  + Porque podréis personalizar/modificar cada instrucción con las opciones deseadas.
+  + Porque podéis trabajar con más de una base de datos abierta simultáneamente y no tienen que estar guardadas en un formato específico para poder abrirlas.
+
+
+
+R como calculadora
+========================================================
+- R es esencialmente una consola en la que el cursor se sitúa tras el símbolo `>`. Ahí se escriben las instrucciones. Se ejecutan con `Enter`.
+- Para empezar, R permite realizar las operaciones de cualquier calculadora científico.
+- Incluye además instrucciones específicas para operaciones estadísticas.
+
+<img src="Rterm2.png" width="1200" height="100%">
+
+
+Necesitamos un editor
+========================================================
+- Más práctico: ejecutar múltiples operaciones simultáneamente.
+- Para ello: se escriben todas en un fichero de texto simple, pero con extensión `.r` en lugar de `.txt`.
+- Es suficiente un editor de texto simple. En Windows: **Bloc de notas** (en OS X: **TextEdit**).
+- Otros editores facilitan la introducción y ejecución de las instrucciones.
+- Ej.: **Notepad++**, **Sublime Text**, **Visual Studio Code**, **Geany**, **Nano**, **Emacs**, **VIM**, ...
+- Enfocado al uso de **R** y el más usado para ello: **RStudio** (nombre del editor y de la empresa que lo produce y comercializa).
+  + RStudio no es software libre, aunque su edición básica es de código abierto y gratuita.
+  + https://www.rstudio.com/
+  
+<img src="4panels1.png">
+
+Algunas nociones sobre RStudio
+========================================================
+- Las instrucciones en el R-script en RStudio se ejecutan con `Control+Enter`
+
+<img src="4panels2.png" width = "100%">
+
+Qué nos encontraremos en R?
+========================================================
+- Objetos elementales de las siquientes clases:
+    + Lógicos (`TRUE` y `FALSE`)
+    + Numéricos
+    + Cadenas de caracteres
+- Se pueden crear objetos más complejos añadiéndoles atributos, como pueden ser las dimensiones o las etiquetas, o modificando su estructura.
+- A partir de los anteriores se pueden crear objetos compuestos con diferentes estructuras, como pueden ser: 
+    + Vectores
+      * Todos los elementos del vector han de ser de la misma clase.
+      * Se crean y se unen con la función `c(...)`
+      * Se usa `vector[i]` para acceder al i-ésimo elemento del vector
+      * Una matriz es un vector con 2 dimensiones
+    + Factores (para las variables categóricas; pueden ser o no ordenados)
+    + Listas (colección ordenada de objetos no necesariamente del mismo tipo)
+    + Data frames (para las bases de datos)
+- R es un lenguaje orientado a objetos. Para asignar nombre a los objetos usamos el símbolo `<-`
+- Funciones: evalúan objetos. La evaluación de un objeto `x` con una función `f` se codifica `f(x)`. Por ejemplo, para conocer la clase, estructura y atributos de un objeto `x` escribiríamos `class(x)`, `str(x)` y `attributes(x)` respectivamente.
+- R dispone de una ayuda muy completa sobre todas las funciones, procedimientos y elementos que configuran el lenguaje
+- Se puede acceder a ella con la función `help()` o mediante `?`. Por ejemplo, `help(class)` o `?attributes`.
+- Se pueden escribir comentarios (secciones de código que el programa no ejecuta), situando antes un símbolo `#`
+- Los missings en R se representan con el símbolo `NA` (cualquier clase de objetos) o también  `NaN` (objetos numéricos).
+
+
+Empecemos
+========================================================
+```{r, echo=TRUE, eval=FALSE}
+install.packages("tidyverse") # instala la librería tidyverse, que a su vez instala las librerías dplyr, tidyr, haven, y otras
+#getwd() # Cuál es el directorio de trabajo actual?
+setwd("~/Documents/PSSJD/Curso-R/") # En qué directorio de trabajo nos situamos ahora
+```
+
+O bien, mediante RStudio:
++ Panel `Packages > Install`
++ `Session > Set Working Directory > Choose Directory`
++ `Session > Set Working Directory > To Source File Location`
+
+Cómo abriríamos la base de datos en Stata? El comando `use` la copia a la memoria
+```{stata}
+. use “data_curs_stat\Estudi_pob_w1.dta”, clear
+```
+Y en R? Usaremos la librería `haven`.
+```{r eval=TRUE}
+library(haven)
+#help(package = "haven") # Informémonos acerca de la librería haven
+#?read_dta # ayuda de la función read_dta
+read_dta("data_curs_stat/Estudi_pob_w1.dta")
+
+```
+
+Primeros pasos con una base de datos (I)
+========================================================
+La función `read_dta` abre la base de datos, pero a diferencia de la instrucción `use` en Stata, no la copia a memoria. Así, si en Stata el podríamos ejecutar `describe` o `summarize`, si en R ejecutamos una función como `summary` el resultado es la propia función.
+```{r eval=TRUE}
+summary
+```
+
+Tenemos que evaluar la función `summary` en la base de datos que abrimos con `read_dta`:
+```{r eval=TRUE}
+summary(read_dta("data_curs_stat/Estudi_pob_w1.dta"))
+```
+
+Primeros pasos con una base de datos (II)
+========================================================
+No es práctico. Asignamos la base de datos a una variable que llamamos `dataw1`:
+```{r eval=TRUE}
+dataw1 <- read_dta("data_curs_stat/Estudi_pob_w1.dta")
+#summary(dataw1)
+#str(dataw1)
+class(dataw1)
+head(dataw1) # primeras (6) filas
+#head(dataw1, 3) # primeras 3 filas
+#tail(dataw1) # últimas (6) filas
+```
+
+**Ejercicio 1**: 
+
+*Usando las funciones `setwd` y `read_dta` convenientemente (hay varias posibilidades), guardar también las bases de datos `Estudi_pob_w2.dta` y `Estudi_pob_w3.dta` en dos variables que llamaremos `dataw2` y `dataw3`.*
+
+Acceso a las variables de una base de datos: `$` y `[[`
+========================================================
+```{r eval=TRUE}
+# dataw1$phys_hea1
+# dataw1[["phys_hea1"]]
+class(dataw1$phys_hea1) # double quiere decir que está guardada como una variable numérica
+#summary(dataw1$phys_hea1)
+str(dataw1$phys_hea1)
+#attributes(dataw1$phys_hea1)
+table(dataw1$phys_hea1)
+#?table
+table(dataw1$phys_hea1, useNA = "ifany")
+prop.table(table(dataw1$phys_hea1))
+```
+
+Transformación de variables (I)
+========================================================
+- La función `as.factor` permite transformar a una variable categórica
+```{r eval=TRUE}
+class(as.factor(dataw1$phys_hea1))
+table(as.factor(dataw1$phys_hea1), useNA = "ifany")
+```
+
+- La función `as_factor` de la librería `haven` permite transformar a una variable categórica con las etiquetas como categorías
+```{r eval=TRUE}
+class(as_factor(dataw1$phys_hea1))
+table(as_factor(dataw1$phys_hea1), useNA = "ifany")
+```
+
+Guardamos la transformación en la base de datos. Para ello usaremos la función `mutate` de la librería `dplyr`, que permite realizar varias transformaciones separadas por comas
+```{r eval=TRUE}
+library(dplyr)
+#?mutate
+
+dataw1 <- dataw1 %>% #partimos de la base de datos dataw1 y entonces
+  mutate(phys_hea1 = as_factor(phys_hea1)) # transformamos la variable y la guardamos con el mismo nombre
+
+# finalmente la base de datos queda guardada con el mismo nombre mediante la asignación inicial (dataw1 <- ...)
+```
+
+Transformación de variables (II)
+========================================================
+La variable `number_id` está guardada como cadena, pero, siendo un número, quizás preferimos guardarla como numérica, igual que q0002_hhid. Para ello podemos usar la función `as.numeric`.
+```{r}
+#class(dataw1$q0002_hhid)
+#class(dataw1$number_id)
+#?as.numeric
+```
+
+
+Varias transformaciones seguidas las podemos evaluar:
+- Aplicando varias veces `mutate`:
+```{r eval=TRUE}
+
+dataw1 <- dataw1 %>% #partimos de la base de datos dataw1 y entonces
+  mutate(phys_hea1 = as_factor(phys_hea1))  %>% # transformamos la variable phys_hea1 y la guardamos con el mismo nombre, y entonces
+  mutate(dep1 = as_factor(dep1)) %>% # transformamos la variable dep1 y la guardamos con el mismo nombre
+  mutate(q0002_hhid = as.numeric(q0002_hhid)) # transformamos la variable q0002_hhid y la guardamos con el mismo nombre
+
+```
+
+- Pero en lugar de eso, habitualmente se separan las instrucciones por comas en un sólo `mutate`:
+```{r eval=TRUE}
+
+dataw1 <- dataw1 %>% #partimos de la base de datos dataw1 y entonces
+  mutate(phys_hea1 = as_factor(phys_hea1), dep1 = as_factor(dep1), q0002_hhid = as.numeric(q0002_hhid)) # transformamos las variables phys_hea1,  dep1 y q0002_hhid y las guardamos con los mismos nombres
+
+```
+- O bien, cuando estamos aplicando la misma transformación (en este caso `as_factor`) a varias variables (y guardándolas con el mismo nombre), podemos usar `across(vector de variables, función)` dentro de `mutate`:
+```{r eval=TRUE}
+dataw1 <- dataw1 %>% #partimos de la base de datos dataw1 y entonces
+  mutate(across(c(phys_hea1, dep1), as_factor), q0002_hhid = as.numeric(q0002_hhid)) # evaluamos as_factor a través de las variables phys_hea1 y dep1 y transformamos también q0002_hhid
+
+```
+
+
+**Ejercicio 2**: 
+
+*Buscar todas las variables categóricas en las 3 bases de datos y transformar estas bases de datos de manera que esas variables sean factores. Mostrar las frecuencias de las categorías de algunas de esas variables. Transformar la variable `q0002_hhid` o `number_id` o ambas de manera que ambas tengan la misma clase (para ello pueden usarse funciones como `as.character`, `as.numeric`, `as.integer` o `as.factor`; véase la ayuda para cada una de ellas).*
+
+
+
+Otras operaciones con funciones de la librería `dplyr`
+========================================================
+- Ejemplo 1
+
+```{r eval=TRUE}
+
+dataw1 %>% #partimos de la base de datos dataw1 y entonces
+  select(number_id, hea1, dep1) %>% # mantenemos sólo las columnas number_id, hea1 y dep1, y entonces
+  mutate(dep1 = as_factor(dep1)) %>% # transformamos la variable  dep1 y la guardamos con el mismo nombre, y entonces
+  filter(dep1 == "Yes") %>% # nos quedamos con las filas de quienes padecen depresión, y entonces
+  arrange(desc(hea1)) %>% # ordenamos las filas por de mayor a menor valor de estado de salud, y entonces
+  head(3) # nos quedamos con los 3 pacientes con depresión con mayor valor de Health state
+
+```
+
+- Ejemplo 2
+
+```{r eval=TRUE}
+
+dataw1 %>% #partimos de la base de datos dataw1 y entonces
+  select(number_id, hea1, dep1) %>% # mantenemos sólo las columnas number_id, hea1 y dep1, y entonces
+  mutate(dep1 = as_factor(dep1)) %>% # transformamos la variable  dep1 y la guardamos con el mismo nombre, y entonces
+  group_by(dep1) %>% # agrupamos por las categorías de depresión, y entonces
+  summarise(mean_hea1 = mean(hea1, na.rm = TRUE), n = n()) # calculamos la media de hea1 para cada categoría de depresión y el número de observaciones por cada categoría
+
+```
+
+Nota: usamos `na.rm = TRUE` dentro de `mean` para que calcule la media de aquellos valores que no son missing. En caso contrario, cuando hay missings el resultado es `NA`.
+Nota: Todo lo anterior se puede realizar también con funciones de R sin necesidad de acudir a la librería `dplyr`, pero no tenemos posibilidades como el uso de `across`, o las alternativas pueden ser más complejas.
+
+
+```{r echo=FALSE}
+dataw1 |> # partimos de la base de datos dataw1 y entonces
+  subset(select = c(hea1, dep1)) |> # mantenemos sólo las columnas hea1 y dep1, y entonces
+  transform(dep1 = as_factor(dep1)) |>  # transformamos la variable  dep1 y la guardamos con el mismo nombre, y entonces
+  stats:::aggregate.formula(formula = hea1 ~ dep1, FUN = "mean") # calculamos la media de hea1 para cada categoría de depresión
+```
+
+```{r echo=FALSE, eval=TRUE}
+dataw2 <- read_dta("data_curs_stat/Estudi_pob_w2.dta")
+dataw3 <- read_dta("data_curs_stat/Estudi_pob_w3.dta")
+
+```
+
+
+Variables y dimensiones de las bbdd
+========================================================
+```{r eval=TRUE}
+names(dataw1)
+dim(dataw1)
+names(dataw2)
+dim(dataw2)
+names(dataw3)
+dim(dataw3)
+```
+
+Fusión (merge) de bbdd (I)
+========================================================
+
+Características (clase y missings) de la variable `q0002_hhid`:
+
+```{r eval=TRUE}
+#?is.na
+class(dataw1$q0002_hhid); class(dataw2$q0002_hhid); #class(dataw3$q0002_hhid)
+table(is.na(dataw1$q0002_hhid)) # contamos el número de missings de q0002_hhid en dataw1
+table(is.na(dataw2$q0002_hhid)) # contamos el número de missings de q0002_hhid en dataw2
+table(is.na(dataw3$q0002_hhid)) # contamos el número de missings de q0002_hhid en dataw3
+```
+
+Clases de la variable `number_id`
+```{r eval=TRUE}
+
+class(dataw1$number_id); #class(dataw2$number_id); class(dataw3$number_id)
+
+```
+
+
+Fusión (merge) de bbdd (II)
+========================================================
+Missings de la variable `number_id`. Como es una una cadena, puede ser vacía (`""`), que sería como un missing. En efecto:
+```{r eval=TRUE}
+table(is.na(dataw1$number_id)) # contamos el número de missings de number_id en dataw1
+table(dataw1$number_id == ""); table(is.na(as.numeric(dataw1$number_id))) # contamos el número de cadenas vacías y el número de cadenas que no codifican números
+```
+
+```{r eval=TRUE}
+table(is.na(dataw2$number_id)) # contamos el número de missings de number_id en dataw2
+table(dataw2$number_id == ""); table(is.na(as.numeric(dataw2$number_id))) # contamos el número de cadenas vacías y el número de cadenas que no codifican números
+```
+
+Fusión (merge) de bbdd (III)
+========================================================
+
+```{r eval=TRUE}
+table(is.na(dataw3$number_id)) # contamos el número de missings de number_id en dataw3
+table(dataw3$number_id == ""); table(is.na(as.numeric(dataw3$number_id))) # contamos el número de cadenas vacías y el número de cadenas que no codifican números
+```
+
+```{r}
+dataw2 <- dataw2 %>%
+  filter(number_id != "") %>%
+  mutate(number_id = as.numeric(number_id))
+dataw3 <- dataw3 %>%
+  filter(number_id != "") %>%
+  mutate(number_id = as.numeric(number_id))
+
+
+```
+
+
+Fusión (merge) de bbdd (IV)
+========================================================
+
+```{r eval=TRUE}
+data <- dataw1 %>% # partimos de la base de datos dataw1 y entonces
+  full_join(dataw2, by = c("q0002_hhid", "number_id")) %>% # unimos horizontalmente con todas las observaciones de dataw2 con q0002_hhid y number_id iguales a los de dataw1 y añadimos las nuevas, y entonces
+  full_join(dataw3, by = c("q0002_hhid", "number_id"))# unimos horizontalmente con todas las observaciones de dataw3 con q0002_hhid y number_id iguales a los que ya había y añadimos las nuevas
+names(data)
+dim(data)
+```
+
+```{r}
+?full_join
+```
+
+**Ejercicio 3**:
+
+Con `full_join` creamos una base de datos resultado de fusionar las 3 iniciales e incluír todas las observaciones de cada una de ellas. Mirando en la ayuda, este ejercicio consiste en fusionar las 3 bases de datos, pero incluyendo sólo aquellas observaciones de id's comunes a las 3. Cuántas observaciones tiene?
+
+
+Assaig clinic
+========================================================
+```{r eval=TRUE}
+ac1 <- read_dta("data_curs_stat/Assaig_clinic_w1.dta")
+ac2 <- read_dta("data_curs_stat/Assaig_clinic_w2.dta")
+ac3 <- read_dta("data_curs_stat/Assaig_clinic_w3.dta")
+
+ach <- ac1 %>% 
+  inner_join(ac2, by = c("number_id","q0002_hhid")) %>% 
+  inner_join(ac3, by = c("number_id", "q0002_hhid")) %>% dim()
+```
+
+
+
+
+Slide With Plot
+========================================================
+
+```{r, echo=FALSE}
+plot(cars)
+```

@@ -1,8 +1,7 @@
 ---
-title: "Intruducción a R"
-author: "Laia Egea e Iago Giné"
-date: "10-12/12/2019"
-abstract: "El objetivo de este curso es introducir el software R a todas las personas que trabajen con datos y darles las herramientas para el manejo y visualización de datos, así como para algunos análisis estadísticos básicos."
+title: "Introducció a R"
+author: "Iago Giné"
+date: "13/09/2021"
 output: 
   html_notebook:
     toc: yes
@@ -15,14 +14,14 @@ output:
     + R es el programa que calcula. Es software libre y gratuito, inicialmente enfocado a la computación estadística.
     + R también es el lenguaje en el que escribimos los comandos, pues es también el lenguaje de programación.
     + Hoy en día está ampliamente extendido y entre los lenguajes de programación más utilizados. Como consecuencia:
-        * existen muchos foros en internet donde los usuarios plantean/resuelven sus dudas y/o propuestas.
+        * existen muchos foros en Internet donde los usuarios plantean/resuelven sus dudas y/o propuestas.
         * hay muchas librerías para R en continuo desarrollo y que permiten usarlo de una manera mucho más rápida y eficiente.
     + RStudio es la interfaz donde estaremos trabajando, pues nos ofrece algunas comodidades.
         * Nos permite crear scripts de una manera más ágil y en un entorno mucho más agradable que usando R.
         * También hace más sencillo instalar y desinstalar librerías, cargar y visualizar bases de datos, etc.
         * Ofrece otras posibilidades más allá de R como crear páginas web, pdf's o archivos word con R integrado, que va más allá de este curso.
 
-* Entre las consecuencias de lo ampliamente usado de R está que podemos encontrar en internet muchos tutoriales introductorios en cualquier idioma:
+* Entre las consecuencias de lo ampliamente usado de R está que podemos encontrar en Internet muchos tutoriales introductorios en cualquier idioma:
     * [http://rosuda.org/mitarbeiter/pilhoefer/rkurs2.pdf]
     * [http://b2slab.upc.edu/software-and-tutorials/r-nutshell/]
     * [https://www.cyclismo.org/tutorial/R/index.html]
@@ -59,7 +58,7 @@ output:
         * [https://dabblingwithdata.wordpress.com/2018/01/02/my-favourite-r-package-for-summarising-data/]
 
 
-* ... e incluso multitud de libros que podéis encontrar en [https://bookdown.org/]
+* ... e incluso multitud de libros que podéis encontrar en [https://bookdown.org/home/archive/] o [https://www.bigbookofr.com/]
 
 * ... además de diversos cursos online (MOOC's) en plataformas como Coursera, edX, etc.
 
@@ -1153,7 +1152,7 @@ table(starwars$hair_color, starwars$eye_color)
     + `aes()`: Especifica cómo y qué variables intervendrán en todo el gráfico
     + `+`: Añade capas
 * Otras librerías amplían las posibilidades de `ggplot`: `GGally`, `ggfortify`, `ggpmisc`, `ggstance`, `ggpubr`, `ggrepel`, ...
-* Para saber más, [http://www.sthda.com/english/wiki/ggplot2-essentials].
+* Para saber más, [http://www.sthda.com/english/wiki/ggplot2-essentials]. Otra buena fuente de ayuda y ejemplos es el blog [https://www.cedricscherer.com/].
 
 ### Gráfico de puntos
 
