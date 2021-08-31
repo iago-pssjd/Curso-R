@@ -116,20 +116,20 @@ read_dta("data_curs_stat/Estudi_pob_w1.dta")
 ```
 
 ```
-# A tibble: 4,753 × 14
+# A tibble: 4,753 x 14
    q0002_hhid number_id ID_ECS       sex       age      mar1    edu1 phys_hea1  hea1   dep1 score_lon1 score_sup1 income1 income_inf1
         <dbl> <chr>      <dbl> <dbl+lbl> <dbl+lbl> <dbl+lbl> <dbl+l> <dbl+lbl> <dbl> <dbl+>      <dbl>      <dbl>   <dbl>   <dbl+lbl>
- 1          1 724000001      1  2 [fem]  2 [35-49]   1 [Yes] 4 [Ter… 1 [None]   70.5 0 [No]          3         12      15  2 [Normal]
- 2          2 724000002      2  1 [masc] 2 [35-49]   1 [Yes] 4 [Ter… 1 [None]   78.9 0 [No]          3         12      17  2 [Normal]
- 3          3 724000003      3  1 [masc] 4 [65-79]   1 [Yes] 2 [Pri… 1 [None]   66.6 0 [No]          3         12      15  2 [Normal]
- 4          4 724000004      4  1 [masc] 3 [50-64]   1 [Yes] 2 [Pri… 2 [1 phy…  77.4 0 [No]          3         11      18  2 [Normal]
- 5          5 724000005      5  2 [fem]  3 [50-64]   0 [No]  4 [Ter… 1 [None]   52.5 0 [No]          3         12      29  2 [Normal]
- 6          6 724000006      6  2 [fem]  3 [50-64]   0 [No]  4 [Ter… 1 [None]   53.7 0 [No]          3         13      25  2 [Normal]
- 7          7 724000007      7  1 [masc] 3 [50-64]   1 [Yes] 3 [Sec… 1 [None]   59.1 0 [No]          6         10      12  3 [Good]  
- 8          8 724000008      8  1 [masc] 3 [50-64]   1 [Yes] 2 [Pri… 1 [None]   76.4 0 [No]          3         12      14  2 [Normal]
- 9          9 724000009      9  2 [fem]  3 [50-64]   0 [No]  3 [Sec… 1 [None]   73.7 0 [No]          3         11      26  3 [Good]  
-10         10 724000010     10  2 [fem]  5 [80+]     0 [No]  2 [Pri… 3 [2+ ph…  28.0 0 [No]          6         13      10  2 [Normal]
-# … with 4,743 more rows
+ 1          1 724000001      1  2 [fem]  2 [35-49]   1 [Yes] 4 [Ter~ 1 [None]   70.5 0 [No]          3         12      15  2 [Normal]
+ 2          2 724000002      2  1 [masc] 2 [35-49]   1 [Yes] 4 [Ter~ 1 [None]   78.9 0 [No]          3         12      17  2 [Normal]
+ 3          3 724000003      3  1 [masc] 4 [65-79]   1 [Yes] 2 [Pri~ 1 [None]   66.6 0 [No]          3         12      15  2 [Normal]
+ 4          4 724000004      4  1 [masc] 3 [50-64]   1 [Yes] 2 [Pri~ 2 [1 phy~  77.4 0 [No]          3         11      18  2 [Normal]
+ 5          5 724000005      5  2 [fem]  3 [50-64]   0 [No]  4 [Ter~ 1 [None]   52.5 0 [No]          3         12      29  2 [Normal]
+ 6          6 724000006      6  2 [fem]  3 [50-64]   0 [No]  4 [Ter~ 1 [None]   53.7 0 [No]          3         13      25  2 [Normal]
+ 7          7 724000007      7  1 [masc] 3 [50-64]   1 [Yes] 3 [Sec~ 1 [None]   59.1 0 [No]          6         10      12  3 [Good]  
+ 8          8 724000008      8  1 [masc] 3 [50-64]   1 [Yes] 2 [Pri~ 1 [None]   76.4 0 [No]          3         12      14  2 [Normal]
+ 9          9 724000009      9  2 [fem]  3 [50-64]   0 [No]  3 [Sec~ 1 [None]   73.7 0 [No]          3         11      26  3 [Good]  
+10         10 724000010     10  2 [fem]  5 [80+]     0 [No]  2 [Pri~ 3 [2+ ph~  28.0 0 [No]          6         13      10  2 [Normal]
+# ... with 4,743 more rows
 ```
 
 Primeros pasos con una base de datos (I)
@@ -143,7 +143,7 @@ summary
 ```
 function (object, ...) 
 UseMethod("summary")
-<bytecode: 0x55cc14a65328>
+<bytecode: 0x0000000025bb93e0>
 <environment: namespace:base>
 ```
 
@@ -192,15 +192,15 @@ head(dataw1) # primeras (6) filas
 ```
 
 ```
-# A tibble: 6 × 14
+# A tibble: 6 x 14
   q0002_hhid number_id ID_ECS       sex       age      mar1    edu1 phys_hea1  hea1   dep1 score_lon1 score_sup1 income1 income_inf1
        <dbl> <chr>      <dbl> <dbl+lbl> <dbl+lbl> <dbl+lbl> <dbl+l> <dbl+lbl> <dbl> <dbl+>      <dbl>      <dbl>   <dbl>   <dbl+lbl>
-1          1 724000001      1  2 [fem]  2 [35-49]   1 [Yes] 4 [Ter… 1 [None]   70.5 0 [No]          3         12      15  2 [Normal]
-2          2 724000002      2  1 [masc] 2 [35-49]   1 [Yes] 4 [Ter… 1 [None]   78.9 0 [No]          3         12      17  2 [Normal]
-3          3 724000003      3  1 [masc] 4 [65-79]   1 [Yes] 2 [Pri… 1 [None]   66.6 0 [No]          3         12      15  2 [Normal]
-4          4 724000004      4  1 [masc] 3 [50-64]   1 [Yes] 2 [Pri… 2 [1 phy…  77.4 0 [No]          3         11      18  2 [Normal]
-5          5 724000005      5  2 [fem]  3 [50-64]   0 [No]  4 [Ter… 1 [None]   52.5 0 [No]          3         12      29  2 [Normal]
-6          6 724000006      6  2 [fem]  3 [50-64]   0 [No]  4 [Ter… 1 [None]   53.7 0 [No]          3         13      25  2 [Normal]
+1          1 724000001      1  2 [fem]  2 [35-49]   1 [Yes] 4 [Ter~ 1 [None]   70.5 0 [No]          3         12      15  2 [Normal]
+2          2 724000002      2  1 [masc] 2 [35-49]   1 [Yes] 4 [Ter~ 1 [None]   78.9 0 [No]          3         12      17  2 [Normal]
+3          3 724000003      3  1 [masc] 4 [65-79]   1 [Yes] 2 [Pri~ 1 [None]   66.6 0 [No]          3         12      15  2 [Normal]
+4          4 724000004      4  1 [masc] 3 [50-64]   1 [Yes] 2 [Pri~ 2 [1 phy~  77.4 0 [No]          3         11      18  2 [Normal]
+5          5 724000005      5  2 [fem]  3 [50-64]   0 [No]  4 [Ter~ 1 [None]   52.5 0 [No]          3         12      29  2 [Normal]
+6          6 724000006      6  2 [fem]  3 [50-64]   0 [No]  4 [Ter~ 1 [None]   53.7 0 [No]          3         13      25  2 [Normal]
 ```
 
 ```r
@@ -380,7 +380,7 @@ dataw1 %>% #partimos de la base de datos dataw1 y entonces
 ```
 
 ```
-# A tibble: 3 × 3
+# A tibble: 3 x 3
   number_id  hea1 dep1 
   <chr>     <dbl> <fct>
 1 724004941  82.1 Yes  
@@ -400,7 +400,7 @@ dataw1 %>% #partimos de la base de datos dataw1 y entonces
 ```
 
 ```
-# A tibble: 3 × 3
+# A tibble: 3 x 3
   dep1  mean_hea1     n
   <fct>     <dbl> <int>
 1 No         55.9  4073
@@ -489,159 +489,21 @@ class(dataw1$q0002_hhid); class(dataw2$q0002_hhid); #class(dataw3$q0002_hhid)
 ```
 
 ```r
-table(is.na(dataw1$q0002_hhid)) # contamos el número de missings de q0002_hhid en dataw1
+#table(is.na(dataw1$q0002_hhid)); table(is.na(dataw2$q0002_hhid)); table(is.na(dataw3$q0002_hhid))# contamos el número de missings de q0002_hhid
 ```
-
-```
-
-FALSE 
- 4753 
-```
-
-```r
-table(is.na(dataw2$q0002_hhid)) # contamos el número de missings de q0002_hhid en dataw2
-```
-
-```
-
-FALSE 
- 4702 
-```
-
-```r
-table(is.na(dataw3$q0002_hhid)) # contamos el número de missings de q0002_hhid en dataw3
-```
-
-```
-
-FALSE 
- 4590 
-```
-
-Clases de la variable `number_id`
-
-```r
-class(dataw1$number_id); #class(dataw2$number_id); class(dataw3$number_id)
-```
-
-```
-[1] "character"
-```
-
-
-Fusión (merge) de bbdd (II)
-========================================================
-Missings de la variable `number_id`. Como es una una cadena, puede ser vacía (`""`), que sería como un missing. En efecto:
-
-```r
-table(is.na(dataw1$number_id)) # contamos el número de missings de number_id en dataw1
-```
-
-```
-
-FALSE 
- 4753 
-```
-
-```r
-table(dataw1$number_id == ""); table(is.na(as.numeric(dataw1$number_id))) # contamos el número de cadenas vacías y el número de cadenas que no codifican números
-```
-
-```
-
-FALSE 
- 4753 
-```
-
-```
-
-FALSE 
- 4753 
-```
-
-
-```r
-table(is.na(dataw2$number_id)) # contamos el número de missings de number_id en dataw2
-```
-
-```
-
-FALSE 
- 4702 
-```
-
-```r
-table(dataw2$number_id == ""); table(is.na(as.numeric(dataw2$number_id))) # contamos el número de cadenas vacías y el número de cadenas que no codifican números
-```
-
-```
-
-FALSE  TRUE 
- 4271   431 
-```
-
-```
-
-FALSE  TRUE 
- 4271   431 
-```
-
-Fusión (merge) de bbdd (III)
-========================================================
-
-
-```r
-table(is.na(dataw3$number_id)) # contamos el número de missings de number_id en dataw3
-```
-
-```
-
-FALSE 
- 4590 
-```
-
-```r
-table(dataw3$number_id == ""); table(is.na(as.numeric(dataw3$number_id))) # contamos el número de cadenas vacías y el número de cadenas que no codifican números
-```
-
-```
-
-FALSE  TRUE 
- 1577  3013 
-```
-
-```
-
-FALSE  TRUE 
- 1577  3013 
-```
-
-
-```r
-dataw2 <- dataw2 %>%
-  filter(number_id != "") %>%
-  mutate(number_id = as.numeric(number_id))
-dataw3 <- dataw3 %>%
-  filter(number_id != "") %>%
-  mutate(number_id = as.numeric(number_id))
-```
-
-
-Fusión (merge) de bbdd (IV)
-========================================================
 
 
 ```r
 data <- dataw1 %>% # partimos de la base de datos dataw1 y entonces
-  full_join(dataw2, by = c("q0002_hhid", "number_id")) %>% # unimos horizontalmente con todas las observaciones de dataw2 con q0002_hhid y number_id iguales a los de dataw1 y añadimos las nuevas, y entonces
-  full_join(dataw3, by = c("q0002_hhid", "number_id"))# unimos horizontalmente con todas las observaciones de dataw3 con q0002_hhid y number_id iguales a los que ya había y añadimos las nuevas
+  full_join(dataw2, by = c("q0002_hhid")) %>% # unimos horizontalmente con todas las observaciones de dataw2 con q0002_hhid iguales a los de dataw1 y añadimos las nuevas, y entonces
+  full_join(dataw3, by = c("q0002_hhid"))# unimos horizontalmente con todas las observaciones de dataw3 con q0002_hhid iguales a los que ya había y añadimos las nuevas
 names(data)
 ```
 
 ```
- [1] "q0002_hhid"    "number_id"     "ID_ECS"        "sex"           "age"           "mar1"          "edu1"          "phys_hea1"     "hea1"          "dep1"          "score_lon1"   
-[12] "score_sup1"    "income1"       "income_inf1"   "dep2"          "score_lon2"    "score_sup2"    "income2"       "phys_hea2"     "hea2"          "dep3"          "score_lon3"   
-[23] "score_sup3"    "income3"       "arthritis3"    "angina3"       "asthma3"       "diabetes3"     "hypertension3"
+ [1] "q0002_hhid"    "number_id.x"   "ID_ECS"        "sex"           "age"           "mar1"          "edu1"          "phys_hea1"     "hea1"          "dep1"          "score_lon1"   
+[12] "score_sup1"    "income1"       "income_inf1"   "number_id.y"   "dep2"          "score_lon2"    "score_sup2"    "income2"       "phys_hea2"     "hea2"          "number_id"    
+[23] "dep3"          "score_lon3"    "score_sup3"    "income3"       "arthritis3"    "angina3"       "asthma3"       "diabetes3"     "hypertension3"
 ```
 
 ```r
@@ -649,7 +511,7 @@ dim(data)
 ```
 
 ```
-[1] 13614    29
+[1] 4753   31
 ```
 
 

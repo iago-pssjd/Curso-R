@@ -291,59 +291,13 @@ Características (clase y missings) de la variable `q0002_hhid`:
 ```{r eval=TRUE}
 #?is.na
 class(dataw1$q0002_hhid); class(dataw2$q0002_hhid); #class(dataw3$q0002_hhid)
-table(is.na(dataw1$q0002_hhid)) # contamos el número de missings de q0002_hhid en dataw1
-table(is.na(dataw2$q0002_hhid)) # contamos el número de missings de q0002_hhid en dataw2
-table(is.na(dataw3$q0002_hhid)) # contamos el número de missings de q0002_hhid en dataw3
+#table(is.na(dataw1$q0002_hhid)); table(is.na(dataw2$q0002_hhid)); table(is.na(dataw3$q0002_hhid))# contamos el número de missings de q0002_hhid
 ```
-
-Clases de la variable `number_id`
-```{r eval=TRUE}
-
-class(dataw1$number_id); #class(dataw2$number_id); class(dataw3$number_id)
-
-```
-
-
-Fusión (merge) de bbdd (II)
-========================================================
-Missings de la variable `number_id`. Como es una una cadena, puede ser vacía (`""`), que sería como un missing. En efecto:
-```{r eval=TRUE}
-table(is.na(dataw1$number_id)) # contamos el número de missings de number_id en dataw1
-table(dataw1$number_id == ""); table(is.na(as.numeric(dataw1$number_id))) # contamos el número de cadenas vacías y el número de cadenas que no codifican números
-```
-
-```{r eval=TRUE}
-table(is.na(dataw2$number_id)) # contamos el número de missings de number_id en dataw2
-table(dataw2$number_id == ""); table(is.na(as.numeric(dataw2$number_id))) # contamos el número de cadenas vacías y el número de cadenas que no codifican números
-```
-
-Fusión (merge) de bbdd (III)
-========================================================
-
-```{r eval=TRUE}
-table(is.na(dataw3$number_id)) # contamos el número de missings de number_id en dataw3
-table(dataw3$number_id == ""); table(is.na(as.numeric(dataw3$number_id))) # contamos el número de cadenas vacías y el número de cadenas que no codifican números
-```
-
-```{r}
-dataw2 <- dataw2 %>%
-  filter(number_id != "") %>%
-  mutate(number_id = as.numeric(number_id))
-dataw3 <- dataw3 %>%
-  filter(number_id != "") %>%
-  mutate(number_id = as.numeric(number_id))
-
-
-```
-
-
-Fusión (merge) de bbdd (IV)
-========================================================
 
 ```{r eval=TRUE}
 data <- dataw1 %>% # partimos de la base de datos dataw1 y entonces
-  full_join(dataw2, by = c("q0002_hhid", "number_id")) %>% # unimos horizontalmente con todas las observaciones de dataw2 con q0002_hhid y number_id iguales a los de dataw1 y añadimos las nuevas, y entonces
-  full_join(dataw3, by = c("q0002_hhid", "number_id"))# unimos horizontalmente con todas las observaciones de dataw3 con q0002_hhid y number_id iguales a los que ya había y añadimos las nuevas
+  full_join(dataw2, by = c("q0002_hhid")) %>% # unimos horizontalmente con todas las observaciones de dataw2 con q0002_hhid iguales a los de dataw1 y añadimos las nuevas, y entonces
+  full_join(dataw3, by = c("q0002_hhid"))# unimos horizontalmente con todas las observaciones de dataw3 con q0002_hhid iguales a los que ya había y añadimos las nuevas
 names(data)
 dim(data)
 ```
