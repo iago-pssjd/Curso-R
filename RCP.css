@@ -1,3 +1,8 @@
 .reveal pre{
 	width: 100%;
+	max-width: 99%;
+}
+
+body {
+	background-color: #edece4;
 }

@@ -10,7 +10,7 @@ css: RCP.css
 
 ```{r include=FALSE}
 knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
-options(width=180, tibble.width=130)
+options(width=180, tibble.width=140)
 ```
 
 
@@ -93,7 +93,7 @@ Qué nos encontraremos en R?
 Empecemos
 ========================================================
 ```{r, echo=TRUE, eval=FALSE}
-install.packages("tidyverse") # instala la librería tidyverse, que a su vez instala las librerías dplyr, tidyr, haven, y otras
+install.packages("tidyverse") # instala la librería tidyverse, que a su vez instala las librerías dplyr, tidyr, haven, y otras (https://www.tidyverse.org)
 #getwd() # Cuál es el directorio de trabajo actual?
 setwd("~/Documents/PSSJD/Curso-R/") # En qué directorio de trabajo nos situamos ahora
 ```
@@ -143,7 +143,9 @@ head(dataw1) # primeras (6) filas
 
 **Ejercicio 1**: 
 
-*Usando las funciones `setwd` y `read_dta` convenientemente (hay varias posibilidades), guardar también las bases de datos `Estudi_pob_w2.dta` y `Estudi_pob_w3.dta` en dos variables que llamaremos `dataw2` y `dataw3`.*
+*Usando las funciones `setwd` y `read_dta` convenientemente (hay varias posibilidades), guardar también las bases de datos `Estudi_pob_w2.dta` y `Estudi_pob_w3.dta` en dos variables que llamaremos `dataw2` y `dataw3`. Tod\*s podéis ver `dataw1`, `dataw2`, `dataw3` y sus dimensiones en el panel `Environment` de RStudio?*
+
+**Nota:** _Para abrir ficheros `*.csv` disponemos de la función `read.csv` en R y de la función `read_csv` de la librería `readr` entre otras. Para abrir ficheros de excel disponemos de diversas funciones en las librerías `readxl` y `openxlsx` entre muchas otras. Por otra parte la librería `readspss` (https://github.com/JanMarvin/readspss) tiene funciones que permiten abrir bases de datos en formato de SPSS encriptadas con contraseña._
 
 Acceso a las variables de una base de datos: `$` y `[[`
 ========================================================
@@ -202,7 +204,7 @@ Varias transformaciones seguidas las podemos evaluar:
 dataw1 <- dataw1 %>% #partimos de la base de datos dataw1 y entonces
   mutate(phys_hea1 = as_factor(phys_hea1))  %>% # transformamos la variable phys_hea1 y la guardamos con el mismo nombre, y entonces
   mutate(dep1 = as_factor(dep1)) %>% # transformamos la variable dep1 y la guardamos con el mismo nombre
-  mutate(q0002_hhid = as.numeric(q0002_hhid)) # transformamos la variable q0002_hhid y la guardamos con el mismo nombre
+  mutate(number_id = as.numeric(number_id)) # transformamos la variable number_id y la guardamos con el mismo nombre
 
 ```
 
@@ -210,13 +212,13 @@ dataw1 <- dataw1 %>% #partimos de la base de datos dataw1 y entonces
 ```{r eval=TRUE}
 
 dataw1 <- dataw1 %>% #partimos de la base de datos dataw1 y entonces
-  mutate(phys_hea1 = as_factor(phys_hea1), dep1 = as_factor(dep1), q0002_hhid = as.numeric(q0002_hhid)) # transformamos las variables phys_hea1,  dep1 y q0002_hhid y las guardamos con los mismos nombres
+  mutate(phys_hea1 = as_factor(phys_hea1), dep1 = as_factor(dep1), number_id = as.numeric(number_id)) # transformamos las variables phys_hea1,  dep1 y number_id y las guardamos con los mismos nombres
 
 ```
 - O bien, cuando estamos aplicando la misma transformación (en este caso `as_factor`) a varias variables (y guardándolas con el mismo nombre), podemos usar `across(vector de variables, función)` dentro de `mutate`:
 ```{r eval=TRUE}
 dataw1 <- dataw1 %>% #partimos de la base de datos dataw1 y entonces
-  mutate(across(c(phys_hea1, dep1), as_factor), q0002_hhid = as.numeric(q0002_hhid)) # evaluamos as_factor a través de las variables phys_hea1 y dep1 y transformamos también q0002_hhid
+  mutate(across(c(phys_hea1, dep1), as_factor), number_id = as.numeric(number_id)) # evaluamos as_factor a través de las variables phys_hea1 y dep1 y transformamos también number_id
 
 ```
 
@@ -250,12 +252,13 @@ dataw1 %>% #partimos de la base de datos dataw1 y entonces
   select(number_id, hea1, dep1) %>% # mantenemos sólo las columnas number_id, hea1 y dep1, y entonces
   mutate(dep1 = as_factor(dep1)) %>% # transformamos la variable  dep1 y la guardamos con el mismo nombre, y entonces
   group_by(dep1) %>% # agrupamos por las categorías de depresión, y entonces
-  summarise(mean_hea1 = mean(hea1, na.rm = TRUE), n = n()) # calculamos la media de hea1 para cada categoría de depresión y el número de observaciones por cada categoría
+  summarise(mean_hea1 = mean(hea1, na.rm = TRUE), median_hea1 = median(hea1, na.rm = TRUE), n = n()) # calculamos la media y la mediana de hea1 para cada categoría de depresión y el número de observaciones por cada categoría
 
 ```
 
-Nota: usamos `na.rm = TRUE` dentro de `mean` para que calcule la media de aquellos valores que no son missing. En caso contrario, cuando hay missings el resultado es `NA`.
-Nota: Todo lo anterior se puede realizar también con funciones de R sin necesidad de acudir a la librería `dplyr`, pero no tenemos posibilidades como el uso de `across`, o las alternativas pueden ser más complejas.
+**Nota:** *usamos `na.rm = TRUE` dentro de `mean` y de `median` para que calcule la media de aquellos valores que no son missing. En caso contrario, cuando hay missings el resultado es `NA`.*
+
+**Nota:** *Todo lo anterior se puede realizar también con funciones de R sin necesidad de acudir a la librería `dplyr`, pero no tenemos posibilidades como el uso de `across`, o las alternativas pueden ser más complejas.*
 
 
 ```{r echo=FALSE}
@@ -277,26 +280,34 @@ Variables y dimensiones de las bbdd
 ```{r eval=TRUE}
 names(dataw1)
 dim(dataw1)
+ncol(dataw1); nrow(dataw1)
 names(dataw2)
 dim(dataw2)
 names(dataw3)
 dim(dataw3)
 ```
 
-Fusión (merge) de bbdd (I)
+Fusión (merge) de bbdd
 ========================================================
 
-Características (clase y missings) de la variable `q0002_hhid`:
 
 ```{r eval=TRUE}
+#Cuántos missings tiene la variable `q0002_hhid`?
 #?is.na
-class(dataw1$q0002_hhid); class(dataw2$q0002_hhid); #class(dataw3$q0002_hhid)
 #table(is.na(dataw1$q0002_hhid)); table(is.na(dataw2$q0002_hhid)); table(is.na(dataw3$q0002_hhid))# contamos el número de missings de q0002_hhid
 ```
 
+En Stata:
+```{stata}
+. use "...\Estudi_pob_w1.dta", clear
+merge 1:1 q0002_hhid using "...\Estudi_pob_w2.dta"
+merge 1:1 q0002_hhid using "...\Estudi_pob_w3.dta", generate(_merge2)
+```
+
+En R, donde ya tenemos las bbdd abiertas y guardadas:
 ```{r eval=TRUE}
 data <- dataw1 %>% # partimos de la base de datos dataw1 y entonces
-  full_join(dataw2, by = c("q0002_hhid")) %>% # unimos horizontalmente con todas las observaciones de dataw2 con q0002_hhid iguales a los de dataw1 y añadimos las nuevas, y entonces
+  full_join(dataw2, by = "q0002_hhid") %>% # unimos horizontalmente con todas las observaciones de dataw2 con q0002_hhid iguales a los de dataw1 y añadimos las nuevas, y entonces
   full_join(dataw3, by = c("q0002_hhid"))# unimos horizontalmente con todas las observaciones de dataw3 con q0002_hhid iguales a los que ya había y añadimos las nuevas
 names(data)
 dim(data)
@@ -308,23 +319,94 @@ dim(data)
 
 **Ejercicio 3**:
 
-Con `full_join` creamos una base de datos resultado de fusionar las 3 iniciales e incluír todas las observaciones de cada una de ellas. Mirando en la ayuda, este ejercicio consiste en fusionar las 3 bases de datos, pero incluyendo sólo aquellas observaciones de id's comunes a las 3. Cuántas observaciones tiene?
+*Con `full_join` creamos una base de datos resultado de fusionar las 3 iniciales e incluír todas las observaciones de cada una de ellas. Mirando en la ayuda, este ejercicio consiste en fusionar las 3 bases de datos, pero incluyendo sólo aquellas observaciones de comunes a las 3. Cuántas observaciones tiene?*
 
 
-Assaig clinic
+Combinar bases de datos
 ========================================================
+Abrimos las 3 olas de un ensayo clínico en fichero separados.
 ```{r eval=TRUE}
 ac1 <- read_dta("data_curs_stat/Assaig_clinic_w1.dta")
 ac2 <- read_dta("data_curs_stat/Assaig_clinic_w2.dta")
 ac3 <- read_dta("data_curs_stat/Assaig_clinic_w3.dta")
 
-ach <- ac1 %>% 
-  inner_join(ac2, by = c("number_id","q0002_hhid")) %>% 
-  inner_join(ac3, by = c("number_id", "q0002_hhid")) %>% dim()
+dim(ac1); names(ac1); dim(ac2); names(ac2); dim(ac3); names(ac3)
+```
+
+Para poder combinarlas verticalmente, los nombres de las columnas que queremos combinar tienen que ser iguales. Para ello usamos otra función de la librería `dplyr`: `rename`
+```{r eval=TRUE}
+ac1 <- ac1 %>% # partimos de ac1 y entonces
+  rename(hea = hea1) # renombramos hea1 como hea
+ac2 <- ac2 %>% # partimos de ac2 y entonces
+  rename(hea = hea2, dep = dep2) # renombramos hea2 como hea y dep2 como dea
+ac3 <- ac3 %>% rename(hea = hea3, dep = dep3) # mismo proceso para ac3
+#Comprobamos
+#names(ac1); names(ac2); names(ac3)
+```
+
+Finalmente combinamos las filas con otra función de la librería `dplyr`: `bind_rows`
+
+```{r eval=TRUE}
+#?bind_rows
+acv <- bind_rows(ac1, ac2, ac3, .id = "wave")
+```
+
+Otras opciones para combinar bases de datos
+========================================================
+
+**Ejercicio 4**:
+*Ver qué variables tiene `acv`; para qué se añadió `.id = "wave"`?; ejecutar `rbind(ac1,ac2,ac3)`*
+
+
+**Nota:** _La función `rbind` de R hace esencialmente lo mismo, pero necesita que las 3 bases de datos tengan exactamente las mismas columnas. En caso en que esto no ocurre, como el presente, da un error._
+
+
+**Nota:** *Las funciones `cbind` y `bind_cols` de R y `dplyr` respectivamente combinan por columnas. Se diferencian de un merge en que no hay una columna "común" por la que fusionar, sino que se añaden las columnas de los distintos objetos, tal como están ordenadas en cada uno de ellos. Además, todas las columnas tienen que tener el mismo número de elementos.*
+
+```{r eval=TRUE, echo=FALSE}
+ac1 <- read_dta("data_curs_stat/Assaig_clinic_w1.dta")
+ac2 <- read_dta("data_curs_stat/Assaig_clinic_w2.dta")
+ac3 <- read_dta("data_curs_stat/Assaig_clinic_w3.dta")
+```
+Abrimos de nuevo las 3 bases de datos, y esta vez sin renombrar las fusionamos horizontalmente y las combinamos:
+```{r eval=TRUE}
+ach <- ac1 %>%
+  full_join(ac2, by = c("q0002_hhid", "number_id", "grups")) %>%
+  full_join(ac3, by = c("q0002_hhid", "number_id", "grups"))
+ach %>%
+  head(3)
+cbind(ac1, ac2, ac3) %>%
+  head(3)
 ```
 
 
+Rellenando datos
+========================================================
+Cuando se combinan las filas mediante `bind_cols`, las columnas que sólo están en una base de datos se llenan con missings. Por ejemplo, es el caso de las variables sociodemográficas, que en el dataframe `acv` sólo tienen datos en las filas correspondientes a la ola 1, que son las filas obtenidas de `ac1`. 
 
+```{r eval=TRUE}
+acv %>%
+  arrange(number_id) %>% # ordenamos por id
+  head()
+```
+
+
+Acudimos ahora a la función `fill` de la librería `tidyr`:
+```{r eval=TRUE}
+library(tidyr)
+acv %>%
+  group_by(number_id) %>% # agrupamos por id y entonces
+  arrange(wave) %>% # ordenamos por ola para tener la fila con datos antes que las otras, y entonces
+  fill(sex, age, mar1, edu1) %>% # para cada id rellenamos las filas vacías de las variables especificadas con los valores que no son missings, y entonces
+  ungroup() %>% # desagrupamos y entonces
+  arrange(number_id) %>% # ordenamos por id para ver las mismas filas que arriba, y entonces
+  head() # nos quedamos con las primeras filas
+```
+
+
+Pivotar
+========================================================
+Pivotar es el proceso de transformar una base de datos horizontal (por ejemplo el producto de un una fusión, como es el caso de `ach`) a una vertical/longitudinal (por ejemplo el resultado de combinar filas, como es el caso de `acv`) o a la inversa.
 
 Slide With Plot
 ========================================================

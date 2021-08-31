@@ -91,7 +91,7 @@ Empecemos
 ========================================================
 
 ```r
-install.packages("tidyverse") # instala la librería tidyverse, que a su vez instala las librerías dplyr, tidyr, haven, y otras
+install.packages("tidyverse") # instala la librería tidyverse, que a su vez instala las librerías dplyr, tidyr, haven, y otras (https://www.tidyverse.org)
 #getwd() # Cuál es el directorio de trabajo actual?
 setwd("~/Documents/PSSJD/Curso-R/") # En qué directorio de trabajo nos situamos ahora
 ```
@@ -117,18 +117,18 @@ read_dta("data_curs_stat/Estudi_pob_w1.dta")
 
 ```
 # A tibble: 4,753 x 14
-   q0002_hhid number_id ID_ECS       sex       age      mar1    edu1 phys_hea1  hea1   dep1 score_lon1 score_sup1 income1 income_inf1
-        <dbl> <chr>      <dbl> <dbl+lbl> <dbl+lbl> <dbl+lbl> <dbl+l> <dbl+lbl> <dbl> <dbl+>      <dbl>      <dbl>   <dbl>   <dbl+lbl>
- 1          1 724000001      1  2 [fem]  2 [35-49]   1 [Yes] 4 [Ter~ 1 [None]   70.5 0 [No]          3         12      15  2 [Normal]
- 2          2 724000002      2  1 [masc] 2 [35-49]   1 [Yes] 4 [Ter~ 1 [None]   78.9 0 [No]          3         12      17  2 [Normal]
- 3          3 724000003      3  1 [masc] 4 [65-79]   1 [Yes] 2 [Pri~ 1 [None]   66.6 0 [No]          3         12      15  2 [Normal]
- 4          4 724000004      4  1 [masc] 3 [50-64]   1 [Yes] 2 [Pri~ 2 [1 phy~  77.4 0 [No]          3         11      18  2 [Normal]
- 5          5 724000005      5  2 [fem]  3 [50-64]   0 [No]  4 [Ter~ 1 [None]   52.5 0 [No]          3         12      29  2 [Normal]
- 6          6 724000006      6  2 [fem]  3 [50-64]   0 [No]  4 [Ter~ 1 [None]   53.7 0 [No]          3         13      25  2 [Normal]
- 7          7 724000007      7  1 [masc] 3 [50-64]   1 [Yes] 3 [Sec~ 1 [None]   59.1 0 [No]          6         10      12  3 [Good]  
- 8          8 724000008      8  1 [masc] 3 [50-64]   1 [Yes] 2 [Pri~ 1 [None]   76.4 0 [No]          3         12      14  2 [Normal]
- 9          9 724000009      9  2 [fem]  3 [50-64]   0 [No]  3 [Sec~ 1 [None]   73.7 0 [No]          3         11      26  3 [Good]  
-10         10 724000010     10  2 [fem]  5 [80+]     0 [No]  2 [Pri~ 3 [2+ ph~  28.0 0 [No]          6         13      10  2 [Normal]
+   q0002_hhid number_id ID_ECS       sex       age      mar1          edu1  phys_hea1  hea1   dep1 score_lon1 score_sup1 income1 income_inf1
+        <dbl> <chr>      <dbl> <dbl+lbl> <dbl+lbl> <dbl+lbl>     <dbl+lbl>  <dbl+lbl> <dbl> <dbl+>      <dbl>      <dbl>   <dbl>   <dbl+lbl>
+ 1          1 724000001      1  2 [fem]  2 [35-49]   1 [Yes] 4 [Tertiary]  1 [None]    70.5 0 [No]          3         12      15  2 [Normal]
+ 2          2 724000002      2  1 [masc] 2 [35-49]   1 [Yes] 4 [Tertiary]  1 [None]    78.9 0 [No]          3         12      17  2 [Normal]
+ 3          3 724000003      3  1 [masc] 4 [65-79]   1 [Yes] 2 [Primary]   1 [None]    66.6 0 [No]          3         12      15  2 [Normal]
+ 4          4 724000004      4  1 [masc] 3 [50-64]   1 [Yes] 2 [Primary]   2 [1 phys~  77.4 0 [No]          3         11      18  2 [Normal]
+ 5          5 724000005      5  2 [fem]  3 [50-64]   0 [No]  4 [Tertiary]  1 [None]    52.5 0 [No]          3         12      29  2 [Normal]
+ 6          6 724000006      6  2 [fem]  3 [50-64]   0 [No]  4 [Tertiary]  1 [None]    53.7 0 [No]          3         13      25  2 [Normal]
+ 7          7 724000007      7  1 [masc] 3 [50-64]   1 [Yes] 3 [Secondary] 1 [None]    59.1 0 [No]          6         10      12  3 [Good]  
+ 8          8 724000008      8  1 [masc] 3 [50-64]   1 [Yes] 2 [Primary]   1 [None]    76.4 0 [No]          3         12      14  2 [Normal]
+ 9          9 724000009      9  2 [fem]  3 [50-64]   0 [No]  3 [Secondary] 1 [None]    73.7 0 [No]          3         11      26  3 [Good]  
+10         10 724000010     10  2 [fem]  5 [80+]     0 [No]  2 [Primary]   3 [2+ phy~  28.0 0 [No]          6         13      10  2 [Normal]
 # ... with 4,743 more rows
 ```
 
@@ -143,7 +143,7 @@ summary
 ```
 function (object, ...) 
 UseMethod("summary")
-<bytecode: 0x0000000025bb93e0>
+<bytecode: 0x0000000025cceae0>
 <environment: namespace:base>
 ```
 
@@ -193,14 +193,14 @@ head(dataw1) # primeras (6) filas
 
 ```
 # A tibble: 6 x 14
-  q0002_hhid number_id ID_ECS       sex       age      mar1    edu1 phys_hea1  hea1   dep1 score_lon1 score_sup1 income1 income_inf1
-       <dbl> <chr>      <dbl> <dbl+lbl> <dbl+lbl> <dbl+lbl> <dbl+l> <dbl+lbl> <dbl> <dbl+>      <dbl>      <dbl>   <dbl>   <dbl+lbl>
-1          1 724000001      1  2 [fem]  2 [35-49]   1 [Yes] 4 [Ter~ 1 [None]   70.5 0 [No]          3         12      15  2 [Normal]
-2          2 724000002      2  1 [masc] 2 [35-49]   1 [Yes] 4 [Ter~ 1 [None]   78.9 0 [No]          3         12      17  2 [Normal]
-3          3 724000003      3  1 [masc] 4 [65-79]   1 [Yes] 2 [Pri~ 1 [None]   66.6 0 [No]          3         12      15  2 [Normal]
-4          4 724000004      4  1 [masc] 3 [50-64]   1 [Yes] 2 [Pri~ 2 [1 phy~  77.4 0 [No]          3         11      18  2 [Normal]
-5          5 724000005      5  2 [fem]  3 [50-64]   0 [No]  4 [Ter~ 1 [None]   52.5 0 [No]          3         12      29  2 [Normal]
-6          6 724000006      6  2 [fem]  3 [50-64]   0 [No]  4 [Ter~ 1 [None]   53.7 0 [No]          3         13      25  2 [Normal]
+  q0002_hhid number_id ID_ECS       sex       age      mar1         edu1    phys_hea1  hea1   dep1 score_lon1 score_sup1 income1 income_inf1
+       <dbl> <chr>      <dbl> <dbl+lbl> <dbl+lbl> <dbl+lbl>    <dbl+lbl>    <dbl+lbl> <dbl> <dbl+>      <dbl>      <dbl>   <dbl>   <dbl+lbl>
+1          1 724000001      1  2 [fem]  2 [35-49]   1 [Yes] 4 [Tertiary] 1 [None]      70.5 0 [No]          3         12      15  2 [Normal]
+2          2 724000002      2  1 [masc] 2 [35-49]   1 [Yes] 4 [Tertiary] 1 [None]      78.9 0 [No]          3         12      17  2 [Normal]
+3          3 724000003      3  1 [masc] 4 [65-79]   1 [Yes] 2 [Primary]  1 [None]      66.6 0 [No]          3         12      15  2 [Normal]
+4          4 724000004      4  1 [masc] 3 [50-64]   1 [Yes] 2 [Primary]  2 [1 physic~  77.4 0 [No]          3         11      18  2 [Normal]
+5          5 724000005      5  2 [fem]  3 [50-64]   0 [No]  4 [Tertiary] 1 [None]      52.5 0 [No]          3         12      29  2 [Normal]
+6          6 724000006      6  2 [fem]  3 [50-64]   0 [No]  4 [Tertiary] 1 [None]      53.7 0 [No]          3         13      25  2 [Normal]
 ```
 
 ```r
@@ -210,7 +210,9 @@ head(dataw1) # primeras (6) filas
 
 **Ejercicio 1**: 
 
-*Usando las funciones `setwd` y `read_dta` convenientemente (hay varias posibilidades), guardar también las bases de datos `Estudi_pob_w2.dta` y `Estudi_pob_w3.dta` en dos variables que llamaremos `dataw2` y `dataw3`.*
+*Usando las funciones `setwd` y `read_dta` convenientemente (hay varias posibilidades), guardar también las bases de datos `Estudi_pob_w2.dta` y `Estudi_pob_w3.dta` en dos variables que llamaremos `dataw2` y `dataw3`. Tod\*s podéis ver `dataw1`, `dataw2`, `dataw3` y sus dimensiones en el panel `Environment` de RStudio?*
+
+**Nota:** _Para abrir ficheros `*.csv` disponemos de la función `read.csv` en R y de la función `read_csv` de la librería `readr` entre otras. Para abrir ficheros de excel disponemos de diversas funciones en las librerías `readxl` y `openxlsx` entre muchas otras. Por otra parte la librería `readspss` (https://github.com/JanMarvin/readspss) tiene funciones que permiten abrir bases de datos en formato de SPSS encriptadas con contraseña._
 
 Acceso a las variables de una base de datos: `$` y `[[`
 ========================================================
@@ -342,20 +344,20 @@ Varias transformaciones seguidas las podemos evaluar:
 dataw1 <- dataw1 %>% #partimos de la base de datos dataw1 y entonces
   mutate(phys_hea1 = as_factor(phys_hea1))  %>% # transformamos la variable phys_hea1 y la guardamos con el mismo nombre, y entonces
   mutate(dep1 = as_factor(dep1)) %>% # transformamos la variable dep1 y la guardamos con el mismo nombre
-  mutate(q0002_hhid = as.numeric(q0002_hhid)) # transformamos la variable q0002_hhid y la guardamos con el mismo nombre
+  mutate(number_id = as.numeric(number_id)) # transformamos la variable number_id y la guardamos con el mismo nombre
 ```
 
 - Pero en lugar de eso, habitualmente se separan las instrucciones por comas en un sólo `mutate`:
 
 ```r
 dataw1 <- dataw1 %>% #partimos de la base de datos dataw1 y entonces
-  mutate(phys_hea1 = as_factor(phys_hea1), dep1 = as_factor(dep1), q0002_hhid = as.numeric(q0002_hhid)) # transformamos las variables phys_hea1,  dep1 y q0002_hhid y las guardamos con los mismos nombres
+  mutate(phys_hea1 = as_factor(phys_hea1), dep1 = as_factor(dep1), number_id = as.numeric(number_id)) # transformamos las variables phys_hea1,  dep1 y number_id y las guardamos con los mismos nombres
 ```
 - O bien, cuando estamos aplicando la misma transformación (en este caso `as_factor`) a varias variables (y guardándolas con el mismo nombre), podemos usar `across(vector de variables, función)` dentro de `mutate`:
 
 ```r
 dataw1 <- dataw1 %>% #partimos de la base de datos dataw1 y entonces
-  mutate(across(c(phys_hea1, dep1), as_factor), q0002_hhid = as.numeric(q0002_hhid)) # evaluamos as_factor a través de las variables phys_hea1 y dep1 y transformamos también q0002_hhid
+  mutate(across(c(phys_hea1, dep1), as_factor), number_id = as.numeric(number_id)) # evaluamos as_factor a través de las variables phys_hea1 y dep1 y transformamos también number_id
 ```
 
 
@@ -382,7 +384,7 @@ dataw1 %>% #partimos de la base de datos dataw1 y entonces
 ```
 # A tibble: 3 x 3
   number_id  hea1 dep1 
-  <chr>     <dbl> <fct>
+      <dbl> <dbl> <fct>
 1 724004941  82.1 Yes  
 2 724004339  80.2 Yes  
 3 724001299  79.8 Yes  
@@ -396,20 +398,21 @@ dataw1 %>% #partimos de la base de datos dataw1 y entonces
   select(number_id, hea1, dep1) %>% # mantenemos sólo las columnas number_id, hea1 y dep1, y entonces
   mutate(dep1 = as_factor(dep1)) %>% # transformamos la variable  dep1 y la guardamos con el mismo nombre, y entonces
   group_by(dep1) %>% # agrupamos por las categorías de depresión, y entonces
-  summarise(mean_hea1 = mean(hea1, na.rm = TRUE), n = n()) # calculamos la media de hea1 para cada categoría de depresión y el número de observaciones por cada categoría
+  summarise(mean_hea1 = mean(hea1, na.rm = TRUE), median_hea1 = median(hea1, na.rm = TRUE), n = n()) # calculamos la media y la mediana de hea1 para cada categoría de depresión y el número de observaciones por cada categoría
 ```
 
 ```
-# A tibble: 3 x 3
-  dep1  mean_hea1     n
-  <fct>     <dbl> <int>
-1 No         55.9  4073
-2 Yes        38.4   510
-3 <NA>      NaN     170
+# A tibble: 3 x 4
+  dep1  mean_hea1 median_hea1     n
+  <fct>     <dbl>       <dbl> <int>
+1 No         55.9        57.4  4073
+2 Yes        38.4        37.9   510
+3 <NA>      NaN          NA     170
 ```
 
-Nota: usamos `na.rm = TRUE` dentro de `mean` para que calcule la media de aquellos valores que no son missing. En caso contrario, cuando hay missings el resultado es `NA`.
-Nota: Todo lo anterior se puede realizar también con funciones de R sin necesidad de acudir a la librería `dplyr`, pero no tenemos posibilidades como el uso de `across`, o las alternativas pueden ser más complejas.
+**Nota:** *usamos `na.rm = TRUE` dentro de `mean` y de `median` para que calcule la media de aquellos valores que no son missing. En caso contrario, cuando hay missings el resultado es `NA`.*
+
+**Nota:** *Todo lo anterior se puede realizar también con funciones de R sin necesidad de acudir a la librería `dplyr`, pero no tenemos posibilidades como el uso de `across`, o las alternativas pueden ser más complejas.*
 
 
 
@@ -435,6 +438,18 @@ dim(dataw1)
 
 ```
 [1] 4753   14
+```
+
+```r
+ncol(dataw1); nrow(dataw1)
+```
+
+```
+[1] 14
+```
+
+```
+[1] 4753
 ```
 
 ```r
@@ -469,33 +484,30 @@ dim(dataw3)
 [1] 4590   11
 ```
 
-Fusión (merge) de bbdd (I)
+Fusión (merge) de bbdd
 ========================================================
 
-Características (clase y missings) de la variable `q0002_hhid`:
 
 
 ```r
+#Cuántos missings tiene la variable `q0002_hhid`?
 #?is.na
-class(dataw1$q0002_hhid); class(dataw2$q0002_hhid); #class(dataw3$q0002_hhid)
-```
-
-```
-[1] "numeric"
-```
-
-```
-[1] "numeric"
-```
-
-```r
 #table(is.na(dataw1$q0002_hhid)); table(is.na(dataw2$q0002_hhid)); table(is.na(dataw3$q0002_hhid))# contamos el número de missings de q0002_hhid
 ```
 
+En Stata:
+
+```stata
+. use "...\Estudi_pob_w1.dta", clear
+merge 1:1 q0002_hhid using "...\Estudi_pob_w2.dta"
+merge 1:1 q0002_hhid using "...\Estudi_pob_w3.dta", generate(_merge2)
+```
+
+En R, donde ya tenemos las bbdd abiertas y guardadas:
 
 ```r
 data <- dataw1 %>% # partimos de la base de datos dataw1 y entonces
-  full_join(dataw2, by = c("q0002_hhid")) %>% # unimos horizontalmente con todas las observaciones de dataw2 con q0002_hhid iguales a los de dataw1 y añadimos las nuevas, y entonces
+  full_join(dataw2, by = "q0002_hhid") %>% # unimos horizontalmente con todas las observaciones de dataw2 con q0002_hhid iguales a los de dataw1 y añadimos las nuevas, y entonces
   full_join(dataw3, by = c("q0002_hhid"))# unimos horizontalmente con todas las observaciones de dataw3 con q0002_hhid iguales a los que ya había y añadimos las nuevas
 names(data)
 ```
@@ -521,24 +533,163 @@ dim(data)
 
 **Ejercicio 3**:
 
-Con `full_join` creamos una base de datos resultado de fusionar las 3 iniciales e incluír todas las observaciones de cada una de ellas. Mirando en la ayuda, este ejercicio consiste en fusionar las 3 bases de datos, pero incluyendo sólo aquellas observaciones de id's comunes a las 3. Cuántas observaciones tiene?
+*Con `full_join` creamos una base de datos resultado de fusionar las 3 iniciales e incluír todas las observaciones de cada una de ellas. Mirando en la ayuda, este ejercicio consiste en fusionar las 3 bases de datos, pero incluyendo sólo aquellas observaciones de comunes a las 3. Cuántas observaciones tiene?*
 
 
-Assaig clinic
+Combinar bases de datos
 ========================================================
+Abrimos las 3 olas de un ensayo clínico en fichero separados.
 
 ```r
 ac1 <- read_dta("data_curs_stat/Assaig_clinic_w1.dta")
 ac2 <- read_dta("data_curs_stat/Assaig_clinic_w2.dta")
 ac3 <- read_dta("data_curs_stat/Assaig_clinic_w3.dta")
 
-ach <- ac1 %>% 
-  inner_join(ac2, by = c("number_id","q0002_hhid")) %>% 
-  inner_join(ac3, by = c("number_id", "q0002_hhid")) %>% dim()
+dim(ac1); names(ac1); dim(ac2); names(ac2); dim(ac3); names(ac3)
+```
+
+```
+[1] 400   9
+```
+
+```
+[1] "q0002_hhid" "number_id"  "ID_ECS"     "sex"        "age"        "mar1"       "edu1"       "hea1"       "grups"     
+```
+
+```
+[1] 400   6
+```
+
+```
+[1] "q0002_hhid" "number_id"  "ID_ECS"     "grups"      "hea2"       "dep2"      
+```
+
+```
+[1] 400   6
+```
+
+```
+[1] "q0002_hhid" "number_id"  "ID_ECS"     "grups"      "hea3"       "dep3"      
+```
+
+Para poder combinarlas verticalmente, los nombres de las columnas que queremos combinar tienen que ser iguales. Para ello usamos otra función de la librería `dplyr`: `rename`
+
+```r
+ac1 <- ac1 %>% # partimos de ac1 y entonces
+  rename(hea = hea1) # renombramos hea1 como hea
+ac2 <- ac2 %>% # partimos de ac2 y entonces
+  rename(hea = hea2, dep = dep2) # renombramos hea2 como hea y dep2 como dea
+ac3 <- ac3 %>% rename(hea = hea3, dep = dep3) # mismo proceso para ac3
+#Comprobamos
+#names(ac1); names(ac2); names(ac3)
+```
+
+Finalmente combinamos las filas con otra función de la librería `dplyr`: `bind_rows`
+
+
+```r
+#?bind_rows
+acv <- bind_rows(ac1, ac2, ac3, .id = "wave")
+```
+
+Otras opciones para combinar bases de datos
+========================================================
+
+**Ejercicio 4**:
+*Ver qué variables tiene `acv`; para qué se añadió `.id = "wave"`?; ejecutar `rbind(ac1,ac2,ac3)`*
+
+
+**Nota:** _La función `rbind` de R hace esencialmente lo mismo, pero necesita que las 3 bases de datos tengan exactamente las mismas columnas. En caso en que esto no ocurre, como el presente, da un error._
+
+
+**Nota:** *Las funciones `cbind` y `bind_cols` de R y `dplyr` respectivamente combinan por columnas. Se diferencian de un merge en que no hay una columna "común" por la que fusionar, sino que se añaden las columnas de los distintos objetos, tal como están ordenadas en cada uno de ellos. Además, todas las columnas tienen que tener el mismo número de elementos.*
+
+
+Abrimos de nuevo las 3 bases de datos, y esta vez sin renombrar las fusionamos horizontalmente y las combinamos:
+
+```r
+ach <- ac1 %>%
+  full_join(ac2, by = c("q0002_hhid", "number_id", "grups")) %>%
+  full_join(ac3, by = c("q0002_hhid", "number_id", "grups"))
+ach %>%
+  head(3)
+```
+
+```
+# A tibble: 3 x 15
+  q0002_hhid number_id ID_ECS.x       sex       age      mar1             edu1  hea1       grups ID_ECS.y  hea2     dep2 ID_ECS  hea3   dep3
+       <dbl> <chr>        <dbl> <dbl+lbl> <dbl+lbl> <dbl+lbl>        <dbl+lbl> <dbl>   <dbl+lbl>    <dbl> <dbl> <dbl+lb>  <dbl> <dbl> <dbl+>
+1       2306 724002306     2306   2 [fem] 3 [50-64]   0 [No]  2 [Primary]       45.9 1 [Interve~     2306  NA    NA        2306    NA     NA
+2       3363 724003363     3363   2 [fem] 4 [65-79]   0 [No]  1 [Less primary]  23.3 1 [Interve~     3363  24.6   0 [No]   3363    NA     NA
+3       3228 724003228     3228   2 [fem] 3 [50-64]   1 [Yes] 1 [Less primary]  49.1 1 [Interve~     3228  35.2   0 [No]   3228    NA     NA
+```
+
+```r
+cbind(ac1, ac2, ac3) %>%
+  head(3)
+```
+
+```
+  q0002_hhid number_id ID_ECS sex age mar1 edu1     hea1 grups q0002_hhid number_id ID_ECS grups     hea2 dep2 q0002_hhid number_id ID_ECS grups     hea3 dep3
+1       2306 724002306   2306   2   3    0    2 45.88945     1         48 724000048     48     0 46.31060    0         48 724000048     48     0 47.35691    0
+2       3363 724003363   3363   2   4    0    1 23.27672     1         61 724000061     61     0 53.24683    0         61 724000061     61     0 67.96230    0
+3       3228 724003228   3228   2   3    1    1 49.08676     1         90 724000090     90     1       NA   NA         90 724000090     90     1       NA   NA
 ```
 
 
+Rellenando datos
+========================================================
+Cuando se combinan las filas mediante `bind_cols`, las columnas que sólo están en una base de datos se llenan con missings. Por ejemplo, es el caso de las variables sociodemográficas, que en el dataframe `acv` sólo tienen datos en las filas correspondientes a la ola 1, que son las filas obtenidas de `ac1`. 
 
+
+```r
+acv %>%
+  arrange(number_id) %>% # ordenamos por id
+  head()
+```
+
+```
+# A tibble: 6 x 11
+  wave  q0002_hhid number_id ID_ECS       sex        age      mar1           edu1   hea       grups       dep
+  <chr>      <dbl> <chr>      <dbl> <dbl+lbl>  <dbl+lbl> <dbl+lbl>      <dbl+lbl> <dbl>   <dbl+lbl> <dbl+lbl>
+1 1             48 724000048     48   2 [fem]  3 [50-64]    0 [No]  3 [Secondary]  47.9 0 [Control]   NA     
+2 2             48 724000048     48  NA       NA           NA      NA              46.3 0 [Control]    0 [No]
+3 3             48 724000048     48  NA       NA           NA      NA              47.4 0 [Control]    0 [No]
+4 1             61 724000061     61   2 [fem]  2 [35-49]    0 [No]  4 [Tertiary]   63.2 0 [Control]   NA     
+5 2             61 724000061     61  NA       NA           NA      NA              53.2 0 [Control]    0 [No]
+6 3             61 724000061     61  NA       NA           NA      NA              68.0 0 [Control]    0 [No]
+```
+
+
+Acudimos ahora a la función `fill` de la librería `tidyr`:
+
+```r
+library(tidyr)
+acv %>%
+  group_by(number_id) %>% # agrupamos por id y entonces
+  arrange(wave) %>% # ordenamos por ola para tener la fila con datos antes que las otras, y entonces
+  fill(sex, age, mar1, edu1) %>% # para cada id rellenamos las filas vacías de las variables especificadas con los valores que no son missings, y entonces
+  ungroup() %>% # desagrupamos y entonces
+  arrange(number_id) %>% # ordenamos por id para ver las mismas filas que arriba, y entonces
+  head() # nos quedamos con las primeras filas
+```
+
+```
+# A tibble: 6 x 11
+  wave  q0002_hhid number_id ID_ECS       sex       age      mar1          edu1   hea       grups       dep
+  <chr>      <dbl> <chr>      <dbl> <dbl+lbl> <dbl+lbl> <dbl+lbl>     <dbl+lbl> <dbl>   <dbl+lbl> <dbl+lbl>
+1 1             48 724000048     48   2 [fem] 3 [50-64]    0 [No] 3 [Secondary]  47.9 0 [Control]   NA     
+2 2             48 724000048     48   2 [fem] 3 [50-64]    0 [No] 3 [Secondary]  46.3 0 [Control]    0 [No]
+3 3             48 724000048     48   2 [fem] 3 [50-64]    0 [No] 3 [Secondary]  47.4 0 [Control]    0 [No]
+4 1             61 724000061     61   2 [fem] 2 [35-49]    0 [No] 4 [Tertiary]   63.2 0 [Control]   NA     
+5 2             61 724000061     61   2 [fem] 2 [35-49]    0 [No] 4 [Tertiary]   53.2 0 [Control]    0 [No]
+6 3             61 724000061     61   2 [fem] 2 [35-49]    0 [No] 4 [Tertiary]   68.0 0 [Control]    0 [No]
+```
+
+
+Pivotar
+========================================================
+Pivotar es el proceso de transformar una base de datos horizontal (por ejemplo el producto de un una fusión, como es el caso de `ach`) a una vertical/longitudinal (por ejemplo el resultado de combinar filas, como es el caso de `acv`) o a la inversa.
 
 Slide With Plot
 ========================================================
