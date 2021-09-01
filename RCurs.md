@@ -44,6 +44,7 @@ R como calculadora
 <img src="Rterm2.png" width="1200" height="100%">
 
 
+
 Necesitamos un editor
 ========================================================
 - Más práctico: ejecutar múltiples operaciones simultáneamente.
@@ -91,7 +92,7 @@ Empecemos
 ========================================================
 
 ```r
-install.packages("tidyverse") # instala la librería tidyverse, que a su vez instala las librerías dplyr, tidyr, haven, y otras (https://www.tidyverse.org)
+install.packages("tidyverse") # instala la librería tidyverse, que a su vez instala las librerías dplyr, tidyr, haven, y otras (https://www.tidyverse.org, https://github.com/tidyverse/tidyverse)
 #getwd() # Cuál es el directorio de trabajo actual?
 setwd("~/Documents/PSSJD/Curso-R/") # En qué directorio de trabajo nos situamos ahora
 ```
@@ -143,7 +144,7 @@ summary
 ```
 function (object, ...) 
 UseMethod("summary")
-<bytecode: 0x0000000025cceae0>
+<bytecode: 0x0000000023f57558>
 <environment: namespace:base>
 ```
 
@@ -210,9 +211,11 @@ head(dataw1) # primeras (6) filas
 
 **Ejercicio 1**: 
 
-*Usando las funciones `setwd` y `read_dta` convenientemente (hay varias posibilidades), guardar también las bases de datos `Estudi_pob_w2.dta` y `Estudi_pob_w3.dta` en dos variables que llamaremos `dataw2` y `dataw3`. Tod\*s podéis ver `dataw1`, `dataw2`, `dataw3` y sus dimensiones en el panel `Environment` de RStudio?*
+*Usando las funciones `setwd` y `read_dta` convenientemente (hay varias posibilidades), guardar también las bases de datos `Estudi_pob_w2.dta` y `Estudi_pob_w3.dta` en dos variables que llamaremos `dataw2` y `dataw3`. Podéis ver `dataw1`, `dataw2`, `dataw3` y sus dimensiones en el panel `Environment` de RStudio?*
+
 
 **Nota:** _Para abrir ficheros `*.csv` disponemos de la función `read.csv` en R y de la función `read_csv` de la librería `readr` entre otras. Para abrir ficheros de excel disponemos de diversas funciones en las librerías `readxl` y `openxlsx` entre muchas otras. Por otra parte la librería `readspss` (https://github.com/JanMarvin/readspss) tiene funciones que permiten abrir bases de datos en formato de SPSS encriptadas con contraseña._
+
 
 Acceso a las variables de una base de datos: `$` y `[[`
 ========================================================
@@ -271,6 +274,57 @@ prop.table(table(dataw1$phys_hea1))
         1         2         3 
 0.4153809 0.3707811 0.2138380 
 ```
+
+Guardando los resultados
+========================================================
+Hemos dicho que R es como una calculadora, y que si no asignamos los objetos a variables, se muestran en consola pero no quedan guardados en ningún sitio.
+- Los objetos de R (como una base de datos o dataframe) se pueden guardar con la función `save` en ficheros con la extensión `.rda` o `.rdata` (aunque a veces también se escribe la `r` e incluso la `d` en mayúscula, por ejemplo `.RData`)
+- Los resultados, si son matrices, data frames o tablas, además, también se pueden guardar en ficheros `.csv` o con formatos de excel (a menudo, las funciones mencionadas de la forma `read_` o `read.` tienen correspondientes `write_` o `write.`).
+- Los resultadosy más generalmente todo aquello que aparece por consola puede ser guardados en ficheros de texto con la función `sink`.
+- A no ser que se especifique la dirección del fichero, serán guardados en el directorio donde R está trabajando (`getwd()`)
+
+```r
+#?sink
+sink("Summary_Estudi_poblacional_w1.txt", split = TRUE)
+print(attributes(dataw1$phys_hea1)$label)
+```
+
+```
+[1] "Number of physical health problems W1"
+```
+
+```r
+table(dataw1$phys_hea1)
+```
+
+```
+
+   1    2    3 
+1723 1538  887 
+```
+
+```r
+print(attributes(dataw1$hea1)$label)
+```
+
+```
+[1] "Health state (0 -100) W1"
+```
+
+```r
+summary(dataw1$hea1)
+```
+
+```
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   0.00   42.83   55.64   53.97   66.06   92.82     187 
+```
+
+```r
+sink()
+```
+
+
 
 Transformación de variables (I)
 ========================================================
@@ -367,6 +421,7 @@ dataw1 <- dataw1 %>% #partimos de la base de datos dataw1 y entonces
 
 
 
+
 Otras operaciones con funciones de la librería `dplyr`
 ========================================================
 - Ejemplo 1
@@ -390,7 +445,7 @@ dataw1 %>% #partimos de la base de datos dataw1 y entonces
 3 724001299  79.8 Yes  
 ```
 
-- Ejemplo 2
+- Ejemplo 2 (uso de funciones de R como `mean`, `median` o `quantile`; se puedn usar otras como `var`, `sd`, `min`, `max`, `IQR`, etc.)
 
 
 ```r
@@ -398,38 +453,87 @@ dataw1 %>% #partimos de la base de datos dataw1 y entonces
   select(number_id, hea1, dep1) %>% # mantenemos sólo las columnas number_id, hea1 y dep1, y entonces
   mutate(dep1 = as_factor(dep1)) %>% # transformamos la variable  dep1 y la guardamos con el mismo nombre, y entonces
   group_by(dep1) %>% # agrupamos por las categorías de depresión, y entonces
-  summarise(mean_hea1 = mean(hea1, na.rm = TRUE), median_hea1 = median(hea1, na.rm = TRUE), n = n()) # calculamos la media y la mediana de hea1 para cada categoría de depresión y el número de observaciones por cada categoría
+  summarise(mean_hea1 = mean(hea1, na.rm = TRUE), median_hea1 = median(hea1, na.rm = TRUE), tercil_hea1 = quantile(hea1, probs = 1/3, na.rm = TRUE), n = n()) # calculamos la media, la mediana y el primer tercil de hea1 para cada categoría de depresión y el número de observaciones por cada categoría
 ```
 
 ```
-# A tibble: 3 x 4
-  dep1  mean_hea1 median_hea1     n
-  <fct>     <dbl>       <dbl> <int>
-1 No         55.9        57.4  4073
-2 Yes        38.4        37.9   510
-3 <NA>      NaN          NA     170
+# A tibble: 3 x 5
+  dep1  mean_hea1 median_hea1 tercil_hea1     n
+  <fct>     <dbl>       <dbl>       <dbl> <int>
+1 No         55.9        57.4        50.2  4073
+2 Yes        38.4        37.9        31.1   510
+3 <NA>      NaN          NA          NA     170
 ```
 
-**Nota:** *usamos `na.rm = TRUE` dentro de `mean` y de `median` para que calcule la media de aquellos valores que no son missing. En caso contrario, cuando hay missings el resultado es `NA`.*
+**Nota:** *usamos `na.rm = TRUE` dentro de `mean`, de `median` y de `quantile` para que calcule la media de aquellos valores que no son missing. En caso contrario, cuando hay missings el resultado es `NA`.*
 
 **Nota:** *Todo lo anterior se puede realizar también con funciones de R sin necesidad de acudir a la librería `dplyr`, pero no tenemos posibilidades como el uso de `across`, o las alternativas pueden ser más complejas.*
 
 
 
 
+Cálculo de prevalencias:
+========================================================
+Prevalencia de depresión:
 
+```r
+dataw1 %>% 
+  count(dep1) %>% # Contamos los individuos en cada categoría de depresión y
+  mutate(prop = 100*n/sum(n)) # calculamos el %
+```
 
+```
+# A tibble: 3 x 3
+  dep1      n  prop
+  <fct> <int> <dbl>
+1 No     4073 85.7 
+2 Yes     510 10.7 
+3 <NA>    170  3.58
+```
+
+Prevalencia de depresión por grupos de edad:
+
+```r
+dataw1 %>% 
+  group_by(age) %>% 
+  count(dep1) %>% # Contamos los individuos en cada categoría de depresión por grupo de edad y
+  filter(!is.na(dep1)) %>% # eliminamos los missings si nos interesa contar el porcentaje sobre el total de respuestas válidas
+  mutate(prop = 100*n/sum(n)) # Calculamos el %
+```
+
+```
+# A tibble: 10 x 4
+# Groups:   age [5]
+   age   dep1      n  prop
+   <fct> <fct> <int> <dbl>
+ 1 18-34 No      382 93.9 
+ 2 18-34 Yes      25  6.14
+ 3 35-49 No      500 90.7 
+ 4 35-49 Yes      51  9.26
+ 5 50-64 No     1558 88.5 
+ 6 50-64 Yes     202 11.5 
+ 7 65-79 No     1298 87.3 
+ 8 65-79 Yes     188 12.7 
+ 9 80+   No      335 88.4 
+10 80+   Yes      44 11.6 
+```
 
 Variables y dimensiones de las bbdd
 ========================================================
+**Ejercicio 3**:
+
+*Guardar `dataw1`, `dataw2` y `dataw3` de manera que no contengan la variable `number_id` (indicación: usamos `select` para seleccionar variables; si queremos quitar variables, ponemos un `-` delante)*
+
+
+
 
 ```r
 names(dataw1)
 ```
 
 ```
- [1] "q0002_hhid"  "number_id"   "ID_ECS"      "sex"         "age"         "mar1"        "edu1"        "phys_hea1"   "hea1"        "dep1"        "score_lon1"  "score_sup1" 
-[13] "income1"     "income_inf1"
+ [1] "q0002_hhid"  "ID_ECS"      "sex"         "age"         "mar1"        "edu1"        "phys_hea1"   "hea1"        "dep1"        "score_lon1"  "score_sup1"  "income1"    
+[13] "income_inf1"
 ```
 
 ```r
@@ -437,7 +541,7 @@ dim(dataw1)
 ```
 
 ```
-[1] 4753   14
+[1] 4753   13
 ```
 
 ```r
@@ -445,7 +549,7 @@ ncol(dataw1); nrow(dataw1)
 ```
 
 ```
-[1] 14
+[1] 13
 ```
 
 ```
@@ -453,35 +557,27 @@ ncol(dataw1); nrow(dataw1)
 ```
 
 ```r
-names(dataw2)
+names(dataw2); dim(dataw2)
 ```
 
 ```
-[1] "number_id"  "q0002_hhid" "dep2"       "score_lon2" "score_sup2" "income2"    "phys_hea2"  "hea2"      
-```
-
-```r
-dim(dataw2)
+[1] "q0002_hhid" "dep2"       "score_lon2" "score_sup2" "income2"    "phys_hea2"  "hea2"      
 ```
 
 ```
-[1] 4702    8
+[1] 4702    7
 ```
 
 ```r
-names(dataw3)
+names(dataw3); dim(dataw3)
 ```
 
 ```
- [1] "number_id"     "q0002_hhid"    "dep3"          "score_lon3"    "score_sup3"    "income3"       "arthritis3"    "angina3"       "asthma3"       "diabetes3"     "hypertension3"
-```
-
-```r
-dim(dataw3)
+ [1] "q0002_hhid"    "dep3"          "score_lon3"    "score_sup3"    "income3"       "arthritis3"    "angina3"       "asthma3"       "diabetes3"     "hypertension3"
 ```
 
 ```
-[1] 4590   11
+[1] 4590   10
 ```
 
 Fusión (merge) de bbdd
@@ -513,9 +609,9 @@ names(data)
 ```
 
 ```
- [1] "q0002_hhid"    "number_id.x"   "ID_ECS"        "sex"           "age"           "mar1"          "edu1"          "phys_hea1"     "hea1"          "dep1"          "score_lon1"   
-[12] "score_sup1"    "income1"       "income_inf1"   "number_id.y"   "dep2"          "score_lon2"    "score_sup2"    "income2"       "phys_hea2"     "hea2"          "number_id"    
-[23] "dep3"          "score_lon3"    "score_sup3"    "income3"       "arthritis3"    "angina3"       "asthma3"       "diabetes3"     "hypertension3"
+ [1] "q0002_hhid"    "ID_ECS"        "sex"           "age"           "mar1"          "edu1"          "phys_hea1"     "hea1"          "dep1"          "score_lon1"    "score_sup1"   
+[12] "income1"       "income_inf1"   "dep2"          "score_lon2"    "score_sup2"    "income2"       "phys_hea2"     "hea2"          "dep3"          "score_lon3"    "score_sup3"   
+[23] "income3"       "arthritis3"    "angina3"       "asthma3"       "diabetes3"     "hypertension3"
 ```
 
 ```r
@@ -523,7 +619,7 @@ dim(data)
 ```
 
 ```
-[1] 4753   31
+[1] 4753   28
 ```
 
 
@@ -531,7 +627,7 @@ dim(data)
 ?full_join
 ```
 
-**Ejercicio 3**:
+**Ejercicio 4**:
 
 *Con `full_join` creamos una base de datos resultado de fusionar las 3 iniciales e incluír todas las observaciones de cada una de ellas. Mirando en la ayuda, este ejercicio consiste en fusionar las 3 bases de datos, pero incluyendo sólo aquellas observaciones de comunes a las 3. Cuántas observaciones tiene?*
 
@@ -580,7 +676,7 @@ ac1 <- ac1 %>% # partimos de ac1 y entonces
 ac2 <- ac2 %>% # partimos de ac2 y entonces
   rename(hea = hea2, dep = dep2) # renombramos hea2 como hea y dep2 como dea
 ac3 <- ac3 %>% rename(hea = hea3, dep = dep3) # mismo proceso para ac3
-#Comprobamos
+#ac <- ac3 %>% rename_with(~sub("3$", "", .))  #otra forma: renombra todas las variables que acaban en 3 quitándoles el 3
 #names(ac1); names(ac2); names(ac3)
 ```
 
@@ -595,11 +691,11 @@ acv <- bind_rows(ac1, ac2, ac3, .id = "wave")
 Otras opciones para combinar bases de datos
 ========================================================
 
-**Ejercicio 4**:
+**Ejercicio 5**:
 *Ver qué variables tiene `acv`; para qué se añadió `.id = "wave"`?; ejecutar `rbind(ac1,ac2,ac3)`*
 
 
-**Nota:** _La función `rbind` de R hace esencialmente lo mismo, pero necesita que las 3 bases de datos tengan exactamente las mismas columnas. En caso en que esto no ocurre, como el presente, da un error._
+**Nota:** _La función `rbind` de R hace esencialmente lo mismo, pero necesita que las 3 bases de datos tengan exactamente las mismas columnas. En caso en que esto no ocurre, como el presente, da un error. Además, tanto en el caso de `rbind` como de `bind_rows`, conviene que las columnas por las que se combina (las de igual nombre) tengan la misma clase, pues en caso contrario pueden ocurrir errores o comportamiento extraños._
 
 
 **Nota:** *Las funciones `cbind` y `bind_cols` de R y `dplyr` respectivamente combinan por columnas. Se diferencian de un merge en que no hay una columna "común" por la que fusionar, sino que se añaden las columnas de los distintos objetos, tal como están ordenadas en cada uno de ellos. Además, todas las columnas tienen que tener el mismo número de elementos.*
@@ -609,24 +705,22 @@ Abrimos de nuevo las 3 bases de datos, y esta vez sin renombrar las fusionamos h
 
 ```r
 ach <- ac1 %>%
-  full_join(ac2, by = c("q0002_hhid", "number_id", "grups")) %>%
-  full_join(ac3, by = c("q0002_hhid", "number_id", "grups"))
-ach %>%
-  head(3)
+  full_join(ac2, by = c("q0002_hhid", "number_id", "grups", "ID_ECS")) %>%
+  full_join(ac3, by = c("q0002_hhid", "number_id", "grups", "ID_ECS"))
+ach %>% head(3)
 ```
 
 ```
-# A tibble: 3 x 15
-  q0002_hhid number_id ID_ECS.x       sex       age      mar1             edu1  hea1       grups ID_ECS.y  hea2     dep2 ID_ECS  hea3   dep3
-       <dbl> <chr>        <dbl> <dbl+lbl> <dbl+lbl> <dbl+lbl>        <dbl+lbl> <dbl>   <dbl+lbl>    <dbl> <dbl> <dbl+lb>  <dbl> <dbl> <dbl+>
-1       2306 724002306     2306   2 [fem] 3 [50-64]   0 [No]  2 [Primary]       45.9 1 [Interve~     2306  NA    NA        2306    NA     NA
-2       3363 724003363     3363   2 [fem] 4 [65-79]   0 [No]  1 [Less primary]  23.3 1 [Interve~     3363  24.6   0 [No]   3363    NA     NA
-3       3228 724003228     3228   2 [fem] 3 [50-64]   1 [Yes] 1 [Less primary]  49.1 1 [Interve~     3228  35.2   0 [No]   3228    NA     NA
+# A tibble: 3 x 13
+  q0002_hhid number_id ID_ECS       sex       age      mar1             edu1  hea1            grups  hea2      dep2  hea3      dep3
+       <dbl> <chr>      <dbl> <dbl+lbl> <dbl+lbl> <dbl+lbl>        <dbl+lbl> <dbl>        <dbl+lbl> <dbl> <dbl+lbl> <dbl> <dbl+lbl>
+1       2306 724002306   2306   2 [fem] 3 [50-64]   0 [No]  2 [Primary]       45.9 1 [Intervention]  NA     NA         NA        NA
+2       3363 724003363   3363   2 [fem] 4 [65-79]   0 [No]  1 [Less primary]  23.3 1 [Intervention]  24.6    0 [No]    NA        NA
+3       3228 724003228   3228   2 [fem] 3 [50-64]   1 [Yes] 1 [Less primary]  49.1 1 [Intervention]  35.2    0 [No]    NA        NA
 ```
 
 ```r
-cbind(ac1, ac2, ac3) %>%
-  head(3)
+cbind(ac1, ac2, ac3) %>% head(3)
 ```
 
 ```
@@ -687,11 +781,279 @@ acv %>%
 ```
 
 
-Pivotar
+Pivotar (horizontal/ancho --> vertical/largo)
 ========================================================
 Pivotar es el proceso de transformar una base de datos horizontal (por ejemplo el producto de un una fusión, como es el caso de `ach`) a una vertical/longitudinal (por ejemplo el resultado de combinar filas, como es el caso de `acv`) o a la inversa.
 
-Slide With Plot
+Veamos primero si tenemos un sólo conjunto de columnas longitudinal, por ejemplo `hea1`, `hea2` y `hea3`.
+
+
+```r
+ach %>%
+  select(-starts_with("dep")) %>% # quitamos las columnas que empiezan con dep y entonces
+  pivot_longer(cols = starts_with("hea"), names_to = "wave", values_to = "hea") %>% # pivotamos, y entonces
+  arrange(number_id) %>% head()
+```
+
+```
+# A tibble: 6 x 10
+  q0002_hhid number_id ID_ECS       sex       age      mar1          edu1       grups wave    hea
+       <dbl> <chr>      <dbl> <dbl+lbl> <dbl+lbl> <dbl+lbl>     <dbl+lbl>   <dbl+lbl> <chr> <dbl>
+1         48 724000048     48   2 [fem] 3 [50-64]    0 [No] 3 [Secondary] 0 [Control] hea1   47.9
+2         48 724000048     48   2 [fem] 3 [50-64]    0 [No] 3 [Secondary] 0 [Control] hea2   46.3
+3         48 724000048     48   2 [fem] 3 [50-64]    0 [No] 3 [Secondary] 0 [Control] hea3   47.4
+4         61 724000061     61   2 [fem] 2 [35-49]    0 [No] 4 [Tertiary]  0 [Control] hea1   63.2
+5         61 724000061     61   2 [fem] 2 [35-49]    0 [No] 4 [Tertiary]  0 [Control] hea2   53.2
+6         61 724000061     61   2 [fem] 2 [35-49]    0 [No] 4 [Tertiary]  0 [Control] hea3   68.0
+```
+
+Cuando hay más de un conjunto de columnas que queremos pivotar, como en este caso, en el que tenemos por un lado `hea1`, `hea2` y `hea3` y por otro lado, `dep2` y `dep3`, son necesarias las expresiones regulares (#regex):
+
+
+```r
+ach %>%
+  pivot_longer(cols = c(starts_with("hea"), starts_with("dep")), names_to = c(".value", "wave"), names_pattern = "(.*)([0-9]$)") %>%
+  arrange(number_id) %>% head()
+```
+
+```
+# A tibble: 6 x 11
+  q0002_hhid number_id ID_ECS       sex       age      mar1          edu1       grups wave    hea       dep
+       <dbl> <chr>      <dbl> <dbl+lbl> <dbl+lbl> <dbl+lbl>     <dbl+lbl>   <dbl+lbl> <chr> <dbl> <dbl+lbl>
+1         48 724000048     48   2 [fem] 3 [50-64]    0 [No] 3 [Secondary] 0 [Control] 1      47.9   NA     
+2         48 724000048     48   2 [fem] 3 [50-64]    0 [No] 3 [Secondary] 0 [Control] 2      46.3    0 [No]
+3         48 724000048     48   2 [fem] 3 [50-64]    0 [No] 3 [Secondary] 0 [Control] 3      47.4    0 [No]
+4         61 724000061     61   2 [fem] 2 [35-49]    0 [No] 4 [Tertiary]  0 [Control] 1      63.2   NA     
+5         61 724000061     61   2 [fem] 2 [35-49]    0 [No] 4 [Tertiary]  0 [Control] 2      53.2    0 [No]
+6         61 724000061     61   2 [fem] 2 [35-49]    0 [No] 4 [Tertiary]  0 [Control] 3      68.0    0 [No]
+```
+
+
+Pivotar (horizontal/ancho <-- vertical/largo)
+========================================================
+
+**Ejercicio 6**:
+
+* *Modificar `acv` de tal manera que sus variables sociodemográficas estén completas tal como se indicó 2 diapositivas antes.*
+* *Qué variables tiene acv?*
+
+
+
+
+```r
+acv %>%
+  pivot_wider(id_cols = c(-hea, -dep, -wave), names_from = c("wave"), values_from = c("hea", "dep")) %>%
+  head()
+```
+
+```
+# A tibble: 6 x 14
+# Groups:   number_id [6]
+  q0002_hhid number_id ID_ECS       sex       age      mar1             edu1            grups hea_1 hea_2 hea_3     dep_1     dep_2    dep_3
+       <dbl> <chr>      <dbl> <dbl+lbl> <dbl+lbl> <dbl+lbl>        <dbl+lbl>        <dbl+lbl> <dbl> <dbl> <dbl> <dbl+lbl> <dbl+lbl> <dbl+lb>
+1       2306 724002306   2306   2 [fem] 3 [50-64]   0 [No]  2 [Primary]      1 [Intervention]  45.9  NA    NA          NA   NA      NA      
+2       3363 724003363   3363   2 [fem] 4 [65-79]   0 [No]  1 [Less primary] 1 [Intervention]  23.3  24.6  NA          NA    0 [No] NA      
+3       3228 724003228   3228   2 [fem] 3 [50-64]   1 [Yes] 1 [Less primary] 1 [Intervention]  49.1  35.2  NA          NA    0 [No] NA      
+4       2371 724002371   2371   2 [fem] 1 [18-34]   0 [No]  3 [Secondary]    1 [Intervention]  57.5  NA    NA          NA   NA      NA      
+5       2452 724002452   2452   2 [fem] 2 [35-49]   0 [No]  1 [Less primary] 1 [Intervention]  41.3  44.3  31.6        NA    0 [No]  1 [Yes]
+6       2750 724002750   2750   2 [fem] 5 [80+]     0 [No]  2 [Primary]      1 [Intervention]  19.5  NA    NA          NA   NA      NA      
+```
+
+**Ejercicio 7**:
+
+*Combinar las filas de `dataw1`, `dataw2` y `dataw3` verticalmente (después de renombrar convenientemente), rellenar las variables invariables y pivotar a formato horizontal*
+
+
+Intervalos de confianza y `t.test`
+========================================================
+
+Con la función `t.test` podemos obtener el intervalo de confianza de una colección de valores
+
+```r
+t.test(dataw1$hea1)$conf.int
+```
+
+```
+[1] 53.48650 54.44456
+attr(,"conf.level")
+[1] 0.95
+```
+Y comparar entre grupos mediante un t-test:
+
+```r
+t.test(hea1 ~ sex, data = dataw1)
+```
+
+```
+
+	Welch Two Sample t-test
+
+data:  hea1 by sex
+t = 14.557, df = 4523.6, p-value < 2.2e-16
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ 5.995119 7.861186
+sample estimates:
+mean in group masc  mean in group fem 
+          57.75280           50.82465 
+```
+
+```r
+t.test(data$hea1, data$hea2, paired = TRUE) #comparamos el estado de salud en la ola 1 con la ola 2
+```
+
+```
+
+	Paired t-test
+
+data:  data$hea1 and data$hea2
+t = 0.81332, df = 2384, p-value = 0.4161
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.2407952  0.5820965
+sample estimates:
+mean of the differences 
+              0.1706506 
+```
+
+Chi-cuadrado
+========================================================
+
+```r
+chisq.test(dataw1$dep1, dataw1$sex)
+```
+
+```
+
+	Pearson's Chi-squared test with Yates' continuity correction
+
+data:  dataw1$dep1 and dataw1$sex
+X-squared = 68.537, df = 1, p-value < 2.2e-16
+```
+
+
+
+Regresión lineal:
 ========================================================
 
 
+
+
+```r
+#?lm
+fit <- lm(hea1 ~ age + sex + income1 + dep1, data = dataw1)
+summary(fit)
+```
+
+```
+
+Call:
+lm(formula = hea1 ~ age + sex + income1 + dep1, data = dataw1)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-53.560  -8.844   0.710   9.444  40.641 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  70.06218    0.80741  86.774  < 2e-16 ***
+age35-49     -5.41946    0.95045  -5.702 1.28e-08 ***
+age50-64    -11.26679    0.79368 -14.196  < 2e-16 ***
+age65-79    -19.19973    0.80852 -23.747  < 2e-16 ***
+age80+      -30.15751    1.02706 -29.363  < 2e-16 ***
+sexfem       -5.07076    0.44117 -11.494  < 2e-16 ***
+income1       0.16659    0.02742   6.075 1.37e-09 ***
+dep1Yes     -14.52514    0.67309 -21.580  < 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 13.09 on 3667 degrees of freedom
+  (1078 observations deleted due to missingness)
+Multiple R-squared:  0.3837,	Adjusted R-squared:  0.3825 
+F-statistic: 326.1 on 7 and 3667 DF,  p-value: < 2.2e-16
+```
+
+Regresión logística
+========================================================
+
+```r
+#?glm
+fit <- glm(dep1 ~ age + sex + income1*hea1 + mar1*score_lon1, data = dataw1, family = binomial)
+summary(fit)
+```
+
+```
+
+Call:
+glm(formula = dep1 ~ age + sex + income1 * hea1 + mar1 * score_lon1, 
+    family = binomial, data = dataw1)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.0231  -0.4485  -0.2799  -0.1678   3.2085  
+
+Coefficients:
+                     Estimate Std. Error z value Pr(>|z|)    
+(Intercept)         0.6507615  0.4959020   1.312 0.189426    
+age35-49            0.1435643  0.3101981   0.463 0.643497    
+age50-64           -0.2696730  0.2772296  -0.973 0.330681    
+age65-79           -1.0277636  0.2922478  -3.517 0.000437 ***
+age80+             -2.0710935  0.3598878  -5.755 8.67e-09 ***
+sexfem              0.2519979  0.1314381   1.917 0.055208 .  
+income1            -0.0154454  0.0276949  -0.558 0.577051    
+hea1               -0.0720689  0.0064107 -11.242  < 2e-16 ***
+mar1Yes            -0.5831916  0.3266439  -1.785 0.074196 .  
+score_lon1          0.3268351  0.0406748   8.035 9.33e-16 ***
+income1:hea1       -0.0001597  0.0005689  -0.281 0.778968    
+mar1Yes:score_lon1  0.1290971  0.0668269   1.932 0.053383 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 2585.4  on 3566  degrees of freedom
+Residual deviance: 1937.0  on 3555  degrees of freedom
+  (1186 observations deleted due to missingness)
+AIC: 1961
+
+Number of Fisher Scoring iterations: 6
+```
+
+Intervalos de confianza para una regresión
+========================================================
+
+```r
+#?confint
+confint(fit)
+```
+
+```
+                          2.5 %        97.5 %
+(Intercept)        -0.328997071  1.6170373179
+age35-49           -0.453392497  0.7675523589
+age50-64           -0.794681232  0.2966808469
+age65-79           -1.585558738 -0.4353302342
+age80+             -2.774032729 -1.3587725617
+sexfem             -0.004042762  0.5116065344
+income1            -0.070008567  0.0387003866
+hea1               -0.084808502 -0.0596656506
+mar1Yes            -1.223548026  0.0578792815
+score_lon1          0.247665974  0.4072594365
+income1:hea1       -0.001288554  0.0009438818
+mar1Yes:score_lon1 -0.001686246  0.2604890641
+```
+
+De la misma manera que `tidyverse` hace referencia a una colección de librerías que simplifican la manipulación de datframes, existe otra colección de librerías, `easystats`, cuyo objetivo es mostrar los resultados de tests y modelos estadísticos con mejor formato.
+
+**Ejercicio 8**:
+
+*Instalar y cargar las librerías `performance` y `parameters` y probar las funciones `model_performance` y `model_parameters` aplicadas a `fit`*.
+
+La librería `modelsummary` dispone de 2 funciones que permiten visualizar multiples resultados en tablas bien organizadas: 
+
+  + `modelsummary` (https://vincentarelbundock.github.io/modelsummary/articles/modelsummary.html) y 
+  + `datasummary` (https://vincentarelbundock.github.io/modelsummary/articles/datasummary.html). 
+  
+Otras librerías que permiten visualizar descriptivos y resultados resumidos en tablas son 
+  + `summarytools` (https://cran.r-project.org/web/packages/summarytools/vignettes/introduction.html) y 
+  + `compareGroups` (https://cran.r-project.org/web/packages/compareGroups/vignettes/compareGroups_vignette.html).
