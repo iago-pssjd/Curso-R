@@ -106,29 +106,25 @@ O bien, mediante RStudio:
 + `Session > Set Working Directory > Choose Directory`
 + `Session > Set Working Directory > To Source File Location`
 
-Cómo abriríamos la base de datos en Stata? El comando `use` la copia a la memoria
-```{stata}
-. use “data_curs_stat\Estudi_pob_w1.dta”, clear
-```
-Y en R? Usaremos la librería `haven`.
-```{r eval=TRUE}
-library(haven)
-#help(package = "haven") # Informémonos acerca de la librería haven
-#?read_dta # ayuda de la función read_dta
-read_dta("data_curs_stat/Estudi_pob_w1.dta")
+Para abrir ficheros de excel disponemos de diversas funciones en las librerías `readxl` y `openxlsx` entre muchas otras. Aunque la segunda librería tiene más funciones para manipular y escribir ficheros `.xlsx`, la primera dispone de funciones que nos permiten leer también ficheros `.xls`
+```{r eval=FALSE}
+library(readxl)
+#help(package = "readxl") # Informémonos acerca de la librería readxl
+#?read_excel # ayuda de la función read_dta
+read_excel("data_curs_stat/EP1.xls")
 
 ```
 
-Primeros pasos con una base de datos (I)
+Abrir bases de datos y ejecutar funciones: R no es como Stata.
 ========================================================
-La función `read_dta` abre la base de datos, pero a diferencia de la instrucción `use` en Stata, no la copia a memoria. Así, si en Stata el podríamos ejecutar `describe` o `summarize`, si en R ejecutamos una función como `summary` el resultado es la propia función.
+La función `read_excel` abre la base de datos, pero a diferencia de instrucciones como `use` o `import excel` en Stata, no la copia a memoria. Así, si en Stata podríamos ejecutar `describe` o `summarize`, si en R ejecutamos una función como `summary` el resultado es la propia función.
 ```{r eval=TRUE}
 summary
 ```
 
-Tenemos que evaluar la función `summary` en la base de datos que abrimos con `read_dta`:
-```{r eval=TRUE}
-summary(read_dta("data_curs_stat/Estudi_pob_w1.dta"))
+Tenemos que evaluar la función `summary` en la base de datos que abrimos con `read_excel`:
+```{r eval=FALSE}
+summary(read_excel("data_curs_stat/EP1.xls"))
 ```
 
 Primeros pasos con una base de datos (II)
@@ -153,7 +149,7 @@ dataw3 <- read_dta("data_curs_stat/Estudi_pob_w3.dta")
 
 ```
 
-**Nota:** _Para abrir ficheros `*.csv` disponemos de la función `read.csv` en R y de la función `read_csv` de la librería `readr` entre otras. Para abrir ficheros de excel disponemos de diversas funciones en las librerías `readxl` y `openxlsx` entre muchas otras. Por otra parte la librería `readspss` (https://github.com/JanMarvin/readspss) tiene funciones que permiten abrir bases de datos en formato de SPSS encriptadas con contraseña._
+**Nota:** _Para abrir ficheros `*.csv` disponemos de la función `read.csv` en R y de la función `read_csv` de la librería `readr` entre otras. Por otra parte la librería `readspss` (https://github.com/JanMarvin/readspss) tiene funciones que permiten abrir bases de datos en formato de SPSS encriptadas con contraseña._
 
 
 Acceso a las variables de una base de datos: `$` y `[[`
