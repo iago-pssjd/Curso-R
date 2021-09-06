@@ -5,6 +5,7 @@
 
 body {
 	background-color: #edece4;
+	font-size: 17pt !important;
 }
 
 
@@ -12,9 +13,7 @@ slide {
 	width: 2560px !important;
 	height: 2440px !important;
 }
-body {
-	font-size: 18pt !important;
-}
+
 ul li {
 	line-height: 100% !important;
 	/*font-size: 18px !important;*/
@@ -27,13 +26,13 @@ p {
 }*/
 
 pre {
-	margin-top: 0.25em !important;
-	margin-bottom: 0.25em !important;
-	font-size: 80% !important;
+	margin-top: 0.17em !important;
+	margin-bottom: 0.17em !important;
+	font-size: 70% !important;
 }
 
 pre.sourceCode {
-	font-size: 80% !important;
+	font-size: 70% !important;
 }
 /*
 h2 {
