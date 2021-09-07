@@ -245,12 +245,6 @@ dataw1 <- dataw1 %>% #partimos de la base de datos dataw1 y entonces
   mutate(phys_hea1 = as.factor(phys_hea1), dep1 = as.factor(dep1), q0002_hhid = as.character(q0002_hhid)) # transformamos las variables phys_hea1,  dep1 y q0002_hhid y las guardamos con los mismos nombres
 
 ```
-- O bien, cuando estamos aplicando la misma transformación (en este caso `as.factor`) a varias variables (y guardándolas con el mismo nombre), podemos usar `across(vector de variables, función)` dentro de `mutate`:
-```{r eval=FALSE}
-dataw1 <- dataw1 %>% #partimos de la base de datos dataw1 y entonces
-  mutate(across(c(phys_hea1, dep1), as_factor), q0002_hhid = as.character(q0002_hhid)) # evaluamos as_factor a través de las variables phys_hea1 y dep1 y transformamos también number_id
-
-```
 
 
 **Ejercicio:** 
@@ -299,7 +293,7 @@ dataw1 %>% #partimos de la base de datos dataw1 y entonces
 
 **Nota:** *usamos `na.rm = TRUE` dentro de `mean`, de `median` y de `quantile` para que calcule la media de aquellos valores que no son missing. En caso contrario, cuando hay missings el resultado es `NA`.*
 
-**Nota:** *Todo lo anterior se puede realizar también con funciones de R sin necesidad de acudir a la librería `dplyr`, pero no tenemos posibilidades como el uso de `across`, o las alternativas pueden ser más complejas.*
+**Nota:** *Todo lo anterior se puede realizar también con funciones de R sin necesidad de acudir a la librería `dplyr`, pero las alternativas pueden ser más complejas.*
 
 
 ```{r echo=FALSE, eval=FALSE}
@@ -391,7 +385,7 @@ acr2 <- ac2 %>% # partimos de ac2 y entonces
   rename(hea = hea2, dep = dep2) # renombramos hea2 como hea y dep2 como dea
 acr3 <- ac3 %>% 
   rename(hea = hea3, dep = dep3) # mismo proceso para ac3
-#ac <- ac3 %>% rename_with(~sub("3$", "", .))  #otra forma: renombra todas las variables que acaban en 3 quitándoles el 3
+
 #names(ac1); names(ac2); names(ac3)
 ```
 
@@ -452,72 +446,41 @@ acv %>%
 
 
 
-## Pivotar (horizontal/ancho --> vertical/largo)
+## Pivotar (vertical/largo --> horizontal/ancho)
 
-Pivotar es el proceso de transformar una base de datos horizontal (por ejemplo el producto de un una fusión, como es el caso de `ach`) a una vertical/longitudinal (por ejemplo el resultado de combinar filas, como es el caso de `acv`) o a la inversa.
-
-Veamos primero si tenemos un sólo conjunto de columnas longitudinal, por ejemplo `hea1`, `hea2` y `hea3`.
-
-```{r eval=TRUE}
-
-ach %>%
-  select(-starts_with("dep")) %>% # quitamos las columnas que empiezan con dep y entonces
-  pivot_longer(cols = starts_with("hea"), names_to = "wave", values_to = "hea") %>% # pivotamos, y entonces
-  arrange(q0002_hhid) %>% head()
-
-```
-
-Cuando hay más de un conjunto de columnas que queremos pivotar, como en este caso, en el que tenemos por un lado `hea1`, `hea2` y `hea3` y por otro lado, `dep2` y `dep3`, son necesarias las expresiones regulares (#regex):
-
-```{r eval=TRUE}
-
-ach %>%
-  pivot_longer(cols = c(starts_with("hea"), starts_with("dep")), names_to = c(".value", "wave"), names_pattern = "(.*)([0-9]$)") %>%
-  arrange(q0002_hhid) %>% head()
-
-```
-
-## Pivotar (horizontal/ancho <-- vertical/largo)
-
+Pivotar es el proceso de transformar una base de datos vertical/longitudinal (por ejemplo el resultado de combinar filas, como es el caso de `acv`) a una horizontal (por ejemplo el producto de un una fusión, como es el caso de `ach`)  o a la inversa.
 
 **Ejercicio:**
 
-* *Modificar `acv` de tal manera que sus variables sociodemográficas estén completas tal como se indicó 2 diapositivas antes.*
+* *Modificar `acv` de tal manera que sus variables sociodemográficas estén completas tal como se indicó en la diapositiva anterior.*
 * *Qué variables tiene acv?*
+* *Qué variables de avc no tienen necesariamente los mismos valores en las distintas olas?*
 
 ```{r echo=FALSE, eval=TRUE}
 acv <- acv %>%
   group_by(q0002_hhid) %>% # agrupamos por id y entonces
   arrange(wave) %>% # ordenamos por ola para tener la fila con datos antes que las otras, y entonces
-  fill(sex, age, mar_1, edu1) # para cada id rellenamos las filas vacías de las variables especificadas con los valores que no son missings
+  fill(sex, age, mar_1, edu1, grups) # para cada id rellenamos las filas vacías de las variables especificadas con los valores que no son missings
 ```
+
+Pivotaje usando la función `pivot_wider` de la librería `tidyr`:
+
 
 ```{r eval=TRUE}
 
 acv %>%
-  pivot_wider(id_cols = c(-hea, -dep, -wave), names_from = c("wave"), values_from = c("hea", "dep")) %>%
+  pivot_wider(names_from = c("wave"), values_from = c("hea", "dep")) %>%
   # select(-where(~all(is.na(.)))) %>% # quitamos aquellas columnas que cumplen que todos sus valores son missings
   head()
 
 ```
 
-**Ejercicio:**
-
-*Combinar las filas de `dataw1`, `dataw2` y `dataw3` verticalmente (después de renombrar convenientemente), rellenar las variables invariables y pivotar a formato horizontal*
-```{r echo=FALSE, eval=FALSE}
-dataw1 <- dataw1 %>% rename_with(~sub("1$", "", .))
-dataw2 <- dataw2 %>% rename_with(~sub("2$", "", .))
-dataw3 <- dataw3 %>% rename_with(~sub("3$", "", .))
-datawl <- bind_rows(dataw1, dataw2, dataw3, .id = "wave")
-datawl %>%
-  group_by(q0002_hhid) %>%
-  # arrange(wave) %>%
-  fill(sex, age, mar_, edu) %>%
-  ungroup() %>%
-  pivot_wider(id_cols = c(q0002_hhid:edu), names_from = "wave", values_from = c(phys_hea:health)) %>%
-  select(-where(~all(is.na(.)))) %>% # quitamos aquellas columnas que cumplen que todos sus valores son missings
-  head()
+Para el pivotaje inverso se utilizaría la función `pivot_longer`.
+```{r}
+#?pivot_wider
+#?pivot_longer
 ```
+
 
 ## T-test
 
@@ -600,7 +563,7 @@ dataw1 %>%
   geom_ribbon(aes(ymin = lwr, ymax = upr), alpha = .15) + # añadimos los CI; también es posible como sigue
   # geom_line(aes(y = lwr), color = "red", linetype = "dashed") +
   # geom_line(aes(y = upr), color = "red", linetype = "dashed") +
-  theme_bw()
+  theme_bw() # cambiamos el tema por defecto
 
 
 
@@ -634,18 +597,36 @@ fit <- glm(dep1 ~ income1, data = dataw1, family = binomial)
 dataw1 %>%
   filter(!if_any(c(dep1, income1), is.na)) %>%  # nos quedamos con las observaciones que no tienen missings en el modelo
   mutate(fit = predict(fit, type = "response")) %>% # añadimos la predicción del modelo como nuevas columnas
+  ggplot(aes(x = income1)) + # creamos el cuadro y añadimos el eje x
+  geom_line(aes(y = fit)) + # añadimos la línea que el modelo induce
+  labs(y = "Predicted probability of dep1 == Yes") + # especificamos la etiqueta del eje y
+  theme_classic() #cambiamos el tema por defecto
+
+
+
+```
+
+
+```{r echo=FALSE, eval=FALSE, fig.height=5}
+
+library(ggplot2)
+fit <- glm(dep1 ~ income1, data = dataw1, family = binomial)
+dataw1 %>%
+  filter(!if_any(c(dep1, income1), is.na)) %>%  # nos quedamos con las observaciones que no tienen missings en el modelo
+  mutate(fit = predict(fit, type = "response")) %>% # añadimos la predicción del modelo como nuevas columnas
   # cbind(predict(fit, type = "link", se.fit = TRUE)) %>% # añadimos la predicción del modelo como nuevas columnas
   # mutate(lwr = fit - 1.96 * se.fit, upr = fit + 1.96 * se.fit) %>%
   # mutate(across(c(fit, lwr, upr), ~1/(1+exp(-.)))) %>%
   ggplot(aes(x = income1)) + # creamos el cuadro y añadimos el eje x
   geom_line(aes(y = fit)) + # añadimos la línea que el modelo induce
   # geom_ribbon(aes(ymin = lwr, ymax = upr), alpha = .15) + # añadimos los CI
-  labs(y = "Predicted probability of dep1 == Yes") +
-  theme_classic()
+  labs(y = "Predicted probability of dep1 == Yes") + # especificamos la etiqueta del eje y
+  theme_classic() #cambiamos el tema por defecto
 
 
 
 ```
+
 
 ## Gràficas de modelos lineales generalizados usando `ggplot`: una variable predictora continua y otra categórica
 
@@ -658,8 +639,8 @@ dataw1 %>%
   mutate(fit = predict(fit, type = "response")) %>% # añadimos la predicción del modelo como nuevas columnas
   ggplot(aes(x = income1, color = edu1)) + # creamos el cuadro y añadimos el eje x
   geom_line(aes(y = fit)) + # añadimos la línea que el modelo induce
-  labs(y = "Predicted probability of dep1 == Yes") +
-  theme_minimal()
+  labs(y = "Predicted probability of dep1 == Yes") + # especificamos la etiqueta del eje y
+  theme_minimal() # cambiamos el tema por defecto
 
 
 
@@ -678,8 +659,8 @@ dataw1 %>%
   ggplot(aes(x = income1, color = edu1)) + # creamos el cuadro y añadimos el eje x
   geom_line(aes(y = fit)) + # añadimos la línea que el modelo induce
   geom_ribbon(aes(ymin = lwr, ymax = upr, fill = edu1), alpha = .15) + # añadimos los CI
-  labs(y = "Predicted probability of dep1 == Yes") +
-  theme_bw()
+  labs(y = "Predicted probability of dep1 == Yes") +  # especificamos la etiqueta del eje y
+  theme_bw() # cambiamos el tema por defecto
 
 
 
