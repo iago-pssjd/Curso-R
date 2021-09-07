@@ -467,7 +467,7 @@ Pivotaje usando la función `pivot_wider` de la librería `tidyr`:
 
 
 ```{r eval=TRUE}
-
+#?pivot_wider
 acv %>%
   pivot_wider(names_from = c("wave"), values_from = c("hea", "dep")) %>%
   # select(-where(~all(is.na(.)))) %>% # quitamos aquellas columnas que cumplen que todos sus valores son missings
@@ -477,7 +477,6 @@ acv %>%
 
 Para el pivotaje inverso se utilizaría la función `pivot_longer`.
 ```{r}
-#?pivot_wider
 #?pivot_longer
 ```
 

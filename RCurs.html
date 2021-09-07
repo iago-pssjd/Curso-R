@@ -271,7 +271,7 @@ Iago Giné Vázquez
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>summary</span></code></pre></div>
 <pre><code>## function (object, ...) 
 ## UseMethod(&quot;summary&quot;)
-## &lt;bytecode: 0x55fab3ddf698&gt;
+## &lt;bytecode: 0x55802f7f62d0&gt;
 ## &lt;environment: namespace:base&gt;</code></pre>
 <p>Tenemos que evaluar la función <code>summary</code> en la base de datos que abrimos con <code>read_excel</code>:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">read_excel</span>(<span class="st">&quot;data_curs_stat/EP1.xls&quot;</span>))</span></code></pre></div>
@@ -609,10 +609,11 @@ Iago Giné Vázquez
 <li><em>Qué variables de avc no tienen necesariamente los mismos valores en las distintas olas?</em></li>
 </ul>
 <p>Pivotaje usando la función <code>pivot_wider</code> de la librería <code>tidyr</code>:</p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>acv <span class="sc">%&gt;%</span></span>
-<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="fu">c</span>(<span class="st">&quot;wave&quot;</span>), <span class="at">values_from =</span> <span class="fu">c</span>(<span class="st">&quot;hea&quot;</span>, <span class="st">&quot;dep&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># select(-where(~all(is.na(.)))) %&gt;% # quitamos aquellas columnas que cumplen que todos sus valores son missings</span></span>
-<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co">#?pivot_wider</span></span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>acv <span class="sc">%&gt;%</span></span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="fu">c</span>(<span class="st">&quot;wave&quot;</span>), <span class="at">values_from =</span> <span class="fu">c</span>(<span class="st">&quot;hea&quot;</span>, <span class="st">&quot;dep&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># select(-where(~all(is.na(.)))) %&gt;% # quitamos aquellas columnas que cumplen que todos sus valores son missings</span></span>
+<span id="cb85-5"><a href="#cb85-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 12
 ## # Groups:   q0002_hhid [6]
 ##   q0002_hhid sex   age   mar_1 edu1         grups        hea_1 hea_2 hea_3 dep_1 dep_2 dep_3
@@ -624,8 +625,7 @@ Iago Giné Vázquez
 ## 5       2452 fem   35-49 No    Less primary Intervention  41.3  44.3  31.6 &lt;NA&gt;  No    Yes  
 ## 6       2750 fem   80+   No    Primary      Intervention  19.5  NA    NA   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;</code></pre>
 <p>Para el pivotaje inverso se utilizaría la función <code>pivot_longer</code>.</p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="co">#?pivot_wider</span></span>
-<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="co">#?pivot_longer</span></span></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="co">#?pivot_longer</span></span></code></pre></div>
 </div>
 <div id="t-test" class="slide section level2">
 <h1>T-test</h1>
