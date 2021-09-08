@@ -98,7 +98,7 @@ install.packages("tidyverse") # instala la librería tidyverse, que a su vez ins
 ```{r, echo=TRUE, eval=FALSE}
 install.packages("tidyverse") # instala la librería tidyverse, que a su vez instala las librerías dplyr, tidyr, haven, y otras (https://www.tidyverse.org, https://github.com/tidyverse/tidyverse)
 #getwd() # Cuál es el directorio de trabajo actual?
-setwd("~/Documents/PSSJD/Curso-R/") # En qué directorio de trabajo nos situamos ahora
+setwd("P:/projects/Curso-R") # En qué directorio de trabajo nos situamos ahora; se tienen que sustituir los \ por /
 ```
 
 O bien, mediante RStudio:
