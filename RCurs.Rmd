@@ -210,13 +210,30 @@ Guardamos la transformación en la base de datos. Para ello usaremos la función
 library(dplyr)
 #?mutate
 
+dataw1 <- mutate(dataw1, phys_hea1 = as.factor(phys_hea1))
+
+# es lo mismo que:
+
+dataw1 <- dataw1 %>% mutate(phys_hea1 = as.factor(phys_hea1))
+
+# podemos escrbir el argumento a la derecha de %>% en las líneas inferiores
+
 dataw1 <- dataw1 %>% #partimos de la base de datos dataw1 y entonces
   mutate(phys_hea1 = as.factor(phys_hea1)) # transformamos la variable y la guardamos con el mismo nombre
 
 # finalmente la base de datos queda guardada con el mismo nombre mediante la asignación inicial (dataw1 <- ...)
 ```
 
++ El primer argumento o valor de la función `mutate` es la base de datos o data frame.
++ Los siguientes argumentos son las transformaciones `variable_output = transformación` separadas por comas.
++ Usando `%>%`, la función situada en el lado derecho (en este caso `mutate`) ya reconoce que su primer argumento es el valor situado en el lado izquierdo de `%>%` (en este caso `dataw1`)
 
+## Pipe
+
+<div style="position: relative; top: 100px;">
+<img style="float: left;" src="pipe.jpg" width="560" height="420">
+<img style="float: right;" src="rpipe.png" width="368" height="426">
+</div>
 ## Transformación de variables (II)
 
 
@@ -688,3 +705,7 @@ Existen distintas <u>librerías</u> que facilitan la representación gráfica de
 + `jtools` (https://cran.r-project.org/web/packages/jtools/vignettes/effect_plot.html)
 + `effects` (https://cran.r-project.org/web/packages/effects/vignettes/predictor-effects-gallery.pdf)
 + `ggeffects`(https://strengejacke.github.io/ggeffects/)
+
+## 
+
+<img src="RTAF.png" width="1116px" height="900px" style="display: block; margin-left: auto; margin-right: auto;">
