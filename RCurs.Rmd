@@ -1,7 +1,7 @@
 ---
 title: "Introducción a R"
 author: Iago Giné Vázquez
-date: 2021-09-13
+date: 2021-09-26/27
 autosize: true
 width: 2560
 height: 1440
@@ -12,7 +12,10 @@ output: slidy_presentation
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
 options(width=180, tibble.width=140)
+#https://stackoverflow.com/questions/39996042/disable-mouse-click-to-show-another-slide-in-rmarkdown-slidy-presentation
 ```
+
+
 
 ## The R Project for Statistical Computing
 
@@ -22,23 +25,27 @@ options(width=180, tibble.width=140)
 - https://www.r-project.org
 - Software estadístico libre, abierto y gratuito
 - Miles de librerías y proyectos complementan el software base en distintas plataformas:
-+ https://cran.r-project.org/
-+ https://r-forge.r-project.org/
-+ https://www.bioconductor.org/
+    + [CRAN](https://cran.r-project.org/)
+    + [R Forge](https://r-forge.r-project.org/)
+    + https://www.bioconductor.org/
+- Una publicación:
+    + [R News](https://www.r-project.org/doc/Rnews/index.html) (2001 - 2008)
+    + [R Journal](https://journal.r-project.org/archive/) (2009 - presente)
 - Una gran comunidad de usuarios escribe en blogs y foros:
-+ https://www.r-bloggers.com/
-+ https://rweekly.org/
-+ https://stackoverflow.com/questions/tagged/r
+    + https://www.r-bloggers.com/
+    + https://rweekly.org/
+    + https://stackoverflow.com/questions/tagged/r
 - Por qué R?
-+ Porque podéis escribir las instrucciones en R scripts, y ejecutarlas todas de una vez, sin tener que memorizar y repetir cada uno de los pasos.
-+ Porque en Internet podréis encontrar solución a (casi) todos los problemas que os encontréis
-+ Porque podréis personalizar/modificar cada instrucción con las opciones deseadas.
-+ Porque podéis trabajar con más de una base de datos abierta simultáneamente y no tienen que estar guardadas en un formato específico para poder abrirlas.
+    + Porque podéis escribir las instrucciones en R scripts, y ejecutarlas todas de una vez, sin tener que memorizar y repetir cada uno de los pasos.
+    + Porque en Internet podréis encontrar solución a (casi) todos los problemas que os encontréis
+    + Porque podréis personalizar/modificar cada instrucción con las opciones deseadas.
+    + Porque podéis trabajar con más de una base de datos abierta simultáneamente y no tienen que estar guardadas en un formato específico para poder abrirlas.
 
 
 ## R como calculadora
 
 - R es esencialmente una consola en la que el cursor se sitúa tras el símbolo `>`. Ahí se escriben las instrucciones. Se ejecutan con `Enter`.
+- Los resultados suelen aparecer debajo. En el caso de gráficas, depende del entorno en que se trabaje (R, RStudio, R Commander, etc.)
 - Para empezar, R permite realizar las operaciones de cualquier calculadora científico.
 - Incluye además instrucciones específicas para operaciones estadísticas.
 
@@ -57,11 +64,12 @@ install.packages("tidyverse") # instala la librería tidyverse, que a su vez ins
 - Otros editores facilitan la introducción y ejecución de las instrucciones.
 - Ej.: **Notepad++**, **Sublime Text**, **Visual Studio Code**, **Geany**, **Nano**, **Emacs**, **VIM**, ...
 - Enfocado al uso de **R** y el más usado para ello: **RStudio** (nombre del editor y de la empresa que lo produce y comercializa).
-+ RStudio no es software libre, aunque su edición básica es de código abierto y gratuita.
-+ https://www.rstudio.com/
+    + RStudio es una interfaz que tiene el objetivo de facilitar y agilizar el uso de R y otros formatos que interactuan con R (documentos pdf, archivos word, páginas y aplicaciones web, etc., todos ellos con código R ejecutado).
+    + En particular ofrece menús para especificar el directorio de trabajo, instalar, actualizar y/o cargar librerías, y abrir y visualizar bases de datos, entre otros. Asímismo dispone de atajos de teclado para introducir los comandos más habituales de manera más rápida.
+    + RStudio no es software libre, aunque su edición básica es de código abierto y gratuita.
+    + https://www.rstudio.com/
 
 <img src="4panels1.png" width="900" height="500">
-
 
 ## Algunas nociones sobre RStudio
 
@@ -709,3 +717,61 @@ Existen distintas <u>librerías</u> que facilitan la representación gráfica de
 ## 
 
 <img src="RTAF.png" width="1116px" height="900px" style="display: block; margin-left: auto; margin-right: auto;">
+
+## Algunos recursos
+
+Tutoriales introductorios a R:
+
+* http://rosuda.org/mitarbeiter/pilhoefer/rkurs2.pdf
+* http://b2slab.upc.edu/software-and-tutorials/r-nutshell/
+* https://www.cyclismo.org/tutorial/R/index.html
+* https://www.uv.es/vcoll/preliminares.html
+* http://people.math.aau.dk/~sorenh/misc/rdocs/Rintro-notes.pdf
+* https://cran.r-project.org/doc/contrib/Verzani-SimpleR.pdf
+* en la pestaña Resources de la web de [RStudio](https://rstudio.com/)
+
+Blogs:
+
++ https://statisticsglobe.com/r-programming-language/
++ enfocados a la estadística, pero no sólo (de hecho, diría que los siguientes son los mejores): 
+    * http://www.sthda.com/english/
+    * http://www.flutterbys.com.au/stats/course.html
+    * [http://www.r-tutor.com/](http://www.r-tutor.com/sitemap) (incluye contenido de estadística bayesiana y machine learning, por otra parte un poco anticuado)
++ enfocado a la investigación en psicología (y vinculado a la librería `psych`):
+    * [http://personality-project.org/r/](http://personality-project.org/r/)
++ https://www.statmethods.net/index.html
+
+Multitud de libros:
+
++ https://bookdown.org/
++ https://www.bigbookofr.com/ (contenidos parecidos a los del link anterior, aunque, por un lado en menor cantidad, por otro lado clasificados por materias)
+
+Cursos online (MOOC's) en plataformas como Coursera, edX, etc.
+
+## Más recursos
+
+Acerca de librerías o materias específicas:
+
++ sobre librerías en general:
+    * https://rdrr.io/
+    * https://cran.r-project.org/web/views/
++ gráficas en general:
+    * https://www.r-graph-gallery.com/
+    * https://r-charts.com
++ formas de mostrar descriptivos:
+    * https://dabblingwithdata.wordpress.com/2018/01/02/my-favourite-r-package-for-summarising-data/
++ meta-análisis:
+    * https://bookdown.org/MathiasHarrer/Doing_Meta_Analysis_in_R/
++ análisis factorial:
+
+
+
+Recursos de RStudio
+
++ El foro https://community.rstudio.com/ principalmente centrado (aunque no exclusivamente) en cuestiones relacionadas con RStudio y con las librerías de la familia tidyverse
++ La página web https://support.rstudio.com/hc/en-us contiene material acerca de RStudio
++ El blog https://blog.rstudio.com publica contenido diverso relacionado con los productos de la compañía RStudio
++ El blog https://rviews.rstudio.com está más enfocado al usuario de R, aportando información y ejemplos del uso de distintas librerías, así como acerca de conferencias de usuarios de R
++ El blog https://www.tidyverse.org/blog/ publica habitualmente entradas acerca de las nuevas librerías de la familia `tidyverse` o de actualizaciones relevantes
+    
+
