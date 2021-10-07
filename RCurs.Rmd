@@ -60,7 +60,7 @@ install.packages("tidyverse") # instala la librería tidyverse, que a su vez ins
 
 - Más práctico: ejecutar múltiples operaciones simultáneamente.
 - Para ello: se escriben todas en un fichero de texto simple, pero con extensión `.r` en lugar de `.txt`.
-- Es suficiente un editor de texto simple. En Windows: **Bloc de notas** (en OS X: **TextEdit**).
+- Es suficiente un editor de texto simple. En Windows: **Bloc de notas** (en OS X: **TextEdit**). Los editores con formatos complejos como Microsoft Word no valen.
 - Otros editores facilitan la introducción y ejecución de las instrucciones.
 - Ej.: **Notepad++**, **Sublime Text**, **Visual Studio Code**, **Geany**, **Nano**, **Emacs**, **VIM**, ...
 - Enfocado al uso de **R** y el más usado para ello: **RStudio** (nombre del editor y de la empresa que lo produce y comercializa).
@@ -69,7 +69,14 @@ install.packages("tidyverse") # instala la librería tidyverse, que a su vez ins
     + RStudio no es software libre, aunque su edición básica es de código abierto y gratuita.
     + https://www.rstudio.com/
 
+<div style="display: flex; align-items: flex-start;">
 <img src="4panels1.png" width="900" height="500">
+<div>
+- Permite tener un fichero con extensión `.r` en el que se puede escribir el código (con autocompletado) y ejecutarlo
+- Permite añadir instrucciones mediante [atajos de teclado](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts)
+</div>
+</div>
+
 
 ## Algunas nociones sobre RStudio
 
@@ -78,51 +85,115 @@ install.packages("tidyverse") # instala la librería tidyverse, que a su vez ins
 <img src="4panels2.png"  width="1321" height="731">
 
 
-## Qué nos encontraremos en R?
+## Qué es lo primero que nos encontramos en R? Objetos, funciones, comentarios, (directorios) y librerías
 
-- Objetos elementales de las siquientes clases:
-+ Lógicos (`TRUE` y `FALSE`)
-+ Numéricos
-+ Cadenas de caracteres
-- Se pueden crear objetos más complejos añadiéndoles atributos, como pueden ser las dimensiones o las etiquetas, o modificando su estructura.
-- A partir de los anteriores se pueden crear objetos compuestos con diferentes estructuras, como pueden ser: 
-+ Vectores
-* Todos los elementos del vector han de ser de la misma clase.
-* Se crean y se unen con la función `c(...)`
-* Se usa `vector[i]` para acceder al i-ésimo elemento del vector
-* Una matriz es un vector con 2 dimensiones
-+ Factores (para las variables categóricas; pueden ser o no ordenados)
-+ Listas (colección ordenada de objetos no necesariamente del mismo tipo)
-+ Data frames (para las bases de datos)
-- R es un lenguaje orientado a objetos. Para asignar nombre a los objetos usamos el símbolo `<-`
-- Funciones: evalúan objetos. La evaluación de un objeto `x` con una función `f` se codifica `f(x)`. Por ejemplo, para conocer la clase, estructura y atributos de un objeto `x` escribiríamos `class(x)`, `str(x)` y `attributes(x)` respectivamente.
-- R dispone de una ayuda muy completa sobre todas las funciones, procedimientos y elementos que configuran el lenguaje
-- Se puede acceder a ella con la función `help()` o mediante `?`. Por ejemplo, `help(class)` o `?attributes`.
-- Se pueden escribir comentarios (secciones de código que el programa no ejecuta), situando antes un símbolo `#`
-- Los missings en R se representan con el símbolo `NA` (cualquier clase de objetos) o también  `NaN` (objetos numéricos).
+- Objetos elementales:
+    + Numéricos, como en una calculadora (vimos algunos hace unas diapositivas)
+    + Cadenas de texto, siempre limitadas por comillas simples o dobles, desde un carácter, por ejemplo `"a"`, o `'z'`, hasta un texto largo como `"Lorem ipsum dolor sit amet..."` o `'Lorem ipsum dolor sit amet...'`
+- Funciones: ejecutan las instrucciones que las definen. Genéricamente se ejecutan escribiendo el nombre de una función `f` seguido de los objetos o valores que necesita entre paréntesis. 
+    + Cuando no es necesario ningún valor, estos paréntesis se escriben sin incluír nada, así: `f()`
+    + En la mayoría de casos, necesitan evaluar objetos. La evaluación de un objeto `x` con una función `f` se codifica `f(x)`. 
+- Un comentario es un fragmento de código, texto... no ejecutable. Se señalan situando a la izquierda un símbolo `#`
+- Directorio de trabajo: el entorno de R tiene como referencia un directorio concreto. Esto nos permite no tener que introducir la dirección de la carpeta cuando queremos acceder a algún elemento de esta (por ejemplo, ficheros con bases de datos). 
+    + Para saber cuál es el directorio de trabajo actual utilizamos la función `getwd`;
+    + Para cambiar el directorio se utiliza la función `setwd` evaluando el directorio de trabajo en que queremos situarnos ahora;
+    + Se puede saber qué archivos hay en el directorio donde R está trabajando con la función `list.files`;
 
-## Empecemos
+```{r}
 
-```{r, echo=TRUE, eval=FALSE}
-install.packages("tidyverse") # instala la librería tidyverse, que a su vez instala las librerías dplyr, tidyr, haven, y otras (https://www.tidyverse.org, https://github.com/tidyverse/tidyverse)
-#getwd() # Cuál es el directorio de trabajo actual?
-setwd("P:/projects/Curso-R") # En qué directorio de trabajo nos situamos ahora; se tienen que sustituir los \ por /
+getwd() # el directorio donde R está trabajando
+setwd("P:/projects/Curso-R") # (en Windows) se tienen que sustituir los \ por /
+list.files()
+
 ```
 
 O bien, mediante RStudio:
 
-+ Panel `Packages > Install`
-+ `Session > Set Working Directory > Choose Directory`
-+ `Session > Set Working Directory > To Source File Location`
+    `Session > Set Working Directory > Choose Directory`
+    `Session > Set Working Directory > To Source File Location`
+    
+- Librerías:
+    + Para instalar una librería llamada `tidyverse` evaluamos con la función `install.packages` la cadena consistente en el nombre de la librería, `"tidyverse"`;
+    + Para cargar una librería llamada `readxl`, evaluamos con la función `library` (o bien `require`, una función distinta), bien la cadena con el nombre de la librería `"readxl"` o bien (el nombre de) la librería misma, `readxl`.
 
-Para abrir ficheros de excel disponemos de diversas funciones en las librerías `readxl` y `openxlsx` entre muchas otras. Aunque la segunda librería tiene más funciones para manipular y escribir ficheros `.xlsx`, la primera dispone de funciones que nos permiten leer también ficheros `.xls`
-```{r eval=TRUE}
+```{r echo=TRUE, eval=FALSE}
+
+install.packages("tidyverse") # instala la librería tidyverse, que a su vez instala las librerías readxl, dplyr, tidyr, haven, y otras (https://www.tidyverse.org, https://github.com/tidyverse/tidyverse)
 library(readxl)
-#help(package = "readxl") # Informémonos acerca de la librería readxl
-#?read_excel # ayuda de la función read_excel
-read_excel("data_curs_stat/EP1.xls")
+# library("readxl")
+# require(readxl)
+# require("readxl")
 
 ```
+
+```{r, echo=FALSE, eval=TRUE, include=FALSE}
+library(readxl)
+```
+
+O bien, mediante RStudio:
+
+    Panel `Packages > Install`
+
+
+
+## Siguientes pasos: formas de obtener ayuda, argumentos de una función y abrir un fichero con formato de Excel
+
+- R dispone de una ayuda muy completa sobre todas las funciones, procedimientos y elementos que configuran el lenguaje
+- Se puede acceder a ella con la función `help()` o mediante `?`. Los siguientes ejemplos nos muestran los documentos de ayuda de las respectivas funciones. 
+
+```{r, eval=FALSE}
+
+help(install.packages)
+?library
+
+```
+
+- Para evaluar un objeto mediante una función, implícitamente estamos asignando el objeto a un argumento de la función. Por ejemplo, al ejecutar `library(readxl)` asignamos (el nombre de) la librería `readxl` al primer argumento de la función `library`, que es `package`. Entonces, otra forma de ejecutar `library(readxl)` es ejecutar `library(package = readxl)`. En este caso, es exactamente lo mismo, pero cuando queremos usar otro argumento de una función distinto del primero en general tenemos que nombrarlo.
+- Además de las funciones, entre otros objetos de los que podemos ver documentos de ayuda están las librerías.
+
+```{r eval=FALSE}
+
+?help
+help(package = "readxl") # Informémonos acerca de la librería readxl
+?read_excel # ayuda de la función read_excel
+
+```
+
+
+Para abrir ficheros de excel disponemos de diversas funciones en las librerías `readxl` y `openxlsx` entre muchas otras. Aunque la segunda librería tiene más funciones para manipular y escribir ficheros `.xlsx`, la primera dispone de funciones que nos permiten leer también ficheros `.xls`
+
+```{r, eval=TRUE}
+read_excel("data_curs_stat/EP1.xls")
+```
+
+
+
+
+## Qué nos encontraremos en R?
+
+- Objetos elementales de las siquientes clases:
+    + Lógicos (`TRUE` y `FALSE`)
+    + Numéricos
+    + Cadenas de caracteres
+- Se pueden crear objetos más complejos añadiéndoles atributos, como pueden ser las dimensiones o las etiquetas, o modificando su estructura.
+- A partir de los anteriores se pueden crear objetos compuestos con diferentes estructuras, como pueden ser: 
+    + Vectores
+        * Todos los elementos del vector han de ser de la misma clase.
+        * Se crean y se unen con la función `c(...)`
+        * Se usa `vector[i]` para acceder al i-ésimo elemento del vector
+        * Una matriz es un vector con 2 dimensiones
+    + Factores (para las variables categóricas; pueden ser o no ordenados)
+    + Listas (colección ordenada de objetos no necesariamente del mismo tipo)
+    + Data frames (para las bases de datos)
+- R es un lenguaje orientado a objetos. Para asignar nombre a los objetos usamos el símbolo `<-`
+- Funciones: Para conocer la clase, estructura y atributos de un objeto `x` escribiríamos `class(x)`, `str(x)` y `attributes(x)` respectivamente.
+
+
+- Los missings en R se representan con el símbolo `NA` (cualquier clase de objetos) o también  `NaN` (objetos numéricos).
+
+
+
+
 
 
 
@@ -744,7 +815,7 @@ Blogs:
 Multitud de libros:
 
 + https://bookdown.org/
-+ https://www.bigbookofr.com/ (contenidos parecidos a los del link anterior, aunque, por un lado en menor cantidad, por otro lado clasificados por materias)
++ https://www.bigbookofr.com/ (contenidos parecidos a los del link anterior, en menor cantidad, aunque clasificados por materias)
 
 Cursos online (MOOC's) en plataformas como Coursera, edX, etc.
 
