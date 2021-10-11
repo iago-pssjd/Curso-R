@@ -168,35 +168,6 @@ read_excel("data_curs_stat/EP1.xls")
 
 
 
-
-## Qué nos encontraremos en R?
-
-- Objetos elementales de las siquientes clases:
-    + Lógicos (`TRUE` y `FALSE`)
-    + Numéricos
-    + Cadenas de caracteres
-- Se pueden crear objetos más complejos añadiéndoles atributos, como pueden ser las dimensiones o las etiquetas, o modificando su estructura.
-- A partir de los anteriores se pueden crear objetos compuestos con diferentes estructuras, como pueden ser: 
-    + Vectores
-        * Todos los elementos del vector han de ser de la misma clase.
-        * Se crean y se unen con la función `c(...)`
-        * Se usa `vector[i]` para acceder al i-ésimo elemento del vector
-        * Una matriz es un vector con 2 dimensiones
-    + Factores (para las variables categóricas; pueden ser o no ordenados)
-    + Listas (colección ordenada de objetos no necesariamente del mismo tipo)
-    + Data frames (para las bases de datos)
-- R es un lenguaje orientado a objetos. Para asignar nombre a los objetos usamos el símbolo `<-`
-- Funciones: Para conocer la clase, estructura y atributos de un objeto `x` escribiríamos `class(x)`, `str(x)` y `attributes(x)` respectivamente.
-
-
-- Los missings en R se representan con el símbolo `NA` (cualquier clase de objetos) o también  `NaN` (objetos numéricos).
-
-
-
-
-
-
-
 ## Abrir bases de datos y ejecutar funciones: R no es como Stata.
 
 
@@ -205,14 +176,50 @@ La función `read_excel` abre la base de datos, pero a diferencia de instruccion
 summary
 ```
 
-Tenemos que evaluar la función `summary` en la base de datos que abrimos con `read_excel`:
+Tenemos que evaluar la base de datos que abrimos con `read_excel` con la función `summary`:
 ```{r eval=TRUE}
 summary(read_excel("data_curs_stat/EP1.xls"))
 ```
 
-## Primeros pasos con una base de datos 
+Abrir la base de datos mediante la función `read_excel` cada vez que queremos operar con ella no es práctico. En lugar de esto, guardamos la base de datos en una variable.
 
-No es práctico. Asignamos la base de datos a una variable que llamamos `dataw1`:
+## Objetos complejos. Bases de datos
+
+
+R es un lenguaje de programación que nos permite acceder a objetos con distintas estructuras y manipularlos. Los [tipos de objetos](https://stat.ethz.ch/R-manual/R-devel/doc/manual/R-lang.html#Basic-types) más importantes son:
+
+- El **vector**, una colección de datos elementales del mismo tipo básico ordenados. 
+    + Los tipos básicos más comunes son:
+        * Numérico
+        * Cadena de texto o caracteres
+        * Lógico: `TRUE`, `FALSE` y `NA` (missing)
+    + Habitualmente, los vectores se crean y se unen con la función `c`
+- La lista, una colección de objetos de cualquier tipo. Habitualmente se crean mediante la función `list`
+- La función
+- El símbolo, el nombre de un objeto
+- El objeto nulo o vacío, `NULL`
+
+La mayoría de los objetos pueden tener [atributos](https://stat.ethz.ch/R-manual/R-devel/doc/manual/R-lang.html#Attributes), como pueden ser las dimensiones o las etiquetas. De esta manera se pueden crear objetos con [estructuras más complejas](https://stat.ethz.ch/R-manual/R-devel/doc/manual/R-lang.html#Special-compound-objects):
+
+- Matrices  (resp. arrays), son vectores ligados a un atributo `dim`incluyendo las 2 (resp. -) dimensiones del objeto.
+- Factores, vectores con un atributo `levels` que corresponde a las posibles categorías de una variable categórica y un atributo `class="factor"`.
+- Data frames, el tipo básico de base de datos en R. Es una lista de vectores (las columnas de la base de datos) -que pueden ser matrices o factores- que tienen todos la misma longitud, con un atributo `names` que designa los nombres de las columnas o variables de la base de datos.
+
+Disponemos de un conjunto de [operadores](https://stat.ethz.ch/R-manual/R-devel/doc/manual/R-lang.html#Operators) en R <!--(cf. `?Syntax`) -->que nos permiten acceder y manipular los objetos. Entre ellos:
+
+- `<-`, para asignar un nombre a un objeto. Por ejemplo, `x <- c(3,log(4), 5.2)`, `y <- list(3, 'a', list(TRUE))`
+- `[`, para acceder a un elemento de un vector o a una sublista. Por ejemplo `x[3]`, `y[2]` o `y[3]`
+- `[[`, para acceder a un elemento en una lista. Por ejemplo `y[[2]]`
+
+Podemos informarnos acerca de la clase, estructura y atributos de un objeto por medio de las funciones `class`, `str` y `attributes` respectivamente.
+
+
+- Los missings en R se representan con el símbolo `NA`, existente para los distintos tipos básicos, o también  `NaN` en el caso de objetos numéricos.
+
+
+## Primeros pasos con una base de datos. 
+
+Asignamos la base de datos a una variable que llamamos `dataw1`:
 ```{r eval=TRUE}
 dataw1 <- read_excel("data_curs_stat/EP1.xls")
 #summary(dataw1)
@@ -233,10 +240,14 @@ dataw3 <- read_excel("data_curs_stat/EP3.xls")
 
 ```
 
-**Nota:** _Para abrir ficheros `*.csv` disponemos de la función `read.csv` en R y de la función `read_csv` de la librería `readr` entre otras. La librería `haven` dispone de diversas funciones que permiten abrir y escribir ficheros en formatos de Stata, SPSS y SAS (pueden consultarse en su ayuda, `package(help = "haven")`). Por otra parte la librería `readspss` (https://github.com/JanMarvin/readspss) tiene funciones que permiten abrir bases de datos en formato de SPSS encriptadas con contraseña._
+**Nota:** _Para abrir ficheros `*.csv` disponemos de la función `read.csv` en R, de la función `read_csv` en la librería `readr` y de la función `fread` en la librería `data.table` entre otras. La librería `haven` dispone de diversas funciones que permiten abrir y escribir ficheros en formatos de Stata, SPSS y SAS (pueden consultarse en su ayuda, `package(help = "haven")`). Por otra parte la librería `readspss` (https://github.com/JanMarvin/readspss) tiene funciones que permiten abrir bases de datos en formato de SPSS encriptadas con contraseña._
 
 
-## Acceso a las variables de una base de datos: `$` y `[[`
+
+
+
+
+## Acceso a las variables de una base de datos: los operadores `$` y `[[`
 
 ```{r eval=TRUE}
 # dataw1$phys_hea1
