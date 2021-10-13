@@ -96,7 +96,7 @@ install.packages("tidyverse") # instala la librería tidyverse, que a su vez ins
 - Un comentario es un fragmento de código, texto... no ejecutable. Se señalan situando a la izquierda un símbolo `#`
 - Directorio de trabajo: el entorno de R tiene como referencia un directorio concreto. Esto nos permite no tener que introducir la dirección de la carpeta cuando queremos acceder a algún elemento de esta (por ejemplo, ficheros con bases de datos). 
     + Para saber cuál es el directorio de trabajo actual utilizamos la función `getwd`;
-    + Para cambiar el directorio se utiliza la función `setwd` evaluando el directorio de trabajo en que queremos situarnos ahora;
+    + Para cambiar el directorio se utiliza la función `setwd` evaluando la dirección del directorio de trabajo en que queremos situarnos ahora;
     + Se puede saber qué archivos hay en el directorio donde R está trabajando con la función `list.files`;
 
 ```{r}
@@ -160,11 +160,13 @@ help(package = "readxl") # Informémonos acerca de la librería readxl
 ```
 
 
-Para abrir ficheros de excel disponemos de diversas funciones en las librerías `readxl` y `openxlsx` entre muchas otras. Aunque la segunda librería tiene más funciones para manipular y escribir ficheros `.xlsx`, la primera dispone de funciones que nos permiten leer también ficheros `.xls`
+Para abrir ficheros de excel disponemos de diversas funciones en las librerías `readxl` y `openxlsx` entre muchas otras. Aunque la segunda librería tiene más funciones para manipular y escribir ficheros `.xlsx`, la primera dispone de funciones que nos permiten leer también ficheros `.xls`. En cualquier caso, estas funciones evalúan, bien la dirección absoluta del fichero que hay que abrir, bien la dirección relativa con respecto al directorio de trabajo de R como en el siguiente ejemplo.
 
 ```{r, eval=TRUE}
 read_excel("data_curs_stat/EP1.xls")
 ```
+
+**Nota:** _Para abrir ficheros `*.csv` disponemos de la función `read.csv` en R, de la función `read_csv` en la librería `readr` y de la función `fread` en la librería `data.table` entre otras. La librería `haven` dispone de diversas funciones que permiten abrir y escribir ficheros en formatos de Stata, SPSS y SAS (pueden consultarse en su ayuda, `package(help = "haven")`). Por otra parte la librería `readspss` (https://github.com/JanMarvin/readspss) tiene funciones que permiten abrir bases de datos en formato de SPSS encriptadas con contraseña._
 
 
 
@@ -194,24 +196,26 @@ R es un lenguaje de programación que nos permite acceder a objetos con distinta
         * Cadena de texto o caracteres
         * Lógico: `TRUE`, `FALSE` y `NA` (missing)
     + Habitualmente, los vectores se crean y se unen con la función `c`
-- La lista, una colección de objetos de cualquier tipo. Habitualmente se crean mediante la función `list`
-- La función
+- La **lista**, una colección de objetos de cualquier tipo. Habitualmente se crean mediante la función `list`
+- La **función**
 - El símbolo, el nombre de un objeto
 - El objeto nulo o vacío, `NULL`
 
 La mayoría de los objetos pueden tener [atributos](https://stat.ethz.ch/R-manual/R-devel/doc/manual/R-lang.html#Attributes), como pueden ser las dimensiones o las etiquetas. De esta manera se pueden crear objetos con [estructuras más complejas](https://stat.ethz.ch/R-manual/R-devel/doc/manual/R-lang.html#Special-compound-objects):
 
-- Matrices  (resp. arrays), son vectores ligados a un atributo `dim`incluyendo las 2 (resp. -) dimensiones del objeto.
-- Factores, vectores con un atributo `levels` que corresponde a las posibles categorías de una variable categórica y un atributo `class="factor"`.
-- Data frames, el tipo básico de base de datos en R. Es una lista de vectores (las columnas de la base de datos) -que pueden ser matrices o factores- que tienen todos la misma longitud, con un atributo `names` que designa los nombres de las columnas o variables de la base de datos.
+- **Matrices**  (resp. **arrays**), son vectores ligados a un atributo `dim` incluyendo las 2 (resp. -) dimensiones del objeto. Podemos crear matrices mediante la función `matrix`.
+- **Factores**, vectores con un atributo `levels` que corresponde a las posibles categorías de una variable categórica y un atributo `class="factor"`. Por defecto son nominales, pero también pueden tener categorías ordenadas, caso en el que el atributo `class` es el vector `c("ordered"," factor")`
+- **Data frames**, el tipo básico de base de datos en R. Es una lista de vectores (las columnas de la base de datos) -que pueden ser matrices o factores- que tienen todos la misma longitud, con un atributo `names` que designa los nombres de las columnas o variables de la base de datos y un atributo `row.names` que designa las filas u observaciones. Podemos crearlos mediante la función `data.frame`
 
 Disponemos de un conjunto de [operadores](https://stat.ethz.ch/R-manual/R-devel/doc/manual/R-lang.html#Operators) en R <!--(cf. `?Syntax`) -->que nos permiten acceder y manipular los objetos. Entre ellos:
 
-- `<-`, para asignar un nombre a un objeto. Por ejemplo, `x <- c(3,log(4), 5.2)`, `y <- list(3, 'a', list(TRUE))`
-- `[`, para acceder a un elemento de un vector o a una sublista. Por ejemplo `x[3]`, `y[2]` o `y[3]`
-- `[[`, para acceder a un elemento en una lista. Por ejemplo `y[[2]]`
+- `<-`, para asignar un nombre a un objeto. Por ejemplo, `x <- c(3,log(4), 5.2)`, `y <- list(3, 'a', list(TRUE))`, `M <- matrix(c(1,2,3,4), nrow = 2, ncol = 2, byrow=TRUE)`
+- `[`, para acceder a un elemento de un vector o a una sublista. Por ejemplo, `x[3]`, `y[2]`, `y[3]`, `M[,2]` o `M[1,2]`
+- `[[`, para acceder a un elemento en una lista. Por ejemplo, `y[[2]]`
 
-Podemos informarnos acerca de la clase, estructura y atributos de un objeto por medio de las funciones `class`, `str` y `attributes` respectivamente.
+Habitualmente es suficiente ejecutar el nombre de un objeto para ver el objeto. En cierta ocasiones conviene evaluarlo explícitamente con la función `print`.
+
+Podemos informarnos acerca de la longitud, clase, estructura y atributos de un objeto por medio de las funciones `length`, `class`, `str` y `attributes` respectivamente. La función `names` nos permite conocer los nombres de los elementos de un objeto, como pueden ser las variables de un data frame, la función `levels` evaluada en un factor retorna las categorías del factor y la función `dim` retorna las dimensiones de un objeto, como pueden ser las filas y columnas de una matriz o de un data frame.
 
 
 - Los missings en R se representan con el símbolo `NA`, existente para los distintos tipos básicos, o también  `NaN` en el caso de objetos numéricos.
@@ -222,12 +226,14 @@ Podemos informarnos acerca de la clase, estructura y atributos de un objeto por 
 Asignamos la base de datos a una variable que llamamos `dataw1`:
 ```{r eval=TRUE}
 dataw1 <- read_excel("data_curs_stat/EP1.xls")
-#summary(dataw1)
-#str(dataw1)
 class(dataw1)
+length(dataw1)
+names(dataw1)
+str(dataw1)
 head(dataw1) # primeras (6) filas
 #head(dataw1, 3) # primeras 3 filas
 #tail(dataw1) # últimas (6) filas
+
 ```
 
 **Ejercicio:** 
@@ -240,10 +246,6 @@ dataw3 <- read_excel("data_curs_stat/EP3.xls")
 
 ```
 
-**Nota:** _Para abrir ficheros `*.csv` disponemos de la función `read.csv` en R, de la función `read_csv` en la librería `readr` y de la función `fread` en la librería `data.table` entre otras. La librería `haven` dispone de diversas funciones que permiten abrir y escribir ficheros en formatos de Stata, SPSS y SAS (pueden consultarse en su ayuda, `package(help = "haven")`). Por otra parte la librería `readspss` (https://github.com/JanMarvin/readspss) tiene funciones que permiten abrir bases de datos en formato de SPSS encriptadas con contraseña._
-
-
-
 
 
 
@@ -252,24 +254,32 @@ dataw3 <- read_excel("data_curs_stat/EP3.xls")
 ```{r eval=TRUE}
 # dataw1$phys_hea1
 # dataw1[["phys_hea1"]]
-class(dataw1$phys_hea1) # chr quiere decir que está guardada como una cadena de carácteres
+class(dataw1$phys_hea1)
 #summary(dataw1$phys_hea1)
-str(dataw1$phys_hea1)
+str(dataw1$phys_hea1) # chr quiere decir que phys_hea1 es una variable carácter, es decir, un vector de tipo cadena de carácteres
 #attributes(dataw1$phys_hea1)
 table(dataw1$phys_hea1)
-#?table
 table(dataw1$phys_hea1, useNA = "ifany")
 prop.table(table(dataw1$phys_hea1))
 ```
 
-## Guardando los resultados
+Es posible introducir diferentes instrucciones en una misma línea separadas por `;` (indiferentemente de los espacios en blanco en medio)
+```{r eval=TRUE}
+class(dataw1$hea1); str(dataw1$hea1) # num quiere decir que hea1 es una variable numérica
+summary(dataw1$hea1)
+#?table
+```
+
+## Vemos las variables y guardamos los resultados
 
 Hemos dicho que R es como una calculadora, y que si no asignamos los objetos a variables, se muestran en consola pero no quedan guardados en ningún sitio.
 
+- Podemos ver los objetos que hemos creado en el panel `Environment` de RStudio o podemos ver sus nombres todavía con la función `ls`. Se pueden eliminar objetos mediante la función `rm`, separando sus nombres por comas.
 - Los objetos de R (como una base de datos o dataframe) se pueden guardar con la función `save` en ficheros con la extensión `.rda` o `.rdata` (aunque a veces también se escribe la `r` e incluso la `d` en mayúscula, por ejemplo `.RData`)
 - Los resultados, si son matrices, data frames o tablas, además, también se pueden guardar en ficheros `.csv` o con formatos de excel (a menudo, las funciones mencionadas de la forma `read_` o `read.` tienen correspondientes `write_` o `write.`).
 - Los resultados y más generalmente todo aquello que aparece por consola puede ser guardados en ficheros de texto con la función `sink`.
 - A no ser que se especifique la dirección del fichero, serán guardados en el directorio donde R está trabajando (`getwd()`)
+
 ```{r echo=TRUE, eval=TRUE}
 #?sink
 sink("Summary_Estudi_poblacional_w1.txt", split = TRUE)
@@ -284,15 +294,51 @@ sink()
 
 
 
-## Transformación de variables (I)
+## Transformación de variables. Factores
 
-- La función `as.factor` permite transformar a una variable categórica
+- La función `as.factor` permite transformar a un factor, objeto que codifica una variable categórica:
 ```{r eval=TRUE}
 class(as.factor(dataw1$phys_hea1))
+attributes(as.factor(dataw1$phys_hea1))
 table(as.factor(dataw1$phys_hea1), useNA = "ifany")
+levels(as.factor(dataw1$phys_hea1))
 ```
 
+Si nos interesa un atributo concreto, usamos la función `attr`:
+
+```{r eval=TRUE}
+attr(as.factor(dataw1$phys_hea1), "class")
+attr(as.factor(dataw1$phys_hea1), "levels")
+```
+
+
 - En formatos de fichero distintos de `.xls` o `.csv`, como pueden ser los formatos de Stata o SPSS, las categorías de las variables categóricas pueden estar grabadas como etiquetas, mientras los valores son numéricos. En esos casos, para recuperar las etiquetas como categorías es más conveniente usar la función `as_factor` de la librería `haven`.
+
+
+## Transformación de variables. Factores ordenados
+
+Del mismo modo que podemos encontrarnos con variables categóricas ordenadas, como es el caso de las escalas de tipo Likert, los factores pueden ser ordenados. En este caso podemos utilizar la función `as.ordered`, aunque ésta puede ordenar las categorías erróneamente. 
+
+```{r eval=TRUE}
+attributes(as.ordered(dataw1$phys_hea1))
+str(as.ordered(dataw1$phys_hea1))
+```
+
+Ante ello, es preferible construír el factor especificando el orden que nos interesa:
+
+```{r eval=TRUE}
+
+x <- factor(dataw1$phys_hea1, ordered = TRUE, levels = c("None", "1 physical health problem", "2+ physical health problems"))
+str(x)
+attributes(x)
+levels(x)
+table(x, useNA = "ifany")
+
+```
+
+
+## Transformación de variables en una base de datos con la librería `dplyr`
+
 
 
 Guardamos la transformación en la base de datos. Para ello usaremos la función `mutate` de la librería `dplyr`, que permite realizar varias transformaciones separadas por comas
