@@ -167,7 +167,7 @@ Para abrir ficheros de excel disponemos de diversas funciones en las librerías 
 read_excel("data_curs_stat/EP1.xls")
 ```
 
-**Nota:** _Para abrir ficheros `*.csv` disponemos de la función `read.csv` en R, de la función `read_csv` en la librería `readr` y de la función `fread` en la librería `data.table` entre otras. La librería `haven` dispone de diversas funciones que permiten abrir y escribir ficheros en formatos de Stata, SPSS y SAS (pueden consultarse en su ayuda, `package(help = "haven")`). Por otra parte la librería `readspss` (https://github.com/JanMarvin/readspss) tiene funciones que permiten abrir bases de datos en formato de SPSS encriptadas con contraseña._
+**Nota:** _Para abrir ficheros `*.csv` disponemos de la función `read.csv` en R, de la función `read_csv` en la librería `readr` y de la función `fread` en la librería `data.table` entre otras. La librería `haven` dispone de diversas funciones que permiten abrir y escribir ficheros en formatos de Stata, SPSS y SAS (pueden consultarse en su ayuda, `package(help = "haven")`). Por otra parte la librería `readspss` (https://github.com/JanMarvin/readspss) tiene funciones que permiten abrir bases de datos en formato de SPSS encriptadas con contraseña. Podemos encontrar más información en esta [breve introducción a R](https://people.umass.edu/biep640w/pdf/R%20handout%202018%20Dataset%20Basics.pdf)_
 
 
 ## Abrir bases de datos y ejecutar funciones: R no es como Stata.
@@ -297,7 +297,7 @@ dataw3 <- read_excel("data_curs_stat/EP3.xls")
 class(dataw1$phys_hea1)
 #summary(dataw1$phys_hea1)
 str(dataw1$phys_hea1) # chr quiere decir que phys_hea1 es una variable carácter, es decir, un vector de tipo cadena de carácteres
-#attributes(dataw1$phys_hea1)
+attributes(dataw1$phys_hea1)
 table(dataw1$phys_hea1)
 table(dataw1$phys_hea1, useNA = "ifany")
 prop.table(table(dataw1$phys_hea1))
@@ -310,34 +310,6 @@ summary(dataw1$hea1)
 #?table
 ```
 
-## Vemos las variables y guardamos los resultados
-
-Hemos dicho que R es como una calculadora, y que si no asignamos los objetos a variables, se muestran en consola pero no quedan guardados en ningún sitio.
-
-- Podemos ver los objetos que hemos creado en el panel `Environment` de RStudio o podemos ver sus nombres todavía con la función `ls`. Se pueden eliminar objetos mediante la función `rm`, separando sus nombres por comas.
-- Los objetos de R (como una base de datos o dataframe) se pueden guardar con la función `save` en ficheros con la extensión `.rda` o `.rdata` (aunque a veces también se escribe la `r` e incluso la `d` en mayúscula, por ejemplo `.RData`).
-- Los ficheros donde se guardan objetos de R se abren o cargan con la función `load` (o de forma distinta, con la función `attach`).
-- Los resultados, si son matrices, data frames o tablas, además, también se pueden guardar en ficheros `.csv` o con formatos de excel. De hecho, a menudo las funciones mencionadas de la forma `read_` o `read.` tienen funciones correspondientes `write_` o `write.`. Por ejemplo, podríamos guardar el data frame `dataw1` en un fichero `csv` con `write.csv`:
-
-```{r, echo=TRUE, eval=FALSE}
-# write.csv(dataw1, file = "datos_ola1.csv")
-```
-
-- Los resultados y más generalmente todo aquello que aparece por consola puede ser guardados en ficheros de texto con la función `sink`. El primer argumento de esta función es el nombre del fichero donde se guardarán los resultados.
-- A no ser que se especifique la dirección del fichero, serán guardados en el directorio donde R está trabajando (`getwd()`)
-
-```{r echo=TRUE, eval=TRUE}
-#?sink
-sink("Summary_Estudi_poblacional_w1.txt", split = TRUE) # El fichero de texto donde se guardarán los resultados se llamará Summary_Estudi_poblacional_w1.txt, pero podría llamarse como cualquier otro fichero de texto, no hay más restricción para el nombre que las del sistema operativo donde se está trabajando
-table(dataw1$phys_hea1)
-summary(dataw1$hea1)
-sink()
-```
-
-**Ejercicio:**
-
-*Qué aparece en el fichero Summary_Estudi_poblacional_w1.txt (o como lo hayáis llamado)?*
-
 
 
 ## Transformación de variables. Factores
@@ -345,6 +317,7 @@ sink()
 - La función `as.factor` permite transformar a un factor, objeto que codifica una variable categórica:
 ```{r eval=TRUE}
 class(as.factor(dataw1$phys_hea1))
+str(as.factor(dataw1$phys_hea1))
 attributes(as.factor(dataw1$phys_hea1))
 table(as.factor(dataw1$phys_hea1), useNA = "ifany")
 levels(as.factor(dataw1$phys_hea1))
@@ -358,7 +331,7 @@ attr(as.factor(dataw1$phys_hea1), "levels")
 ```
 
 
-- En formatos de fichero distintos de `.xls` o `.csv`, como pueden ser los formatos de Stata o SPSS, las categorías de las variables categóricas pueden estar grabadas como etiquetas, mientras los valores son numéricos. En esos casos, para recuperar las etiquetas como categorías es más conveniente usar la función `as_factor` de la librería `haven`.
+
 
 
 ## Transformación de variables. Factores ordenados
@@ -514,7 +487,7 @@ sum(is.na(x))
 
 **Ejercicio:**
 
-- *Buscar en la ayuda para qué sirven las funciones mencionadas arriba y practicar con ejemplos.*
+- *Si hemos afirmado que un vector creado con la función `c` tiene todos los elementos del mismo tipo y que `NA` es un elemento de tipo lógico, por qué la instrucción `c(1,3,5,7, NA, 8,5, NA)` no da lugar a un error?*
 - *Los operadores lógicos* `|` *y* `||` *, y* `&` *y* `&&` *se diferencian cuando comparan vectores lógicos con más de un elemento, como por ejemplo `c(TRUE, FALSE)`. Cuáles son esas diferencias?*
 
 **Nota:** *para buscar la ayuda de un operador como* `|` *podemos ejecutar la instrucción* `` ?`|` ``
@@ -577,6 +550,37 @@ dataw1 %>%
 
 ```
 
+
+## Vemos las variables y guardamos los resultados
+
+Hemos dicho que R es como una calculadora, y que si no asignamos los objetos a variables, se muestran en consola pero no quedan guardados en ningún sitio.
+
+- Podemos ver los objetos que hemos creado en el panel `Environment` de RStudio o podemos ver sus nombres todavía con la función `ls`. Se pueden eliminar objetos mediante la función `rm`, separando sus nombres por comas.
+- Los objetos de R (como una base de datos o dataframe) se pueden guardar con la función `save` en ficheros con la extensión `.rda` o `.rdata` (aunque a veces también se escribe la `r` e incluso la `d` en mayúscula, por ejemplo `.RData`).
+- Los ficheros donde se guardan objetos de R se abren o cargan con la función `load` (o de forma distinta, con la función `attach`).
+- Los resultados, si son matrices, data frames o tablas, además, también se pueden guardar en ficheros `.csv` o con formatos de excel. De hecho, a menudo las funciones mencionadas de la forma `read_` o `read.` tienen funciones correspondientes `write_` o `write.`. Por ejemplo, podríamos guardar el data frame `dataw1` en un fichero `csv` con `write.csv`:
+
+```{r, echo=TRUE, eval=FALSE}
+# write.csv(dataw1, file = "datos_ola1.csv")
+```
+
+- Los resultados y más generalmente todo aquello que aparece por consola puede ser guardados en ficheros de texto con la función `sink`. El primer argumento de esta función es el nombre del fichero donde se guardarán los resultados.
+- A no ser que se especifique la dirección del fichero, serán guardados en el directorio donde R está trabajando (`getwd()`)
+
+```{r echo=TRUE, eval=TRUE}
+#?sink
+sink("Summary_Estudi_poblacional_w1.txt", split = TRUE) # El fichero de texto donde se guardarán los resultados se llamará Summary_Estudi_poblacional_w1.txt, pero podría llamarse como cualquier otro fichero de texto, no hay más restricción para el nombre que las del sistema operativo donde se está trabajando
+table(dataw1$phys_hea1)
+summary(dataw1$hea1)
+sink()
+```
+
+**Ejercicio:**
+
+*Qué aparece en el fichero Summary_Estudi_poblacional_w1.txt (o como lo hayáis llamado)?*
+
+
+
 ## Condiciones y loops
 
 - Condiciones: `if`, `else`, `ifelse` (e `if_else`, la función equivalente en `dplyr`)
@@ -608,7 +612,7 @@ head(z, 10); table(z, useNA = "always")
 
 - Para aplicar una función a una matriz/data.frame/lista R dispone de las funciones de la familia apply: 
     + lapply: Devuelve una lista de resultados al aplicar una función a un vector o lista.
-    + sapply: Si es posible, devuelve un vector de resultados al aplicar una función a un vector o lista.
+    + sapply: Si es posible\*, devuelve un vector de resultados al aplicar una función a un vector o lista.
     + apply: Devuelve el vector o la lista de valores obtenidos aplicando una función a un vector o matriz por grupos.
     + tapply: Devuelve una lista con los resultados obtenidos al aplicar una función a un vector por grupos.
     + mapply: Devuelve un vector resultado de aplicar una función a tuplas de elementos en paralelo.
@@ -624,6 +628,7 @@ mapply(paste, 1:4, 4:1)
 
 ```
 
+\* Del mismo modo que la función `c`, intenta forzar a todos los elementos de la lista inicialmente resultante a tener el mismo tipo, en el orden `NULL` < lógico < entero < numérico < carácter (esencialmente)
 
 ## Variables y dimensiones de las bbdd
 
@@ -653,7 +658,7 @@ Ya tenemos las bbdd abiertas y guardadas. Sólo tenemos que unir por la(s) varia
 ```{r eval=TRUE}
 data <- dataw1 %>% # partimos de la base de datos dataw1 y entonces
   full_join(dataw2, by = "q0002_hhid") %>% # unimos horizontalmente con todas las observaciones de dataw2 con q0002_hhid iguales a los de dataw1 y añadimos las nuevas, y entonces
-  full_join(dataw3, by = c("q0002_hhid")) # unimos horizontalmente con todas las observaciones de dataw3 con q0002_hhid iguales a los que ya había y añadimos las nuevas
+  full_join(dataw3, by = "q0002_hhid") # unimos horizontalmente con todas las observaciones de dataw3 con q0002_hhid iguales a los que ya había y añadimos las nuevas
 names(data)
 dim(data)
 ```
@@ -667,18 +672,65 @@ dim(data)
 *Con `full_join` creamos una base de datos resultado de fusionar las 3 iniciales e incluír todas las observaciones de cada una de ellas. Consultando en la ayuda, este ejercicio consiste en fusionar las 3 bases de datos, pero incluyendo sólo aquellas observaciones comunes a las 3. Cuántas observaciones tiene?*
 
 
+## Bases de datos en formato de Stata 
+
+Abrimos las 3 olas de un ensayo clínico en fichero separados. Usamos la función `read_dta` en la librería `haven`. 
+
+- Puede abrir bases de datos guardadas con diferentes versiones de Stata, pero si fueron guardadas con versiones previas a la 14 en Mac o Linux, entonces hay que ajustar el argumento `encoding = "latin1"` (información que proporciona con más detalle la ayuda de la función, `?read_dta`)
+- La función `write_dta` permite guardar data frames en formato de Stata para distintas versiones, especificando el argumento `version`.
+- Otras librerías que permiten abrir ficheros de Stata son `foreign` y `readstata13`.
+    
+```{r eval=TRUE}
+
+library(haven)
+ac1 <- read_dta("data_curs_stat/Assaig_clinic_w1.dta"); ac2 <- read_dta("data_curs_stat/Assaig_clinic_w2.dta"); ac3 <- read_dta("data_curs_stat/Assaig_clinic_w3.dta")
+
+```
+
+Una base de datos en formato de Stata está guardada de manera distinta que una base de datos en formato de excel. Por ello, al abrirla como un data frame, éste tiene una estructura ligeramente distinta.
+
+Recordemos que cuando abrimos la base de datos que guardamos en el objeto `dataw1`, la variable `phys_hea1` era un vector carácter y sus elementos eran las distintas categorías, de manera que la transformamos de manera razonable en factor mediante la función `as.factor`. Ahora, sin embargo, al abrir bases de datos en formato Stata con la librería `haven` encontramos algunas diferencias
+
+```{r, echo=TRUE, eval=TRUE}
+class(ac1$edu1)
+str(ac1$edu1)
+attributes(ac1$edu1)
+table(ac1$edu1)
+
+```
+
+## Variables con etiquetas
+
+En formatos de fichero distintos de excel o `.csv`, como pueden ser los de Stata o SPSS, las categorías de las variables categóricas pueden estar grabadas como etiquetas, mientras los valores son numéricos. 
+
+```{r, echo=TRUE, eval=TRUE}
+class(as.factor(ac1$edu1))
+str(as.factor(ac1$edu1))
+attributes(as.factor(ac1$edu1))
+table(as.factor(ac1$edu1))
+
+```
+
+En estos casos, la función `as_factor` de la librería `haven` es más adecuada que `as.factor` para recuperar las etiquetas, ya que, a diferencia de esta última, tiene en cuenta los atributos de la variable original.
+
+```{r, echo=TRUE, eval=TRUE}
+class(as_factor(ac1$edu1))
+str(as_factor(ac1$edu1))
+attributes(as_factor(ac1$edu1))
+table(as_factor(ac1$edu1))
+
+```
+
+
 ## Combinar bases de datos
 
-Abrimos las 3 olas de un ensayo clínico en fichero separados.
 ```{r eval=TRUE}
-ac1 <- read_excel("data_curs_stat/AC1.xls")
-ac2 <- read_excel("data_curs_stat/AC2.xls")
-ac3 <- read_excel("data_curs_stat/AC3.xls")
 
 dim(ac1); names(ac1); dim(ac2); names(ac2); dim(ac3); names(ac3)
 ```
 
 Para poder combinarlas verticalmente, los nombres de las columnas que queremos combinar tienen que ser iguales. Para ello usamos otra función de la librería `dplyr`: `rename`
+
 ```{r eval=TRUE}
 acr1 <- ac1 %>% # partimos de ac1 y entonces
   rename(hea = hea1) # renombramos hea1 como hea
@@ -713,8 +765,8 @@ acv <- bind_rows(acr1, acr2, acr3, .id = "wave")
 Fusionamos horizontalmente las 3 bbdd originales de los ensayos clínicos. En este caso no las podemos combinar porque tienen distinto número de filas:
 ```{r eval=TRUE}
 ach <- ac1 %>%
-  full_join(ac2, by = c("q0002_hhid")) %>%
-  full_join(ac3, by = c("q0002_hhid"))
+  full_join(ac2, by = c("q0002_hhid", "number_id", "ID_ECS", "grups")) %>%
+  full_join(ac3, by = c("q0002_hhid", "number_id", "ID_ECS", "grups"))
 ach %>% 
   head()
 # cbind(ac1, ac2, ac3) %>% 
@@ -739,12 +791,33 @@ library(tidyr)
 acv %>%
   group_by(q0002_hhid) %>% # agrupamos por id y entonces
   arrange(wave) %>% # ordenamos por ola para tener la fila con datos antes que las otras, y entonces
-  fill(sex, age, mar_1, edu1, grups) %>% # para cada id rellenamos las filas vacías de las variables especificadas con los valores que no son missings, y entonces
+  fill(sex, age, mar1, edu1) %>% # para cada id rellenamos las filas vacías de las variables especificadas con los valores que no son missings, y entonces
   ungroup() %>% # desagrupamos y entonces
   arrange(q0002_hhid) %>% # ordenamos por id para ver las mismas filas que arriba, y entonces
   head() # nos quedamos con las primeras filas
 ```
 
+
+## Pivotar (horizontal/ancho --> vertical/largo)
+
+Pivotar es el proceso de transformar una base de datos horizontal (por ejemplo el producto de un una fusión, como es el caso de `ach`) a una vertical/longitudinal (por ejemplo el resultado de combinar filas, como es el caso de `acv`) o a la inversa.
+
+Veamos primero si tenemos un sólo conjunto de columnas longitudinal, por ejemplo `hea1`, `hea2` y `hea3`.
+
+```{r eval=TRUE}
+ach %>%
+  select(-starts_with("dep")) %>% # quitamos las columnas que empiezan con dep y entonces
+  pivot_longer(cols = starts_with("hea"), names_to = "wave", values_to = "hea") %>% # pivotamos, y entonces
+  arrange(q0002_hhid) %>% head()
+```
+
+Cuando hay más de un conjunto de columnas que queremos pivotar, como en este caso, en el que tenemos por un lado `hea1`, `hea2` y `hea3` y por otro lado, `dep2` y `dep3`, son necesarias las expresiones regulares.
+
+```{r eval=TRUE}
+ach %>%
+  pivot_longer(cols = c(starts_with("hea"), starts_with("dep")), names_to = c(".value", "wave"), names_pattern = "(.*)([0-9]$)") %>%
+  arrange(q0002_hhid) %>% head()
+```
 
 
 ## Pivotar (vertical/largo --> horizontal/ancho)
@@ -761,7 +834,7 @@ Pivotar es el proceso de transformar una base de datos vertical/longitudinal (po
 acv <- acv %>%
   group_by(q0002_hhid) %>% # agrupamos por id y entonces
   arrange(wave) %>% # ordenamos por ola para tener la fila con datos antes que las otras, y entonces
-  fill(sex, age, mar_1, edu1, grups) # para cada id rellenamos las filas vacías de las variables especificadas con los valores que no son missings
+  fill(sex, age, mar1, edu1) # para cada id rellenamos las filas vacías de las variables especificadas con los valores que no son missings
 ```
 
 Pivotaje usando la función `pivot_wider` de la librería `tidyr`:
@@ -776,10 +849,6 @@ acv %>%
 
 ```
 
-Para el pivotaje inverso se utilizaría la función `pivot_longer`.
-```{r}
-#?pivot_longer
-```
 
 
 ## T-test
@@ -792,12 +861,12 @@ t.test(data$hea1, data$hea2, paired = TRUE) #comparamos el estado de salud en la
 
 ## Chi-cuadrado y correlación
 
--Test de chi-cuadrado
+- Test de chi-cuadrado
 ```{r, eval=TRUE}
 chisq.test(dataw1$dep1, dataw1$sex)
 ```
 
--Cálculo de correlaciones
+- Cálculo de correlaciones
 ```{r eval=TRUE}
 #cor(dataw1$score_sup, dataw1$income)
 cor.test(dataw1$score_sup1, dataw1$income1)
@@ -991,7 +1060,7 @@ Existen distintas <u>librerías</u> que facilitan la representación gráfica de
 + `ggeffects`(https://strengejacke.github.io/ggeffects/)
 
 
-## Otras funciones útiles en R
+## Otras funciones y librerías útiles en R
 
 * A veces conviene guardar el nombre de un objeto en una variable y trabajar con la misma.
 
@@ -1009,9 +1078,12 @@ get(w)
 
 * Si queremos ejecutar el código en R guardado en un archivo (habitualmente con la extensión `.r`), se puede ejecutar a través de la función `source`. Por ejemplo `source("fichero.r")`.
 * En ocasiones nos puede interesar el número de caracteres en una cadena. Lo podemos obtener mediante la función `nchar`.
+
 ```{r, echo=TRUE, eval=TRUE}
 nchar(paste(x, 4)) == 3
 ```
+
+* Tal como la librería `haven` guarda las etiquetas de los objetos como atributos de los mismos, a los que se puede acceder por medio de la función `attributes` otras librerías como `labelled`, `sjmisc` o `sjlabelled` también tienen múltiples funciones creadas para trabajar con etiquetas.
 
 
 ## 
@@ -1062,7 +1134,10 @@ Acerca de librerías o materias específicas:
     * https://dabblingwithdata.wordpress.com/2018/01/02/my-favourite-r-package-for-summarising-data/
 + meta-análisis:
     * https://bookdown.org/MathiasHarrer/Doing_Meta_Analysis_in_R/
-+ análisis factorial:
++ neuroimagen:
+    * https://www.alexejgossmann.com/MRI_viz/
+    * https://johnmuschelli.com/
+
 
 
 
