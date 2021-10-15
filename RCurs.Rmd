@@ -1,7 +1,7 @@
 ---
 title: "Introducción a R"
 author: Iago Giné Vázquez
-date: 2021-09-26/27
+date: 2021-10-26/27
 autosize: true
 width: 2560
 height: 1440
@@ -161,14 +161,13 @@ help(package = "readxl") # Informémonos acerca de la librería readxl
 ```
 
 
-Para abrir ficheros de excel disponemos de diversas funciones en las librerías `readxl` y `openxlsx` entre muchas otras. Aunque la segunda librería tiene más funciones para manipular y escribir ficheros `.xlsx`, la primera dispone de funciones que nos permiten leer también ficheros `.xls`. En cualquier caso, estas funciones evalúan, bien la dirección absoluta del fichero que hay que abrir, bien la dirección relativa con respecto al directorio de trabajo de R como en el siguiente ejemplo.
+Para abrir ficheros de excel disponemos de diversas funciones en las librerías `readxl` y `openxlsx` entre muchas otras. Aunque la segunda librería tiene más funciones y opciones para manipular y escribir ficheros `.xlsx`, la primera dispone de funciones que nos permiten leer también ficheros `.xls`. En cualquier caso, estas funciones evalúan, bien la dirección absoluta del fichero que hay que abrir, bien la dirección relativa con respecto al directorio de trabajo de R como en el siguiente ejemplo.
 
 ```{r, eval=TRUE}
 read_excel("data_curs_stat/EP1.xls")
 ```
 
 **Nota:** _Para abrir ficheros `*.csv` disponemos de la función `read.csv` en R, de la función `read_csv` en la librería `readr` y de la función `fread` en la librería `data.table` entre otras. La librería `haven` dispone de diversas funciones que permiten abrir y escribir ficheros en formatos de Stata, SPSS y SAS (pueden consultarse en su ayuda, `package(help = "haven")`). Por otra parte la librería `readspss` (https://github.com/JanMarvin/readspss) tiene funciones que permiten abrir bases de datos en formato de SPSS encriptadas con contraseña._
-
 
 
 ## Abrir bases de datos y ejecutar funciones: R no es como Stata.
@@ -186,7 +185,13 @@ summary(read_excel("data_curs_stat/EP1.xls"))
 
 Abrir la base de datos mediante la función `read_excel` cada vez que queremos operar con ella no es práctico. En lugar de esto, guardamos la base de datos en una variable.
 
-## Objetos complejos. Bases de datos
+
+**Ejercicio:**
+
+*Instalar la librería `openxlsx` y buscar la ayuda de sus funciones `read.xlsx` y `loadWorkbook`*
+
+
+## Objetos complejos. Clases. Bases de datos
 
 
 R es un lenguaje de programación que nos permite acceder a objetos con distintas estructuras y manipularlos. Los [tipos de objetos](https://stat.ethz.ch/R-manual/R-devel/doc/manual/R-lang.html#Basic-types) más importantes son:
@@ -207,6 +212,9 @@ La mayoría de los objetos pueden tener [atributos](https://stat.ethz.ch/R-manua
 
 - **Matrices**  (resp. **arrays**), son vectores ligados a un atributo `dim` incluyendo las 2 (resp. -) dimensiones del objeto. Podemos crear matrices mediante la función `matrix`.
 - **Factores**, vectores con un atributo `levels` que corresponde a las posibles categorías de una variable categórica y un atributo `class="factor"`. Por defecto son nominales, pero también pueden tener categorías ordenadas, caso en el que el atributo `class` es el vector `c("ordered"," factor")`
+- **Fechas/Horas**: hay 2 representaciones principales (ejecutando `?DateTimeClasses` puede verse más información)
+    + vectores de tipo numérico (o entero), representando el número de segundos desde 1970-01-01 UTC, con clase `POSIXct`
+    + listas, cuyos objetos son los distintos elementos del momento representado (año, mes, día, hora, minuto, segundo, etc.), con clase `POSIXlt`
 - **Data frames**, el tipo básico de base de datos en R. Es una lista de vectores (las columnas de la base de datos) -que pueden ser matrices o factores- que tienen todos la misma longitud, con un atributo `names` que designa los nombres de las columnas o variables de la base de datos y un atributo `row.names` que designa las filas u observaciones. Podemos crearlos mediante la función `data.frame`
 
 Disponemos de un conjunto de [operadores](https://stat.ethz.ch/R-manual/R-devel/doc/manual/R-lang.html#Operators) en R <!--(cf. `?Syntax`) -->que nos permiten acceder y manipular los objetos. Además de los operadores aritméticos y lógicos, entre otros disponemos de los siguientes:
@@ -215,13 +223,16 @@ Disponemos de un conjunto de [operadores](https://stat.ethz.ch/R-manual/R-devel/
 - `[`, para acceder a un elemento de un vector o a una sublista. Por ejemplo, `x[3]`, `y[2]`, `y[3]`, `M[,2]` o `M[1,2]`
 - `[[`, para acceder a un elemento en una lista. Por ejemplo, `y[[2]]`
 
+
+
+
 ## Otras características y algunas funciones prácticas
 
 - Los missings en R se representan con el símbolo `NA`, existente para los distintos tipos básicos, o también  `NaN` en el caso de objetos numéricos.
-- Podemos nombrar los elementos de una lista con la forma `nombre = elemento`. Por ejemplo ``y <- list(numero = 3, `letra` = 'a', "sublista" = list(TRUE))``. 
-- Cuando tenemos una lista con nombres (como es el caso de cualquier data frame):
-    + podemos usar el nombre (como cadena de caracteres) en lugar del índice para acceder a las sublistas o a los elementos de la lista. Por ejemplo `y[c("letra", 'sublista')]` o `y[['sublista']]`.
-    + el operador `$` utilizado en la forma ``lista$nombre`` (o ``lista$`nombre` ``) equivale a `lista[["nombre"]]`
+- Podemos nombrar los elementos de un vector o lista con la forma `nombre = elemento`. Por ejemplo ``y <- list(numero = 3, `letra` = 'a', "sublista" = list(TRUE))``. 
+- Cuando tenemos un vector o lista con nombres (como es el caso de cualquier data frame):
+    + podemos usar el nombre (como cadena de caracteres) en lugar del índice para acceder a los elementos del vector o a las sublistas. Por ejemplo `y[c("letra", 'sublista')]`.
+    + en el caso de listas también podemos acceder a sus elementos mediante los operadores`[[` o `$`. Por ejemplo  `y[['letra']]` o `y[["sublista"]]`, o equivalentemente `y$letra` o `y$sublista` (o ``y$`letra` `` o ``y$`sublista` ``).
 - Habitualmente es suficiente ejecutar el nombre de un objeto para ver el objeto. En cierta ocasiones conviene evaluarlo explícitamente con la función `print`.
 - Otras funciones (principalmente informativas):
     + Podemos informarnos acerca de la longitud, clase, estructura y atributos de un objeto por medio de las funciones `length`, `class`, `str` y `attributes` respectivamente. 
@@ -251,9 +262,10 @@ Disponemos de un conjunto de [operadores](https://stat.ethz.ch/R-manual/R-devel/
 
 ## Primeros pasos con una base de datos. 
 
-Asignamos la base de datos a una variable que llamamos `dataw1`:
+Asignamos la base de datos a una variable que llamamos `dataw1`. A partir de este momento tenemos un objeto de R con nombre `dataw1`, ya no es una base de datos en excel.
+
 ```{r eval=TRUE}
-dataw1 <- read_excel("data_curs_stat/EP1.xls")
+dataw1 <- read_excel("data_curs_stat/EP1.xls", sheet = 1) # aunque en este caso no es necesario, especificamos también que abrimos la hoja 1 del fichero excel
 class(dataw1)
 length(dataw1)
 names(dataw1)
@@ -305,7 +317,12 @@ Hemos dicho que R es como una calculadora, y que si no asignamos los objetos a v
 - Podemos ver los objetos que hemos creado en el panel `Environment` de RStudio o podemos ver sus nombres todavía con la función `ls`. Se pueden eliminar objetos mediante la función `rm`, separando sus nombres por comas.
 - Los objetos de R (como una base de datos o dataframe) se pueden guardar con la función `save` en ficheros con la extensión `.rda` o `.rdata` (aunque a veces también se escribe la `r` e incluso la `d` en mayúscula, por ejemplo `.RData`).
 - Los ficheros donde se guardan objetos de R se abren o cargan con la función `load` (o de forma distinta, con la función `attach`).
-- Los resultados, si son matrices, data frames o tablas, además, también se pueden guardar en ficheros `.csv` o con formatos de excel (a menudo, las funciones mencionadas de la forma `read_` o `read.` tienen correspondientes `write_` o `write.`).
+- Los resultados, si son matrices, data frames o tablas, además, también se pueden guardar en ficheros `.csv` o con formatos de excel. De hecho, a menudo las funciones mencionadas de la forma `read_` o `read.` tienen funciones correspondientes `write_` o `write.`. Por ejemplo, podríamos guardar el data frame `dataw1` en un fichero `csv` con `write.csv`:
+
+```{r, echo=TRUE, eval=FALSE}
+# write.csv(dataw1, file = "datos_ola1.csv")
+```
+
 - Los resultados y más generalmente todo aquello que aparece por consola puede ser guardados en ficheros de texto con la función `sink`. El primer argumento de esta función es el nombre del fichero donde se guardarán los resultados.
 - A no ser que se especifique la dirección del fichero, serán guardados en el directorio donde R está trabajando (`getwd()`)
 
@@ -402,7 +419,7 @@ dataw1$phys_hea1 <- as.factor(dataw1$phys_hea1)
 dataw1 <- transform(dataw1, phys_hea1 = as.factor(phys_hea1))
 ```
 
-Y a partir de la versión 4.1.0, de R, dispone del nuevo operador `|>`:
+Y a partir de la versión 4.1.0, R dispone del nuevo operador `|>`:
 
 ```{r eval=FALSE}
 dataw1 <- dataw1 |> transform(phys_hea1 = as.factor(phys_hea1))
@@ -432,7 +449,7 @@ Varias transformaciones seguidas las podemos evaluar:
 
 dataw1 <- dataw1 %>% #partimos de la base de datos dataw1 y entonces
   mutate(phys_hea1 = as.factor(phys_hea1))  %>% # transformamos la variable phys_hea1 y la guardamos con el mismo nombre, y entonces
-  mutate(dep1 = as.factor(dep1)) %>% # transformamos la variable dep1 y la guardamos con el mismo nombre
+  mutate(dep1 = as.factor(dep1)) %>% # transformamos la variable dep1 y la guardamos con el mismo nombre, y entonces
   mutate(q0002_hhid = as.character(q0002_hhid)) # transformamos la variable q0002_hhid y la guardamos con el mismo nombre
 
 ```
@@ -470,6 +487,37 @@ dataw3 <- dataw3 %>%
 ```
 
 
+## Otras funciones y [operadores](https://stat.ethz.ch/R-manual/R-devel/doc/manual/R-lang.html#Operators) lógicos y aritméticos en R
+
+- Operadores aritméticos: `+`, `-`, `*`, `/`, `%%` (residuo), `^` (potencia)
+- Algunas funciones aritméticas: `sum`, `round`, `floor`, `log`, `log10`, `log2`, `exp`, `sqrt`, `factorial`
+- Operadores lógicos: `==` (igualdad), `!` (negación), `!=` (no igualdad), `<`, `<=`, `>`, `>=` (desigualdades), `%in%` (pertenencia), `|`, `||` (o), `&`, `&&` (y)
+
+```{r, echo=TRUE, eval=TRUE}
+
+3 %in% c(1:5)
+!3 %in% c(1:5)
+3 %in% c(5:50)
+!3 %in% c(5:50)
+
+TRUE & TRUE
+TRUE & FALSE
+FALSE | FALSE
+FALSE | TRUE
+
+
+
+x <- c(1,3,5,7, NA, 8,5, NA)
+sum(is.na(x))
+
+```
+
+**Ejercicio:**
+
+- *Buscar en la ayuda para qué sirven las funciones mencionadas arriba y practicar con ejemplos.*
+- *Los operadores lógicos* `|` *y* `||` *, y* `&` *y* `&&` *se diferencian cuando comparan vectores lógicos con más de un elemento, como por ejemplo `c(TRUE, FALSE)`. Cuáles son esas diferencias?*
+
+**Nota:** *para buscar la ayuda de un operador como* `|` *podemos ejecutar la instrucción* `` ?`|` ``
 
 ## Otras operaciones con funciones de la librería `dplyr` y funciones de R para el cálculo de estadísticos
 
@@ -524,17 +572,15 @@ Prevalencia de depresión por grupos de edad y sin tener en cuenta los missings:
 dataw1 %>% 
   group_by(age) %>% 
   count(dep1) %>% # Contamos los individuos en cada categoría de depresión por grupo de edad y entonces
-  filter(!is.na(dep1)) %>% # eliminamos los missings si nos interesa contar el porcentaje sobre el total de respuestas válidas
+  filter(!is.na(dep1)) %>% # eliminamos los missings si nos interesa contar el porcentaje sobre el total de respuestas válidas, y entonces
   mutate(prop = 100*n/sum(n)) # Calculamos el %
 
 ```
 
-
-## Otros operadores y funciones en R: condiciones, loops y operadores lógicos
+## Condiciones y loops
 
 - Condiciones: `if`, `else`, `ifelse` (e `if_else`, la función equivalente en `dplyr`)
 - Loops: `for`, `while`
-- Operadores lógicos: `|`, `||` (o), `&`, `&&` (y)
 
 ```{r, echo=TRUE, eval=TRUE}
 y <- x <- as.character(dataw1$edu1)
@@ -607,7 +653,7 @@ Ya tenemos las bbdd abiertas y guardadas. Sólo tenemos que unir por la(s) varia
 ```{r eval=TRUE}
 data <- dataw1 %>% # partimos de la base de datos dataw1 y entonces
   full_join(dataw2, by = "q0002_hhid") %>% # unimos horizontalmente con todas las observaciones de dataw2 con q0002_hhid iguales a los de dataw1 y añadimos las nuevas, y entonces
-  full_join(dataw3, by = c("q0002_hhid"))# unimos horizontalmente con todas las observaciones de dataw3 con q0002_hhid iguales a los que ya había y añadimos las nuevas
+  full_join(dataw3, by = c("q0002_hhid")) # unimos horizontalmente con todas las observaciones de dataw3 con q0002_hhid iguales a los que ya había y añadimos las nuevas
 names(data)
 dim(data)
 ```
@@ -618,7 +664,7 @@ dim(data)
 
 **Ejercicio:**
 
-*Con `full_join` creamos una base de datos resultado de fusionar las 3 iniciales e incluír todas las observaciones de cada una de ellas. Consultando en la ayuda, este ejercicio consiste en fusionar las 3 bases de datos, pero incluyendo sólo aquellas observaciones de comunes a las 3. Cuántas observaciones tiene?*
+*Con `full_join` creamos una base de datos resultado de fusionar las 3 iniciales e incluír todas las observaciones de cada una de ellas. Consultando en la ayuda, este ejercicio consiste en fusionar las 3 bases de datos, pero incluyendo sólo aquellas observaciones comunes a las 3. Cuántas observaciones tiene?*
 
 
 ## Combinar bases de datos
@@ -962,6 +1008,10 @@ get(w)
 ```
 
 * Si queremos ejecutar el código en R guardado en un archivo (habitualmente con la extensión `.r`), se puede ejecutar a través de la función `source`. Por ejemplo `source("fichero.r")`.
+* En ocasiones nos puede interesar el número de caracteres en una cadena. Lo podemos obtener mediante la función `nchar`.
+```{r, echo=TRUE, eval=TRUE}
+nchar(paste(x, 4)) == 3
+```
 
 
 ## 
