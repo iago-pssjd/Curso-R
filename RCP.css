@@ -28,11 +28,12 @@ p {
 pre {
 	margin-top: 0.17em !important;
 	margin-bottom: 0.17em !important;
-	font-size: 70% !important;
+	font-size: 60% !important;
 }
 
 pre.sourceCode {
 	font-size: 70% !important;
+	margin-right: 0.5em;
 }
 /*
 h2 {
@@ -47,4 +48,8 @@ h2 {
 
 div.slide {
 	line-height: 90%;
+}
+
+div.sourceCode {
+	margin: 0.5em 0 0.15em 0;
 }

@@ -11,7 +11,7 @@ output: slidy_presentation
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
-options(width=180, tibble.width=140)
+options(width=240, tibble.width=140)
 #https://stackoverflow.com/questions/39996042/disable-mouse-click-to-show-another-slide-in-rmarkdown-slidy-presentation
 ```
 
@@ -358,7 +358,9 @@ table(x, useNA = "ifany")
 
 ## Transformación de una variable en una base de datos (con la librería `dplyr`)
 
-
+```{r echo=FALSE, eval=TRUE, include=FALSE}
+library(dplyr)
+```
 
 Guardamos la transformación en la base de datos. Para ello usaremos la función `mutate` de la librería `dplyr`, que permite realizar varias transformaciones separadas por comas
 ```{r eval=FALSE}
@@ -401,10 +403,49 @@ dataw1 <- dataw1 |> transform(phys_hea1 = as.factor(phys_hea1))
 
 ## Pipe
 
-<div style="position: relative; top: 100px;">
+<div style="position: relative; top: 0px;">
 <img style="float: left;" src="pipe.jpg" width="560" height="420">
 <img style="float: right;" src="rpipe.png" width="368" height="426">
 </div>
+
+<div style="clear:both;"></div>
+
+<div style="display: flex; align-items: flex-start;">
+<div>
+```{r, echo=TRUE, eval=TRUE}
+head(names(dataw1))
+
+dataw1 %>% # la pipa más habitual: envía los datos de la izquierda a la función que sigue (a la derecha o abajo) y retorna su evaluación
+  names() %>% # esta pipa está incluida en la librería dplyr, pero es original de la librería magrittr
+  head()
+
+library(magrittr)
+# dataw1 %T>% # como la pipa anterior, pero retorna de nuevo los datos de la izquierda
+#   View() %>% # sirve para usar los datos en más de una función, cuando las intermedias no retornan nada, como View, plot, ...
+#   names() %>%
+#   head()
+
+```
+
+
+</div>
+<div>
+```{r, echo=TRUE, eval=TRUE}
+
+dataw1 %$% # para funciones sin un argumento para data.frame's
+  table(edu1, phys_hea1)
+
+dataw1 %<>%
+  mutate(phys_hea1 = as.factor(phys_hea1)) # la asignación está incluida en la pipa; 
+
+# es lo mismo que
+# dataw1 <- dataw1 %>% mutate(phys_hea1 = as.factor(phys_hea1))
+```
+</div>
+</div>
+
+**Nota:** *la pipa `%>%` puede ser problemática con algunas funciones, como por ejemplo `save`. La pipa de R base `|>`, aunque no se puede utilizar para determinadas estructuras más complejas, es más segura. Por ejemplo, `dataw1 |> save(file = "datos.Rdata")` es exactamente lo mismo que `save(dataw1, file = "datos.Rdata)`, pero `dataw1 %>% save(file = "datos.Rdata")` implica una instrucción ligeramente distinta.*
+
 
 ## Transformación de varias variables en una base de datos con la librería `dplyr`
 
@@ -447,7 +488,6 @@ dataw1 <- dataw1 %>% #partimos de la base de datos dataw1 y entonces
 *Buscar todas las variables categóricas en las 3 bases de datos y transformar estas bases de datos de manera que esas variables sean factores. Mostrar las frecuencias de las categorías de algunas de esas variables. Transformar la variable `q0002_hhid` a cadena de carácteres. Consultar también la ayuda de `as.numeric`, `as.integer` y `as.factor`*
 
 ```{r echo=FALSE, eval=TRUE, include=FALSE}
-library(dplyr)
 dataw1 <- dataw1 %>%
   mutate(across(c(sex, age, mar_1, edu1, phys_hea1, dep1, income_inf1), as.factor), q0002_hhid = as.character(q0002_hhid))
 
@@ -492,6 +532,48 @@ sum(is.na(x))
 
 **Nota:** *para buscar la ayuda de un operador como* `|` *podemos ejecutar la instrucción* `` ?`|` ``
 
+## Otras operaciones con funciones de la librería `dplyr`: selección de variables
+
+**Selección** de variables
+
+```{r eval=TRUE}
+
+dataw1 %>% #partimos de la base de datos dataw1 y entonces
+  select(q0002_hhid, hea1, dep1) %>% # mantenemos sólo las columnas q0002_hhid, hea1 y dep1, y entonces
+  names() # miramos qué nombres tienen
+
+dataw1 %>%
+  select(ends_with("1")) %>% # seleccionamos todas las variables cuyo nombre acaba en 1, y entonces
+  names() # miramos qué nombres tienen
+```
+
+**Nota:** *Podemos seleccionar variables por índice y por nombre. Por ejemplo, para las 3 primeras variables escribiríamos `select(1:3)`.*
+
+**Ejercicio:**
+
+- *Qué ocurre si escribimos un `-` delante de `end_with`?*
+- *De qué otras funciones similares a `ends_with` disponemos?*
+- *Seleccionar todas las variables numéricas sin nombrarlas*
+
+
+**Pull**. Una función en `dplyr` para el operador `$`
+
+```{r, eval=TRUE}
+
+dataw1 %>% pull(phys_hea1) %>% str()
+
+```
+
+Posibles combinaciones **distintas** de edad, educación y depresión
+
+```{r, eval=TRUE}
+
+dataw1 %>% distinct(age, edu1, dep1)
+
+```
+
+
+
 ## Otras operaciones con funciones de la librería `dplyr` y funciones de R para el cálculo de estadísticos
 
 - Ejemplo 1
@@ -506,6 +588,8 @@ dataw1 %>% #partimos de la base de datos dataw1 y entonces
 
 ```
 
+
+
 - Ejemplo 2 (uso de funciones de R como `mean`, `median` o `quantile`; se pueden usar otras como `var`, `sd`, `min`, `max`, `IQR`, etc.)
 
 ```{r eval=TRUE}
@@ -513,7 +597,7 @@ dataw1 %>% #partimos de la base de datos dataw1 y entonces
 dataw1 %>% #partimos de la base de datos dataw1 y entonces
   select(q0002_hhid, hea1, dep1) %>% # mantenemos sólo las columnas number_id, hea1 y dep1, y entonces
   group_by(dep1) %>% # agrupamos por las categorías de depresión, y entonces
-  summarise(mean_hea1 = mean(hea1, na.rm = TRUE), median_hea1 = median(hea1, na.rm = TRUE), tercil_hea1 = quantile(hea1, probs = 1/3, na.rm = TRUE), n = n()) # calculamos la media, la mediana y el primer tercil de hea1 para cada categoría de depresión y el número de observaciones por cada categoría
+  summarise(mean_hea1 = mean(hea1, na.rm = TRUE), median_hea1 = median(hea1, na.rm = TRUE), tercil_hea1 = quantile(hea1, probs = 1/3, na.rm = TRUE), n = n()) # para cada categoría de depresión calculamos media, mediana y primer tercil de hea1, y número de observaciones
 
 ```
 
@@ -569,7 +653,8 @@ Hemos dicho que R es como una calculadora, y que si no asignamos los objetos a v
 
 ```{r echo=TRUE, eval=TRUE}
 #?sink
-sink("Summary_Estudi_poblacional_w1.txt", split = TRUE) # El fichero de texto donde se guardarán los resultados se llamará Summary_Estudi_poblacional_w1.txt, pero podría llamarse como cualquier otro fichero de texto, no hay más restricción para el nombre que las del sistema operativo donde se está trabajando
+sink("Summary_Estudi_poblacional_w1.txt", split = TRUE) # El fichero de texto donde se guardarán los resultados se llamará Summary_Estudi_poblacional_w1.txt, 
+# pero podría llamarse como cualquier otro fichero de texto, no hay más restricción para el nombre que las del sistema operativo donde se está trabajando
 table(dataw1$phys_hea1)
 summary(dataw1$hea1)
 sink()
@@ -583,13 +668,11 @@ sink()
 
 ## Condiciones y loops
 
-- Condiciones: `if`, `else`, `ifelse` (e `if_else`, la función equivalente en `dplyr`)
+- Condiciones: `if`, `else`, `ifelse` (e `if_else`, la función equivalente en `dplyr`), `case_when` (otra función en `dplyr`)
 - Loops: `for`, `while`
 
 ```{r, echo=TRUE, eval=TRUE}
-y <- x <- as.character(dataw1$edu1)
-head(x, 10)
-table(x, useNA = "always")
+y <- x <- as.character(dataw1$edu1); head(x, 10); table(x, useNA = "always")
 for(i in seq_along(x)){
   if(is.na(x[i])){
     y[i] <- "Unknown"
@@ -598,14 +681,18 @@ for(i in seq_along(x)){
   } else if (x[i] == "Secondary" || x[i] == "Tertiary"){
     y[i] <- "Secondary or higher"
   } else {
-    print(x[i])
-    y[i] <- x[i]
+    print(x[i]); y[i] <- x[i]
   }
 }
 head(y, 10); table(y, useNA = "always")
 
 z <- ifelse(x == "Secondary" | x == "Tertiary", "Secondary or higher", "Until primary")
 head(z, 10); table(z, useNA = "always")
+w <- case_when(is.na(x) ~ "Unknown", 
+               x %in% c("Less primary", "Primary") ~ "Until primary", 
+               x %in% c("Secondary", "Tertiary") ~ "Secondary or higher", 
+               TRUE ~ x)
+head(w, 10); table(w, useNA = "always")
 ```
 
 ## Funciones \*apply
@@ -763,15 +850,23 @@ acv <- bind_rows(acr1, acr2, acr3, .id = "wave")
 
 
 Fusionamos horizontalmente las 3 bbdd originales de los ensayos clínicos. En este caso no las podemos combinar porque tienen distinto número de filas:
+
 ```{r eval=TRUE}
 ach <- ac1 %>%
   full_join(ac2, by = c("q0002_hhid", "number_id", "ID_ECS", "grups")) %>%
   full_join(ac3, by = c("q0002_hhid", "number_id", "ID_ECS", "grups"))
 ach %>% 
   head()
-# cbind(ac1, ac2, ac3) %>% 
-#    head()
+
+cbind(ac1, ac2, ac3) %>% 
+  head()
 ```
+
+Las funciones de las librerías de la familia `tidyverse` tratan los nombres de las variables de un data frame de una manera distinta a como lo hacen las funciones de R base. Por ejemplo, admiten determinados nombres especiales, pero sin embargo no admiten variables distintas con el mismo nombre, como sí ocurre en el último ejemplo.
+
+**Ejercicio:**
+
+*Sustituír `cbind` por `bind_cols` en el último ejemplo. Qué ocurre si se sustituye el valor por defecto del argumento `.name_repair` por los otros valores posibles?*
 
 
 ## Rellenando datos
