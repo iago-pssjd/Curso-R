@@ -213,7 +213,7 @@ La mayoría de los objetos pueden tener [atributos](https://stat.ethz.ch/R-manua
 - **Matrices**  (resp. **arrays**), son vectores ligados a un atributo `dim` incluyendo las 2 (resp. -) dimensiones del objeto. Podemos crear matrices mediante la función `matrix`.
 - **Factores**, vectores con un atributo `levels` que corresponde a las posibles categorías de una variable categórica y un atributo `class="factor"`. Por defecto son nominales, pero también pueden tener categorías ordenadas, caso en el que el atributo `class` es el vector `c("ordered"," factor")`
 - **Fechas/Horas**: hay 2 representaciones principales (ejecutando `?DateTimeClasses` puede verse más información)
-    + vectores de tipo numérico (o entero), representando el número de segundos desde 1970-01-01 UTC, con clase `POSIXct`
+    + vectores de tipo numérico (o entero), representando el número de segundos (resp. días) desde 1970-01-01 UTC, con clase `POSIXct` (resp. `Date`)
     + listas, cuyos objetos son los distintos elementos del momento representado (año, mes, día, hora, minuto, segundo, etc.), con clase `POSIXlt`
 - **Data frames**, el tipo básico de base de datos en R. Es una lista de vectores (las columnas de la base de datos) -que pueden ser matrices o factores- que tienen todos la misma longitud, con un atributo `names` que designa los nombres de las columnas o variables de la base de datos y un atributo `row.names` que designa las filas u observaciones. Podemos crearlos mediante la función `data.frame`
 
@@ -595,18 +595,25 @@ dataw1 %>% #partimos de la base de datos dataw1 y entonces
 ```{r eval=TRUE}
 
 dataw1 %>% #partimos de la base de datos dataw1 y entonces
-  select(q0002_hhid, hea1, dep1) %>% # mantenemos sólo las columnas number_id, hea1 y dep1, y entonces
+  select(q0002_hhid, hea1, dep1, score_lon1) %>% # mantenemos sólo las columnas number_id, hea1 y dep1, y entonces
   group_by(dep1) %>% # agrupamos por las categorías de depresión, y entonces
-  summarise(mean_hea1 = mean(hea1, na.rm = TRUE), median_hea1 = median(hea1, na.rm = TRUE), tercil_hea1 = quantile(hea1, probs = 1/3, na.rm = TRUE), n = n()) # para cada categoría de depresión calculamos media, mediana y primer tercil de hea1, y número de observaciones
+  summarise(mean_hea1 = mean(hea1, na.rm = TRUE), median_hea1 = median(hea1, na.rm = TRUE), tercil_hea1 = quantile(hea1, probs = 1/3, na.rm = TRUE), n = n(), distinct_score_lon1 = n_distinct(score_lon1)) 
+# para cada categoría de depresión calculamos media, mediana y primer tercil de hea1,
+# número de observaciones y número de observaciones distintas de score_lon1
+
+dataw1 %>% distinct(dep1, score_lon1) %>% group_by(dep1) %>% summarise(n = n())
 
 ```
+
+**Ejercicio:**
+
+*Comprender los distintos pasos en la última instrucción*
 
 **Nota:** *usamos `na.rm = TRUE` dentro de `mean`, de `median` y de `quantile` para que calcule la media de aquellos valores que no son missing. En caso contrario, cuando hay missings el resultado es `NA`.*
 
 **Nota:** *Todo lo anterior se puede realizar también con funciones de R sin necesidad de acudir a la librería `dplyr`, pero las alternativas pueden ser más complejas.*
 
-
-```{r echo=TRUE, eval=FALSE}
+```{r echo=FALSE, eval=FALSE}
 dataw1 |> # partimos de la base de datos dataw1 y entonces
   subset(select = c(hea1, dep1)) |> # mantenemos sólo las columnas hea1 y dep1, y entonces
   transform(dep1 = as.factor(dep1)) |>  # transformamos la variable  dep1 y la guardamos con el mismo nombre, y entonces
@@ -1232,6 +1239,7 @@ Acerca de librerías o materias específicas:
 + neuroimagen:
     * https://www.alexejgossmann.com/MRI_viz/
     * https://johnmuschelli.com/
+    * https://openwetware.org/wiki/RAVE
 
 
 
