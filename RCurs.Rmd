@@ -271,8 +271,9 @@ length(dataw1)
 names(dataw1)
 str(dataw1)
 head(dataw1) # primeras (6) filas
-#head(dataw1, 3) # primeras 3 filas
-#tail(dataw1) # últimas (6) filas
+# head(dataw1, 3) # primeras 3 filas
+# tail(dataw1) # últimas (6) filas
+# View(dataw1) # vemos la base de datos completa
 
 ```
 
@@ -309,6 +310,39 @@ class(dataw1$hea1); str(dataw1$hea1) # num quiere decir que hea1 es una variable
 summary(dataw1$hea1)
 #?table
 ```
+
+
+## Otras funciones y [operadores](https://stat.ethz.ch/R-manual/R-devel/doc/manual/R-lang.html#Operators) lógicos y aritméticos en R
+
+- Operadores aritméticos: `+`, `-`, `*`, `/`, `%%` (residuo), `^` (potencia)
+- Algunas funciones aritméticas: `sum`, `round`, `floor`, `log`, `log10`, `log2`, `exp`, `sqrt`, `factorial`
+- Operadores lógicos: `==` (igualdad), `!` (negación), `!=` (no igualdad), `<`, `<=`, `>`, `>=` (desigualdades), `%in%` (pertenencia), `|`, `||` (o), `&`, `&&` (y)
+
+```{r, echo=TRUE, eval=TRUE}
+
+3 %in% c(1:5)
+!3 %in% c(1:5)
+3 %in% c(5:50)
+!3 %in% c(5:50)
+
+TRUE & TRUE
+TRUE & FALSE
+FALSE | FALSE
+FALSE | TRUE
+
+
+
+x <- c(1,3,5,7, NA, 8,5, NA)
+sum(is.na(x))
+
+```
+
+**Ejercicio:**
+
+- *Si hemos afirmado que un vector creado con la función `c` tiene todos los elementos del mismo tipo y que `NA` es un elemento de tipo lógico, por qué la instrucción `c(1,3,5,7, NA, 8,5, NA)` no da lugar a un error?*
+- *Los operadores lógicos* `|` *y* `||` *, y* `&` *y* `&&` *se diferencian cuando comparan vectores lógicos con más de un elemento, como por ejemplo `c(TRUE, FALSE)`. Cuáles son esas diferencias?*
+
+**Nota:** *para buscar la ayuda de un operador como* `|` *podemos ejecutar la instrucción* `` ?`|` ``
 
 
 
@@ -458,7 +492,9 @@ Como la variable `q0002_hhid` es un id podría interesarnos que fuera de clase c
 
 
 Varias transformaciones seguidas las podemos evaluar:
+
 - Aplicando varias veces `mutate`:
+
 ```{r eval=FALSE}
 
 dataw1 <- dataw1 %>% #partimos de la base de datos dataw1 y entonces
@@ -469,6 +505,7 @@ dataw1 <- dataw1 %>% #partimos de la base de datos dataw1 y entonces
 ```
 
 - Pero en lugar de eso, habitualmente se separan las instrucciones por comas en un sólo `mutate`:
+
 ```{r eval=FALSE}
 
 dataw1 <- dataw1 %>% #partimos de la base de datos dataw1 y entonces
@@ -485,7 +522,11 @@ dataw1 <- dataw1 %>% #partimos de la base de datos dataw1 y entonces
 
 **Ejercicio:** 
 
-*Buscar todas las variables categóricas en las 3 bases de datos y transformar estas bases de datos de manera que esas variables sean factores. Mostrar las frecuencias de las categorías de algunas de esas variables. Transformar la variable `q0002_hhid` a cadena de carácteres. Consultar también la ayuda de `as.numeric`, `as.integer` y `as.factor`*
+- *Buscar todas las variables categóricas en las 3 bases de datos y transformar estas bases de datos de manera que esas variables sean factores. Mostrar las frecuencias de las categorías de algunas de esas variables. Transformar la variable `q0002_hhid` a cadena de carácteres. Consultar también la ayuda de `as.numeric`, `as.integer` y `as.factor`*
+- *Qué hace la función transmute?*
+
+
+**Nota:** *Dentro de la función `across`, podemos seleccionar las variables que nos interesan de formas alternativas a escribir un vector de variables como `c(phys_hea1, dep1)`. Veremos una introducción a estas alternativas en la siguiente diapositiva*
 
 ```{r echo=FALSE, eval=TRUE, include=FALSE}
 dataw1 <- dataw1 %>%
@@ -500,37 +541,6 @@ dataw3 <- dataw3 %>%
 ```
 
 
-## Otras funciones y [operadores](https://stat.ethz.ch/R-manual/R-devel/doc/manual/R-lang.html#Operators) lógicos y aritméticos en R
-
-- Operadores aritméticos: `+`, `-`, `*`, `/`, `%%` (residuo), `^` (potencia)
-- Algunas funciones aritméticas: `sum`, `round`, `floor`, `log`, `log10`, `log2`, `exp`, `sqrt`, `factorial`
-- Operadores lógicos: `==` (igualdad), `!` (negación), `!=` (no igualdad), `<`, `<=`, `>`, `>=` (desigualdades), `%in%` (pertenencia), `|`, `||` (o), `&`, `&&` (y)
-
-```{r, echo=TRUE, eval=TRUE}
-
-3 %in% c(1:5)
-!3 %in% c(1:5)
-3 %in% c(5:50)
-!3 %in% c(5:50)
-
-TRUE & TRUE
-TRUE & FALSE
-FALSE | FALSE
-FALSE | TRUE
-
-
-
-x <- c(1,3,5,7, NA, 8,5, NA)
-sum(is.na(x))
-
-```
-
-**Ejercicio:**
-
-- *Si hemos afirmado que un vector creado con la función `c` tiene todos los elementos del mismo tipo y que `NA` es un elemento de tipo lógico, por qué la instrucción `c(1,3,5,7, NA, 8,5, NA)` no da lugar a un error?*
-- *Los operadores lógicos* `|` *y* `||` *, y* `&` *y* `&&` *se diferencian cuando comparan vectores lógicos con más de un elemento, como por ejemplo `c(TRUE, FALSE)`. Cuáles son esas diferencias?*
-
-**Nota:** *para buscar la ayuda de un operador como* `|` *podemos ejecutar la instrucción* `` ?`|` ``
 
 ## Otras operaciones con funciones de la librería `dplyr`: selección de variables
 
@@ -607,7 +617,7 @@ dataw1 %>% distinct(dep1, score_lon1) %>% group_by(dep1) %>% summarise(n = n())
 
 **Ejercicio:**
 
-*Comprender los distintos pasos en la última instrucción*
+*Comprender los distintos pasos en la última instrucción y las distintas funciones mencionadas referentes a estadísticos. Mirar también qué hace y cómo se puede usar la función `range`*
 
 **Nota:** *usamos `na.rm = TRUE` dentro de `mean`, de `median` y de `quantile` para que calcule la media de aquellos valores que no son missing. En caso contrario, cuando hay missings el resultado es `NA`.*
 
@@ -900,31 +910,12 @@ acv %>%
 ```
 
 
-## Pivotar (horizontal/ancho --> vertical/largo)
-
-Pivotar es el proceso de transformar una base de datos horizontal (por ejemplo el producto de un una fusión, como es el caso de `ach`) a una vertical/longitudinal (por ejemplo el resultado de combinar filas, como es el caso de `acv`) o a la inversa.
-
-Veamos primero si tenemos un sólo conjunto de columnas longitudinal, por ejemplo `hea1`, `hea2` y `hea3`.
-
-```{r eval=TRUE}
-ach %>%
-  select(-starts_with("dep")) %>% # quitamos las columnas que empiezan con dep y entonces
-  pivot_longer(cols = starts_with("hea"), names_to = "wave", values_to = "hea") %>% # pivotamos, y entonces
-  arrange(q0002_hhid) %>% head()
-```
-
-Cuando hay más de un conjunto de columnas que queremos pivotar, como en este caso, en el que tenemos por un lado `hea1`, `hea2` y `hea3` y por otro lado, `dep2` y `dep3`, son necesarias las expresiones regulares.
-
-```{r eval=TRUE}
-ach %>%
-  pivot_longer(cols = c(starts_with("hea"), starts_with("dep")), names_to = c(".value", "wave"), names_pattern = "(.*)([0-9]$)") %>%
-  arrange(q0002_hhid) %>% head()
-```
-
-
 ## Pivotar (vertical/largo --> horizontal/ancho)
 
-Pivotar es el proceso de transformar una base de datos vertical/longitudinal (por ejemplo el resultado de combinar filas, como es el caso de `acv`) a una horizontal (por ejemplo el producto de un una fusión, como es el caso de `ach`)  o a la inversa.
+- Bases de datos horizontales/anchas: aquellas con una fila para cada individuo y tantas columnas como observaciones por variable, por ejemplo el producto de un una fusión, como es el caso de `ach`
+- Bases de datos verticales/largas (longitudinales): aquellas con tantas filas como observaciones se hayan hecho a todos los individuos y una columna por variable, por ejemplo el resultado de combinar filas, como es el caso de `acv`.
+
+Pivotar es el proceso de transformar una base de datos vertical/longitudinal a una horizontal o a la inversa.
 
 **Ejercicio:**
 
@@ -952,23 +943,52 @@ acv %>%
 ```
 
 
+## Pivotar (horizontal/ancho --> vertical/largo)
 
-## T-test
 
-Comparamos entre grupos mediante un t-test:
-```{r, eval=TRUE}
-t.test(hea1 ~ sex, data = dataw1)
-t.test(data$hea1, data$hea2, paired = TRUE) #comparamos el estado de salud en la ola 1 con la ola 2
+Si tenemos un sólo conjunto de columnas longitudinal, por ejemplo `hea1`, `hea2` y `hea3`, podemos acudir a la función `pivot_longer` de la librería `tidyr`:
+
+```{r eval=TRUE}
+ach %>%
+  select(-starts_with("dep")) %>% # quitamos las columnas que empiezan con dep y entonces
+  pivot_longer(cols = starts_with("hea"), names_to = "wave", values_to = "hea") %>% # pivotamos, y entonces
+  arrange(q0002_hhid) %>% head()
 ```
 
-## Chi-cuadrado y correlación
+Cuando hay más de un conjunto de columnas que queremos pivotar, como en este caso, en el que tenemos por un lado `hea1`, `hea2` y `hea3` y por otro lado, `dep2` y `dep3`, usaremos la función `reshape` de R. Para ello, primero necesitamos el mismo número de columnas de `hea` y `dep`, por tanto creamos la columna `dep1`.
 
-- Test de chi-cuadrado
-```{r, eval=TRUE}
-chisq.test(dataw1$dep1, dataw1$sex)
+```{r, echo=TRUE, eval=TRUE}
+
+ach$dep1 <- NA  # como en un data frame todas las variables tienen las mismas filas, R ya entiende que tiene que asignar NA para cada fila.
+
 ```
+
+También necesitamos que el objeto sea un data frame propiamente dicho, en lugar de un tibble (son así llamados los data frames creados por las funciones de la familia `tidyverse`, que se caracterizan porque su clase es `c("tbl_df", "tbl", "data.frame")`)
+
+```{r, echo=TRUE, eval=TRUE}
+
+class(ach)
+class(as.data.frame(ach))
+reshape(as.data.frame(ach), varying = list(paste0("hea", 1:3), paste0("dep", 1:3)), v.names = c("hea", "dep"), timevar = "wave", idvar = "q0002_hhid", direction = "long") %>% 
+  arrange(q0002_hhid) %>%
+  head()
+
+```
+
+
+
+```{r eval=FALSE, echo=FALSE}
+ach %>%
+  pivot_longer(cols = c(starts_with("hea"), starts_with("dep")), names_to = c(".value", "wave"), names_pattern = "(.*)([0-9]$)") %>%
+  arrange(q0002_hhid) %>% head()
+```
+
+
+
+## Correlación y khi (o ji o chi)-cuadrado y correlación
 
 - Cálculo de correlaciones
+
 ```{r eval=TRUE}
 #cor(dataw1$score_sup, dataw1$income)
 cor.test(dataw1$score_sup1, dataw1$income1)
@@ -979,8 +999,55 @@ cor.test(dataw1$score_sup1, dataw1$income1)
 *Consultar la ayuda de `cor`. Calcular la correlación de Spearman. Cómo tendríamos que hacer si hay valores missing?*
 
 
+- Test de chi-cuadrado
+```{r, eval=TRUE}
+chisq.test(dataw1$dep1, dataw1$sex)
+```
+
+
+
+## Prueba t de Student (o t-test)
+
+Comparamos entre grupos mediante un t-test:
+
+```{r, eval=TRUE}
+t.test(hea1 ~ sex, data = dataw1)
+t.test(data$hea1, data$hea2, paired = TRUE) # comparamos el estado de salud en la ola 1 con la ola 2
+t.test(hea1 ~ sex, data = dataw1, mu = -7) # comparamos la diferencia de medias con el valor mu (hipótesis nula)
+```
+
+**Nota:** *mediante el argumento `alternative` de la función `t.test`, podemos especificar si la hipótesis nula es la igualdad (test bilateral) o una desigualdad.*
+
+Con la función `t.test` podemos obtener el intervalo de confianza de una colección de valores
+
+```{r, eval=TRUE}
+t.test(dataw1$hea1)$conf.int
+```
+
+
+## Prueba Wilcoxon-Mann-Whitney (o test U de Mann-Whitney)
+
+* Prueba no paramétrica que compara medias de dos variables
+
+```{r, echo=TRUE, eval=TRUE}
+
+wilcox.test(hea1 ~ sex, data = dataw1, 
+            alternative = "two.sided", mu = 0, 
+            paired = FALSE, exact = FALSE, 
+            conf.int = TRUE, conf.level = 0.95)
+
+```
+
+
 ## Regresión lineal:
 
+
+
+
+
+<div style="display: flex; align-items: flex-start;">
+
+<div>
 
 ```{r echo=FALSE, eval=TRUE}
 dataw1 <- dataw1 %>% 
@@ -992,30 +1059,71 @@ dataw1 <- dataw1 %>%
 #?lm
 fit <- lm(hea1 ~ age + sex + income1 + dep1, data = dataw1)
 summary(fit)
+coef(fit) # o fit$coefficients
+#?confint
+confint(fit, level = 0.95) # intervalos de confianza
+
 ```
+
+
+</div>
+
+
+<div>
+
+
+```{r, eval=TRUE, fig.width=5, fig.height=4}
+
+#predict
+plot(fit)
+
+```
+
+
+</div>
+
+</div>
+
+
+
+
 
 ## Regresión logística
 
+<div style="display: flex; align-items: flex-start;">
+
+<div>
 
 ```{r eval=TRUE}
 #?glm
 fit <- glm(dep1 ~ age + sex + income1*hea1 + mar_1*score_lon1, data = dataw1, family = binomial)
 summary(fit)
-```
 
-## Intervalos de confianza
-
-Con la función `t.test` podemos obtener el intervalo de confianza de una colección de valores
-```{r, eval=TRUE}
-t.test(dataw1$hea1)$conf.int
-```
-
-Intervalos de confianza de los coeficientes de un modelo:
-```{r echo=TRUE, eval=TRUE}
-#?confint
-confint(fit)
+# Coefficients as odds-ratios
+exp(coef(fit))
 
 ```
+
+</div>
+
+
+<div>
+
+
+```{r, eval=TRUE, fig.width=5, fig.height=4}
+
+plot(fit)
+
+```
+
+
+</div>
+
+</div>
+
+
+
+
 
 
 ## Gràficas de modelos lineales simples usando `ggplot`: una única variable predictora
@@ -1034,6 +1142,9 @@ dataw1 %>%
   geom_ribbon(aes(ymin = lwr, ymax = upr), alpha = .15) + # añadimos los CI; también es posible como sigue
   # geom_line(aes(y = lwr), color = "red", linetype = "dashed") +
   # geom_line(aes(y = upr), color = "red", linetype = "dashed") +
+  annotate("text", 
+           label = paste("La correlación es", round(cor(dataw1$hea1, dataw1$income1, use = "complete.obs"), 2)),
+           x = 30, y = 15) +
   theme_bw() # cambiamos el tema por defecto
 
 
@@ -1070,7 +1181,9 @@ dataw1 %>%
   mutate(fit = predict(fit, type = "response")) %>% # añadimos la predicción del modelo como nuevas columnas
   ggplot(aes(x = income1)) + # creamos el cuadro y añadimos el eje x
   geom_line(aes(y = fit)) + # añadimos la línea que el modelo induce
-  labs(y = "Predicted probability of dep1 == Yes") + # especificamos la etiqueta del eje y
+  labs(y = "Predicted probability of dep1 == Yes", 
+       title = "Predicting  depression from income through a logistic model",
+       caption = "Data source: A cohort study") + # especificamos la etiqueta del eje y, del título y de pie de figura
   theme_classic() #cambiamos el tema por defecto
 
 
@@ -1141,7 +1254,7 @@ dataw1 %>%
 
 De la misma manera que `tidyverse` hace referencia a una colección de librerías que simplifican la manipulación de datframes, existe otra colección de librerías, `easystats` (https://easystats.github.io/easystats/), cuyo objetivo es mostrar los resultados de tests y modelos estadísticos con mejor formato.
 
-**Ejercicio 8**:
+**Ejercicio:**
 
 *Instalar y cargar las librerías `performance` y `parameters` y probar las funciones `model_performance` y `model_parameters` aplicadas a `fit`*.
 
@@ -1160,6 +1273,35 @@ Existen distintas <u>librerías</u> que facilitan la representación gráfica de
 + `jtools` (https://cran.r-project.org/web/packages/jtools/vignettes/effect_plot.html)
 + `effects` (https://cran.r-project.org/web/packages/effects/vignettes/predictor-effects-gallery.pdf)
 + `ggeffects`(https://strengejacke.github.io/ggeffects/)
+
+
+## Otras gráficas
+
+```{r, echo=TRUE, eval=TRUE, fig.height=2.45, fig.width=4}
+
+p <- dataw1 %>% filter(!is.na(hea1)) %>% 
+  ggplot(aes(x = hea1)) + 
+  geom_histogram(binwidth = 15, color = "blue", fill = "yellow")
+plot(p)
+```
+
+
+```{r, echo=TRUE, eval=TRUE, fig.height=2.45, fig.width=4}
+
+dataw1 %>% filter(!is.na(hea1)) %>% 
+  ggplot(aes(x = edu1, y = hea1)) + 
+  geom_boxplot() +
+  coord_flip()
+
+```
+
+**Ejercicio:**
+
+- *En el histograma: Qué ocurre si cambiamos el valor de `binwidth`? Y si no pasamos ningún valor? Y si usamos el argumento `bins` en lugar de `binwidth`?*
+- *En el boxplot: Qué ocurre si prescindimos de `coord_flip`?*
+- *Ejecutar `ggsave(filename = "hi_grafica.png", device = "png, width = 15, height = 20, units = "cm", dpi = 300)`. Qué podemos ver en el fichero hi_grafica.png?*
+- *Ejecutar `ggsave(filename = "hi_grafica2.png", plot = p, device = "png, width = 15, height = 20, units = "cm", dpi = 300)`. Qué podemos ver en el fichero hi_grafica2.png?*
+
 
 
 ## Otras funciones y librerías útiles en R
@@ -1186,6 +1328,41 @@ nchar(paste(x, 4)) == 3
 ```
 
 * Tal como la librería `haven` guarda las etiquetas de los objetos como atributos de los mismos, a los que se puede acceder por medio de la función `attributes` otras librerías como `labelled`, `sjmisc` o `sjlabelled` también tienen múltiples funciones creadas para trabajar con etiquetas.
+
+* La función de R `sample` permite seleccionar elementos de un vector aleatoriamente. La función `slice_sample` de la librería `dplyr` permite seleccionar filas (observaciones) al azar de un data frame.
+
+
+## Apéndice
+
+* **Ojo**: 
+    + Hay una cantidad enorme de librerías, muchas de las cuales comparten funciones (porque unas llaman a otras), pero también muchas de las cuales comparten nombres de funciones que son distintas (como muestra la advertencia al cargar la librería con funciones que ya están en el entorno).  Por ejemplo:
+    + Las librerías `plyr` y `dplyr` comparten varias funciones, entre ellas `rename`. Si se carga primero `dplyr` y después `plyr` R asocia `rename` a la función de `plyr`, pero al usarla como la función de `dplyr`, es probable que se produzca un error.
+    + Es de los más frecuentes y extraños, por ello hay varias maneras de solucionarlo. Esencialmente, mediante el operador `::`
+
+```{r, echo=TRUE, eval=TRUE, include=FALSE}
+
+lapply(paste('package:', names(sessionInfo()$otherPkgs), sep = ""), detach, character.only = TRUE, unload = TRUE)
+```
+
+
+```{r, echo=TRUE, eval=TRUE, error=TRUE}
+
+library(dplyr); library(plyr)
+# ?rename # con la ayuda podemos ver que esta función está en varias librerías actualmente cargadas
+names(ac1)
+names(rename(ac1, hea = hea1)) # error
+names(dplyr::rename(ac1, hea = hea1)) # especificamos que la función que queremos es la de dplyr
+names(plyr::rename(ac1, hea = hea1)) # comprobamos que la función que estaba usando antes era la de plyr, ya que genera el mismo error
+rename <- dplyr::rename # otra solución es asignar al nombre la función de dplyr
+names(rename(ac1, hea = hea1)) # ya no hay error
+
+```
+
+```{r, echo=FALSE, eval=FALSE}
+detach("package:plyr", unload=TRUE)
+detach("package:dplyr", unload=TRUE)
+
+```
 
 
 ## 
@@ -1232,6 +1409,8 @@ Acerca de librerías o materias específicas:
 + gráficas en general:
     * https://www.r-graph-gallery.com/
     * https://r-charts.com
+    * https://ggplot2-book.org, el libro de `ggplot2`
+    * https://exts.ggplot2.tidyverse.org/gallery/, librerías que extienden las funcionalidades de `ggplot2`
 + formas de mostrar descriptivos:
     * https://dabblingwithdata.wordpress.com/2018/01/02/my-favourite-r-package-for-summarising-data/
 + meta-análisis:
@@ -1252,4 +1431,3 @@ Recursos de RStudio
 + El blog https://rviews.rstudio.com está más enfocado al usuario de R, aportando información y ejemplos del uso de distintas librerías, así como acerca de conferencias de usuarios de R
 + El blog https://www.tidyverse.org/blog/ publica habitualmente entradas acerca de las nuevas librerías de la familia `tidyverse` o de actualizaciones relevantes
     
-
