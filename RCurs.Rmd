@@ -985,7 +985,8 @@ ach %>%
 
 
 
-## Correlación y khi (o ji o chi)-cuadrado y correlación
+## Correlación y tests de normalidad
+
 
 - Cálculo de correlaciones
 
@@ -999,11 +1000,81 @@ cor.test(dataw1$score_sup1, dataw1$income1)
 *Consultar la ayuda de `cor`. Calcular la correlación de Spearman. Cómo tendríamos que hacer si hay valores missing?*
 
 
-- Test de chi-cuadrado
-```{r, eval=TRUE}
-chisq.test(dataw1$dep1, dataw1$sex)
+* Test de Shapiro-Wilk
+
+```{r, echo=TRUE, eval=TRUE}
+
+shapiro.test(dataw1$hea1)
+
 ```
 
+* Test de Kolmogorov-Smirnov
+
+```{r, echo=TRUE, eval=TRUE}
+
+ks.test(dataw1$hea1, "pnorm")
+
+```
+
+* Ambos test son significativos, así pues descartamos la hipótesis nula consistente en la normalidad de la distribución de `hea1` para la muestra en `dataw1`.
+
+* Para otros tests de normalidad como los de Lilliefors, Anderson-Darling o Jarque-Bera, disponemos de funciones en librerías como `DescTools`, `nortest` o `tseries`.
+
+
+
+
+## Tests chi-cuadrado y de Fisher
+
+```{r, eval = TRUE}
+table(dataw1$mar_1, dataw1$sex)
+```
+
+- Test de chi (o ji o khi)-cuadrado de Pearson
+    + Prueba no paramétrica que se utiliza para probar la independencia de dos variables categóricas nominales entre sí mediante la presentación de los datos en tablas de contingencia.
+    + Hipótesis nula: independientes vs Hipotesis alternativa ($p\approx0$): dependientes
+    + En la tabla de las frecuencias esperadas cada celda debe ser mayor o igual que 5 para poder aplicar este test
+
+```{r, eval=TRUE}
+
+test <- chisq.test(dataw1$mar_1, dataw1$sex)
+test  # por defecto, test con correccion de continuidad si es 2x2
+test$expected # frecuencia esperada de cada celda
+chisq.test(dataw1$mar_1, dataw1$sex, correct = FALSE) # test sin corrección
+
+```
+
+- Test de Fisher
+
+```{r, eval=TRUE}
+fisher.test(dataw1$mar_1, dataw1$sex)
+```
+
+
+## Tests univariantes
+
+```{r echo=FALSE, eval=TRUE}
+set.seed(1)
+```
+
+
+- Test t de Student de comparación de una media muestral a la hipótesis nula 
+
+```{r, eval=TRUE}
+dataw1$new_var <- rnorm(nrow(dataw1))
+mean(dataw1$new_var)
+
+t.test(dataw1$new_var, mu = 0)
+t.test(dataw1$new_var)$conf.int # intervalo de confianza para la media muestral de new_var en dataw1
+```
+
+- Test no paramétrico de los rangos con signo de Wilcoxon, de simetría de los datos respecto a la hipótesis nula
+
+```{r, eval=TRUE}
+mean(dataw1$hea1, na.rm = TRUE)
+wilcox.test(dataw1$hea1, mu = 54, conf.int = TRUE, conf.level = 0.95, exact = FALSE)
+```
+
+Como conclusiones, no podemos descartar que la media de `new_var` sea 0, pero sí podemos descartar que los valores de `hea1` se localizen en torno a 54.
 
 
 ## Prueba t de Student (o t-test)
@@ -1018,16 +1089,11 @@ t.test(hea1 ~ sex, data = dataw1, mu = -7) # comparamos la diferencia de medias 
 
 **Nota:** *mediante el argumento `alternative` de la función `t.test`, podemos especificar si la hipótesis nula es la igualdad (test bilateral) o una desigualdad.*
 
-Con la función `t.test` podemos obtener el intervalo de confianza de una colección de valores
-
-```{r, eval=TRUE}
-t.test(dataw1$hea1)$conf.int
-```
 
 
-## Prueba Wilcoxon-Mann-Whitney (o test U de Mann-Whitney)
+## Prueba Wilcoxon-Mann-Whitney (también test U de Mann-Whitney o test de la suma de rangos de Wilcoxon)
 
-* Prueba no paramétrica que compara medias de dos variables
+* Prueba no paramétrica que compara los valores en dos grupos
 
 ```{r, echo=TRUE, eval=TRUE}
 
@@ -1036,13 +1102,64 @@ wilcox.test(hea1 ~ sex, data = dataw1,
             paired = FALSE, exact = FALSE, 
             conf.int = TRUE, conf.level = 0.95)
 
+library(ggplot2)
+```
+
+Descartamos la hipótesis nula, por tanto podemos concluír que la distribución de `hea1` en los hombres es significativamente diferente de la distribución en las mujeres.
+
+<div style="display: flex; align-items: center;">
+
+<div>
+
+```{r, eval=TRUE, fig.width=7, fig.height=3}
+
+
+dataw1 %>% 
+  filter(!is.na(hea1)) %>% 
+  ggplot(aes(x = hea1)) + # asignamos la variable hea1 al eje x
+  geom_histogram(bins = 15, fill = "turquoise", color = "black") + # creamos el histograma y lo personalizamos 
+  facet_wrap(~sex) # dividimos la gráfica para las distintas categorías de sex
+
+```
+
+</div>
+
+<div>
+
+```{r, eval=TRUE, fig.width=7, fig.height=3}
+
+dataw1 %>% 
+  filter(!is.na(hea1)) %>% 
+  ggplot(aes(x = sex, y = hea1)) +  # asignamos la variable sex al eje x y la variable hea1 al eje y
+  geom_boxplot() + # creamos el boxplot
+  coord_flip()
+
 ```
 
 
-## Regresión lineal:
+</div>
+
+</div>
 
 
+## ANOVA
 
+-  Test de comparación de la distribución de una variable normal entre múltiples grupos
+
+```{r, eval=TRUE, fig.height=4}
+
+ks.test(dataw1$new_var, "pnorm")
+dataw1 %>%
+  filter(!is.na(edu1)) %>%
+  ggplot(aes(x = edu1, y = new_var)) +
+  geom_boxplot()
+
+anovafit <- aov(new_var ~ edu1, data = dataw1)
+summary(anovafit)
+```
+
+
+## Regresión lineal
 
 
 <div style="display: flex; align-items: flex-start;">
@@ -1130,7 +1247,7 @@ plot(fit)
 
 ```{r echo=TRUE, eval=TRUE, fig.height=5}
 
-library(ggplot2)
+
 fit <- lm(hea1 ~ income1, data = dataw1)
 dataw1 %>%
   filter(!is.na(hea1), !is.na(income1)) %>% # nos quedamos con las observaciones que no tienen missings en el modelo
@@ -1275,33 +1392,6 @@ Existen distintas <u>librerías</u> que facilitan la representación gráfica de
 + `ggeffects`(https://strengejacke.github.io/ggeffects/)
 
 
-## Otras gráficas
-
-```{r, echo=TRUE, eval=TRUE, fig.height=2.45, fig.width=4}
-
-p <- dataw1 %>% filter(!is.na(hea1)) %>% 
-  ggplot(aes(x = hea1)) + 
-  geom_histogram(binwidth = 15, color = "blue", fill = "yellow")
-plot(p)
-```
-
-
-```{r, echo=TRUE, eval=TRUE, fig.height=2.45, fig.width=4}
-
-dataw1 %>% filter(!is.na(hea1)) %>% 
-  ggplot(aes(x = edu1, y = hea1)) + 
-  geom_boxplot() +
-  coord_flip()
-
-```
-
-**Ejercicio:**
-
-- *En el histograma: Qué ocurre si cambiamos el valor de `binwidth`? Y si no pasamos ningún valor? Y si usamos el argumento `bins` en lugar de `binwidth`?*
-- *En el boxplot: Qué ocurre si prescindimos de `coord_flip`?*
-- *Ejecutar `ggsave(filename = "hi_grafica.png", device = "png, width = 15, height = 20, units = "cm", dpi = 300)`. Qué podemos ver en el fichero hi_grafica.png?*
-- *Ejecutar `ggsave(filename = "hi_grafica2.png", plot = p, device = "png, width = 15, height = 20, units = "cm", dpi = 300)`. Qué podemos ver en el fichero hi_grafica2.png?*
-
 
 
 ## Otras funciones y librerías útiles en R
@@ -1330,6 +1420,9 @@ nchar(paste(x, 4)) == 3
 * Tal como la librería `haven` guarda las etiquetas de los objetos como atributos de los mismos, a los que se puede acceder por medio de la función `attributes` otras librerías como `labelled`, `sjmisc` o `sjlabelled` también tienen múltiples funciones creadas para trabajar con etiquetas.
 
 * La función de R `sample` permite seleccionar elementos de un vector aleatoriamente. La función `slice_sample` de la librería `dplyr` permite seleccionar filas (observaciones) al azar de un data frame.
+
+* La función `ggsave` permite guardar gráficas generadas a partir de `ggplot`, especificando el formato, medida y calidad entre otros.
+
 
 
 ## Apéndice
