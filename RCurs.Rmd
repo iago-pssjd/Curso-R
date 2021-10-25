@@ -47,7 +47,7 @@ options(width=240, tibble.width=140)
 
 - R es esencialmente una consola en la que el cursor se sitúa tras el símbolo `>`. Ahí se escriben las instrucciones. Se ejecutan con `Enter`.
 - Los resultados suelen aparecer debajo. En el caso de gráficas, depende del entorno en que se trabaje (R, RStudio, R Commander, etc.)
-- Para empezar, R permite realizar las operaciones de cualquier calculadora científico.
+- Para empezar, R permite realizar las operaciones de cualquier calculadora científica.
 - Incluye además instrucciones específicas para operaciones estadísticas.
 
 <img src="Rterm2.png" width="750" height="700">
