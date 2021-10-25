@@ -40,6 +40,7 @@ options(width=240, tibble.width=140)
     + Porque en Internet podréis encontrar solución a (casi) todos los problemas que os encontréis
     + Porque podréis personalizar/modificar cada instrucción con las opciones deseadas.
     + Porque podéis trabajar con más de una base de datos abierta simultáneamente y no tienen que estar guardadas en un formato específico para poder abrirlas.
+    + Porque cuando se producen errores, en general los mensajes son bastante informativos (a diferencia de los crípticos errores en otros lenguajes, v. gr. Python)
 
 
 ## R como calculadora
