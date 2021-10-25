@@ -550,10 +550,6 @@ dataw1 %>%
 **Nota:** *Podemos seleccionar variables por índice y por nombre. Por ejemplo, para las 3 primeras variables escribiríamos `select(1:3)`.*
 
 
-- *Qué ocurre si escribimos un `-` delante de `end_with`?*
-- *De qué otras funciones similares a `ends_with` disponemos?*
-- *Seleccionar todas las variables numéricas sin nombrarlas*
-
 
 **Pull**. Una función en `dplyr` para el operador `$`
 
