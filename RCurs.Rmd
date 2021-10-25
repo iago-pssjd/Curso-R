@@ -186,9 +186,6 @@ summary(read_excel("data_curs_stat/EP1.xls"))
 Abrir la base de datos mediante la función `read_excel` cada vez que queremos operar con ella no es práctico. En lugar de esto, guardamos la base de datos en una variable.
 
 
-**Ejercicio:**
-
-*Instalar la librería `openxlsx` y buscar la ayuda de sus funciones `read.xlsx` y `loadWorkbook`*
 
 
 ## Objetos complejos. Clases. Bases de datos
@@ -256,9 +253,7 @@ Disponemos de un conjunto de [operadores](https://stat.ethz.ch/R-manual/R-devel/
     + `paste` y `paste0` combinan cadenas de caracteres según se especifique. Por ejemplo, `paste(y$letra, c(1,2))`
 
 
-**Ejercicio:**
 
-*Buscar en la ayuda de las funciones presentadas qué opciones presentan según como se especifiquen sus argumentos. Para qué sirven las funciones `seq_len` y `seq_along`?*
 
 ## Primeros pasos con una base de datos. 
 
@@ -277,15 +272,8 @@ head(dataw1) # primeras (6) filas
 
 ```
 
-**Ejercicio:** 
 
-*Usando las funciones `setwd` y `read_excel` convenientemente (hay varias posibilidades), guardar también las bases de datos `EP2.xls` y `EP3.xls` en dos variables que llamaremos `dataw2` y `dataw3`. Podéis ver `dataw1`, `dataw2`, `dataw3` y sus dimensiones en el panel `Environment` de RStudio?*
 
-```{r echo=FALSE, eval=TRUE}
-dataw2 <- read_excel("data_curs_stat/EP2.xls")
-dataw3 <- read_excel("data_curs_stat/EP3.xls")
-
-```
 
 
 
@@ -337,12 +325,27 @@ sum(is.na(x))
 
 ```
 
-**Ejercicio:**
 
+
+
+## Ejercicios
+
+- *Instalar la librería `openxlsx` y buscar la ayuda de sus funciones `read.xlsx` y `loadWorkbook`*
+- *Buscar en la ayuda de las funciones presentadas (por ejemplo `paste`, `seq` o `rep``) qué opciones presentan según como se especifiquen sus argumentos. Para qué sirven las funciones `seq_len` y `seq_along`?*
+- *Usando las funciones `setwd` y `read_excel` convenientemente (hay varias posibilidades), guardar también las bases de datos `EP2.xls` y `EP3.xls` en dos variables que llamaremos `dataw2` y `dataw3`. Podéis ver `dataw1`, `dataw2`, `dataw3` y sus dimensiones en el panel `Environment` de RStudio?*
 - *Si hemos afirmado que un vector creado con la función `c` tiene todos los elementos del mismo tipo y que `NA` es un elemento de tipo lógico, por qué la instrucción `c(1,3,5,7, NA, 8,5, NA)` no da lugar a un error?*
 - *Los operadores lógicos* `|` *y* `||` *, y* `&` *y* `&&` *se diferencian cuando comparan vectores lógicos con más de un elemento, como por ejemplo `c(TRUE, FALSE)`. Cuáles son esas diferencias?*
 
+
 **Nota:** *para buscar la ayuda de un operador como* `|` *podemos ejecutar la instrucción* `` ?`|` ``
+
+```{r echo=FALSE, eval=TRUE}
+
+dataw2 <- read_excel("data_curs_stat/EP2.xls")
+dataw3 <- read_excel("data_curs_stat/EP3.xls")
+
+```
+
 
 
 
@@ -520,25 +523,11 @@ dataw1 <- dataw1 %>% #partimos de la base de datos dataw1 y entonces
   mutate(across(c(phys_hea1, dep1), as_factor), q0002_hhid = as.character(q0002_hhid)) # evaluamos as_factor a través de las variables phys_hea1 y dep1 y transformamos también number_id
 ```
 
-**Ejercicio:** 
-
-- *Buscar todas las variables categóricas en las 3 bases de datos y transformar estas bases de datos de manera que esas variables sean factores. Mostrar las frecuencias de las categorías de algunas de esas variables. Transformar la variable `q0002_hhid` a cadena de carácteres. Consultar también la ayuda de `as.numeric`, `as.integer` y `as.factor`*
-- *Qué hace la función transmute?*
 
 
-**Nota:** *Dentro de la función `across`, podemos seleccionar las variables que nos interesan de formas alternativas a escribir un vector de variables como `c(phys_hea1, dep1)`. Veremos una introducción a estas alternativas en la siguiente diapositiva*
 
-```{r echo=FALSE, eval=TRUE, include=FALSE}
-dataw1 <- dataw1 %>%
-  mutate(across(c(sex, age, mar_1, edu1, phys_hea1, dep1, income_inf1), as.factor), q0002_hhid = as.character(q0002_hhid))
+**Nota:** *Dentro de la función `across`, podemos seleccionar las variables que nos interesan de formas alternativas a escribir un vector de variables como `c(phys_hea1, dep1)`. Veremos una introducción a estas alternativas en la siguiente diapositiva y en los ejercicios*
 
-dataw2 <- dataw2 %>%
-  mutate(across(c(phys_hea2, dep2), as.factor), q0002_hhid = as.character(q0002_hhid))
-
-dataw3 <- dataw3 %>%
-  mutate(across(c(dep3, phys_hea3), as.factor), q0002_hhid = as.character(q0002_hhid))
-
-```
 
 
 
@@ -559,7 +548,6 @@ dataw1 %>%
 
 **Nota:** *Podemos seleccionar variables por índice y por nombre. Por ejemplo, para las 3 primeras variables escribiríamos `select(1:3)`.*
 
-**Ejercicio:**
 
 - *Qué ocurre si escribimos un `-` delante de `end_with`?*
 - *De qué otras funciones similares a `ends_with` disponemos?*
@@ -615,9 +603,7 @@ dataw1 %>% distinct(dep1, score_lon1) %>% group_by(dep1) %>% summarise(n = n())
 
 ```
 
-**Ejercicio:**
 
-*Comprender los distintos pasos en la última instrucción y las distintas funciones mencionadas referentes a estadísticos. Mirar también qué hace y cómo se puede usar la función `range`*
 
 **Nota:** *usamos `na.rm = TRUE` dentro de `mean`, de `median` y de `quantile` para que calcule la media de aquellos valores que no son missing. En caso contrario, cuando hay missings el resultado es `NA`.*
 
@@ -677,10 +663,29 @@ summary(dataw1$hea1)
 sink()
 ```
 
-**Ejercicio:**
 
-*Qué aparece en el fichero Summary_Estudi_poblacional_w1.txt (o como lo hayáis llamado)?*
+## Ejercicios
 
+- *Buscar todas las variables categóricas en las 3 bases de datos y transformar estas bases de datos de manera que esas variables sean factores. Mostrar las frecuencias de las categorías de algunas de esas variables. Transformar la variable `q0002_hhid` a cadena de carácteres.*
+- *Qué hace la función transmute?*
+- *Qué ocurre si escribimos un `-` delante de `end_with` en `dataw1 %>% select(ends_with("1")) %>% names()`?*
+- *De qué otras funciones similares a `ends_with` disponemos?*
+- *Seleccionar todas las variables numéricas sin nombrarlas*
+- *Comprender los distintos pasos en la instrucción `dataw1 %>% distinct(dep1, score_lon1) %>% group_by(dep1) %>% summarise(n = n())` y las distintas funciones mencionadas referentes a estadísticos. Mirar también qué hace y cómo se puede usar la función `range`*
+- *Qué aparece en el fichero Summary_Estudi_poblacional_w1.txt (o como lo hayáis llamado)?*
+
+```{r echo=FALSE, eval=TRUE, include=FALSE}
+
+dataw1 <- dataw1 %>%
+  mutate(across(c(sex, age, mar_1, edu1, phys_hea1, dep1, income_inf1), as.factor), q0002_hhid = as.character(q0002_hhid))
+
+dataw2 <- dataw2 %>%
+  mutate(across(c(phys_hea2, dep2), as.factor), q0002_hhid = as.character(q0002_hhid))
+
+dataw3 <- dataw3 %>%
+  mutate(across(c(dep3, phys_hea3), as.factor), q0002_hhid = as.character(q0002_hhid))
+
+```
 
 
 ## Condiciones y loops
@@ -732,7 +737,7 @@ mapply(paste, 1:4, 4:1)
 
 ```
 
-\* Del mismo modo que la función `c`, intenta forzar a todos los elementos de la lista inicialmente resultante a tener el mismo tipo, en el orden `NULL` < lógico < entero < numérico < carácter (esencialmente)
+\* Del mismo modo que la función `c`, `sapply` intenta forzar a todos los elementos de la lista inicialmente resultante a tener el mismo tipo, en el orden `NULL` < lógico < entero < numérico < carácter (esencialmente)
 
 ## Variables y dimensiones de las bbdd
 
@@ -771,9 +776,7 @@ dim(data)
 ?full_join
 ```
 
-**Ejercicio:**
 
-*Con `full_join` creamos una base de datos resultado de fusionar las 3 iniciales e incluír todas las observaciones de cada una de ellas. Consultando en la ayuda, este ejercicio consiste en fusionar las 3 bases de datos, pero incluyendo sólo aquellas observaciones comunes a las 3. Cuántas observaciones tiene?*
 
 
 ## Bases de datos en formato de Stata 
@@ -855,9 +858,7 @@ acv <- bind_rows(acr1, acr2, acr3, .id = "wave")
 
 ## Otras opciones para combinar bases de datos
 
-**Ejercicio:**
 
-*Ver qué variables tiene `acv`; para qué se añadió `.id = "wave"`?; ejecutar `rbind(ac1,ac2,ac3)`*
 
 
 **Nota:** _La función `rbind` de R hace esencialmente lo mismo, pero necesita que las 3 bases de datos tengan exactamente las mismas columnas. En caso en que esto no ocurre, como el presente, da un error. Además, tanto en el caso de `rbind` como de `bind_rows`, conviene que las columnas por las que se combina (las de igual nombre) tengan la misma clase, pues en caso contrario pueden ocurrir errores o comportamiento extraños._
@@ -881,9 +882,7 @@ cbind(ac1, ac2, ac3) %>%
 
 Las funciones de las librerías de la familia `tidyverse` tratan los nombres de las variables de un data frame de una manera distinta a como lo hacen las funciones de R base. Por ejemplo, admiten determinados nombres especiales, pero sin embargo no admiten variables distintas con el mismo nombre, como sí ocurre en el último ejemplo.
 
-**Ejercicio:**
 
-*Sustituír `cbind` por `bind_cols` en el último ejemplo. Qué ocurre si se sustituye el valor por defecto del argumento `.name_repair` por los otros valores posibles?*
 
 
 ## Rellenando datos
@@ -910,18 +909,15 @@ acv %>%
 ```
 
 
-## Pivotar (vertical/largo --> horizontal/ancho)
 
-- Bases de datos horizontales/anchas: aquellas con una fila para cada individuo y tantas columnas como observaciones por variable, por ejemplo el producto de un una fusión, como es el caso de `ach`
-- Bases de datos verticales/largas (longitudinales): aquellas con tantas filas como observaciones se hayan hecho a todos los individuos y una columna por variable, por ejemplo el resultado de combinar filas, como es el caso de `acv`.
+## Ejercicios
 
-Pivotar es el proceso de transformar una base de datos vertical/longitudinal a una horizontal o a la inversa.
-
-**Ejercicio:**
-
-* *Modificar `acv` de tal manera que sus variables sociodemográficas estén completas tal como se indicó en la diapositiva anterior.*
-* *Qué variables tiene acv?*
-* *Qué variables de avc no tienen necesariamente los mismos valores en las distintas olas?*
+- *Con `full_join` creamos una base de datos resultado de fusionar las 3 iniciales e incluír todas las observaciones de cada una de ellas. Consultando en la ayuda, este ejercicio consiste en fusionar las 3 bases de datos, pero incluyendo sólo aquellas observaciones comunes a las 3. Cuántas observaciones tiene?*
+- *Ver qué variables tiene `acv`; para qué se añadió `.id = "wave"`?; ejecutar `rbind(ac1,ac2,ac3)`*
+- *Sustituír `cbind` por `bind_cols` en el último ejemplo. Qué ocurre si se sustituye el valor por defecto del argumento `.name_repair` por los otros valores posibles?*
+- *Modificar `acv` de tal manera que sus variables sociodemográficas estén completas tal como se indicó en la diapositiva anterior.*
+- *Qué variables tiene acv?*
+- *Qué variables de acv no tienen necesariamente los mismos valores en las distintas olas?*
 
 ```{r echo=FALSE, eval=TRUE}
 acv <- acv %>%
@@ -929,6 +925,18 @@ acv <- acv %>%
   arrange(wave) %>% # ordenamos por ola para tener la fila con datos antes que las otras, y entonces
   fill(sex, age, mar1, edu1) # para cada id rellenamos las filas vacías de las variables especificadas con los valores que no son missings
 ```
+
+
+
+## Pivotar (vertical/largo --> horizontal/ancho)
+
+- Bases de datos horizontales/anchas: aquellas con una fila para cada individuo y tantas columnas como observaciones por variable, por ejemplo el producto de un una fusión, como es el caso de `ach`
+- Bases de datos verticales/largas (longitudinales): aquellas con tantas filas como observaciones se hayan hecho a todos los individuos y una columna por variable, por ejemplo el resultado de combinar filas, como es el caso de `acv`.
+
+Pivotar es el proceso de transformar una base de datos vertical/longitudinal a una horizontal o a la inversa.
+
+
+
 
 Pivotaje usando la función `pivot_wider` de la librería `tidyr`:
 
@@ -995,9 +1003,7 @@ ach %>%
 cor.test(dataw1$score_sup1, dataw1$income1)
 ```
 
-**Ejercicio:**
 
-*Consultar la ayuda de `cor`. Calcular la correlación de Spearman. Cómo tendríamos que hacer si hay valores missing?*
 
 
 * Test de Shapiro-Wilk
@@ -1367,13 +1373,10 @@ dataw1 %>%
 
 ```
 
-## Otras formas de obtener resultados estadísticos en R
+## Otras formas de obtener resultados estadísticos en R; Ejercicios
 
 De la misma manera que `tidyverse` hace referencia a una colección de librerías que simplifican la manipulación de datframes, existe otra colección de librerías, `easystats` (https://easystats.github.io/easystats/), cuyo objetivo es mostrar los resultados de tests y modelos estadísticos con mejor formato.
 
-**Ejercicio:**
-
-*Instalar y cargar las librerías `performance` y `parameters` y probar las funciones `model_performance` y `model_parameters` aplicadas a `fit`*.
 
 La librería `modelsummary` dispone de 2 <u>funciones</u> que permiten visualizar multiples resultados en tablas bien organizadas: 
 
@@ -1392,11 +1395,15 @@ Existen distintas <u>librerías</u> que facilitan la representación gráfica de
 + `ggeffects`(https://strengejacke.github.io/ggeffects/)
 
 
+**Ejercicios:**
+
+- *Consultar la ayuda de `cor`. Calcular la correlación de Spearman. Cómo tendríamos que hacer si hay valores missing?*
+- *Instalar y cargar las librerías `performance` y `parameters` y probar las funciones `model_performance` y `model_parameters` aplicadas a `fit`*.
 
 
 ## Otras funciones y librerías útiles en R
 
-* A veces conviene guardar el nombre de un objeto en una variable y trabajar con la misma.
+- A veces conviene guardar el nombre de un objeto en una variable y trabajar con la misma.
 
 ```{r, echo=TRUE, eval=TRUE}
 
@@ -1410,18 +1417,16 @@ get(w)
 
 ```
 
-* Si queremos ejecutar el código en R guardado en un archivo (habitualmente con la extensión `.r`), se puede ejecutar a través de la función `source`. Por ejemplo `source("fichero.r")`.
-* En ocasiones nos puede interesar el número de caracteres en una cadena. Lo podemos obtener mediante la función `nchar`.
+- Si queremos ejecutar el código en R guardado en un archivo (habitualmente con la extensión `.r`), se puede ejecutar a través de la función `source`. Por ejemplo `source("fichero.r")`.
+- En ocasiones nos puede interesar el número de caracteres en una cadena. Lo podemos obtener mediante la función `nchar`.
 
 ```{r, echo=TRUE, eval=TRUE}
 nchar(paste(x, 4)) == 3
 ```
 
-* Tal como la librería `haven` guarda las etiquetas de los objetos como atributos de los mismos, a los que se puede acceder por medio de la función `attributes` otras librerías como `labelled`, `sjmisc` o `sjlabelled` también tienen múltiples funciones creadas para trabajar con etiquetas.
-
-* La función de R `sample` permite seleccionar elementos de un vector aleatoriamente. La función `slice_sample` de la librería `dplyr` permite seleccionar filas (observaciones) al azar de un data frame.
-
-* La función `ggsave` permite guardar gráficas generadas a partir de `ggplot`, especificando el formato, medida y calidad entre otros.
+- Tal como la librería `haven` guarda las etiquetas de los objetos como atributos de los mismos, a los que se puede acceder por medio de la función `attributes` otras librerías como `labelled`, `sjmisc` o `sjlabelled` también tienen múltiples funciones creadas para trabajar con etiquetas.
+- La función de R `sample` permite seleccionar elementos de un vector aleatoriamente. La función `slice_sample` de la librería `dplyr` permite seleccionar filas (observaciones) al azar de un data frame.
+- La función `ggsave` permite guardar gráficas generadas a partir de `ggplot`, especificando el formato, medida y calidad entre otros.
 
 
 
