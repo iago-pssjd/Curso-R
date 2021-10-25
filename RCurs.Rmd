@@ -884,7 +884,7 @@ Las funciones de las librerías de la familia `tidyverse` tratan los nombres de 
 
 ## Rellenando datos
 
-Cuando se combinan las filas mediante `bind_cols`, las columnas que sólo están en una base de datos se llenan con missings. Por ejemplo, es el caso de las variables sociodemográficas, que en el dataframe `acv` sólo tienen datos en las filas correspondientes a la ola 1, que son las filas obtenidas de `ac1`. 
+Cuando se combinan las filas mediante `bind_rows`, las columnas que sólo están en una base de datos se llenan con missings. Por ejemplo, es el caso de las variables sociodemográficas, que en el dataframe `acv` sólo tienen datos en las filas correspondientes a la ola 1, que son las filas obtenidas de `ac1`. 
 
 ```{r eval=TRUE}
 acv %>%
