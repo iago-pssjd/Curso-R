@@ -231,7 +231,7 @@ Disponemos de un conjunto de [operadores](https://stat.ethz.ch/R-manual/R-devel/
 - Cuando tenemos un vector o lista con nombres (como es el caso de cualquier data frame):
     + podemos usar el nombre (como cadena de caracteres) en lugar del índice para acceder a los elementos del vector o a las sublistas. Por ejemplo `y[c("letra", 'sublista')]`.
     + en el caso de listas también podemos acceder a sus elementos mediante los operadores`[[` o `$`. Por ejemplo  `y[['letra']]` o `y[["sublista"]]`, o equivalentemente `y$letra` o `y$sublista` (o ``y$`letra` `` o ``y$`sublista` ``).
-- Habitualmente es suficiente ejecutar el nombre de un objeto para ver el objeto. En cierta ocasiones conviene evaluarlo explícitamente con la función `print`.
+- Habitualmente es suficiente ejecutar el nombre de un objeto para ver el objeto. En ciertas ocasiones conviene evaluarlo explícitamente con la función `print`.
 - Otras funciones (principalmente informativas):
     + Podemos informarnos acerca de la longitud, clase, estructura y atributos de un objeto por medio de las funciones `length`, `class`, `str` y `attributes` respectivamente. 
     + La función `names` nos permite conocer los nombres de los elementos de un objeto, como pueden ser las variables de un data frame.
