@@ -521,7 +521,7 @@ dataw1 <- dataw1 %>% #partimos de la base de datos dataw1 y entonces
 
 ```{r eval=FALSE}
 dataw1 <- dataw1 %>% #partimos de la base de datos dataw1 y entonces
-  mutate(across(c(phys_hea1, dep1), as_factor), q0002_hhid = as.character(q0002_hhid)) # evaluamos as_factor a través de las variables phys_hea1 y dep1 y transformamos también number_id
+  mutate(across(c(phys_hea1, dep1), as.factor), q0002_hhid = as.character(q0002_hhid)) # evaluamos as.factor a través de las variables phys_hea1 y dep1 y transformamos también number_id
 ```
 
 
