@@ -482,7 +482,7 @@ dataw1 %<>%
 </div>
 </div>
 
-**Nota:** *la pipa `%>%` puede ser problemática con algunas funciones, como por ejemplo `save`. La pipa de R base `|>`, aunque no se puede utilizar para determinadas estructuras más complejas, es más segura. Por ejemplo, `dataw1 |> save(file = "datos.Rdata")` es exactamente lo mismo que `save(dataw1, file = "datos.Rdata)`, pero `dataw1 %>% save(file = "datos.Rdata")` implica una instrucción ligeramente distinta.*
+**Nota:** *la pipa `%>%` puede ser problemática con algunas funciones, como por ejemplo `save`. La pipa de R base `|>`, aunque no se puede utilizar para determinadas estructuras más complejas, es más segura. Por ejemplo, `dataw1 |> save(file = "datos.Rdata")` es exactamente lo mismo que `save(dataw1, file = "datos.Rdata")`, pero `dataw1 %>% save(file = "datos.Rdata")` implica una instrucción ligeramente distinta.*
 
 
 ## Transformación de varias variables en una base de datos con la librería `dplyr`
