@@ -1526,4 +1526,4 @@ Recursos de RStudio
 + El blog https://rviews.rstudio.com está más enfocado al usuario de R, aportando información y ejemplos del uso de distintas librerías, así como acerca de conferencias de usuarios de R
 + El blog https://www.tidyverse.org/blog/ publica habitualmente entradas acerca de las nuevas librerías de la familia `tidyverse` o de actualizaciones relevantes
     
-Podéis consultarme vuestras dudas a través de mi dirección de email: iago.gine@sjd.es
+Podéis consultarme vuestras dudas a través de mi dirección de email: iago.gine at sjd.es
